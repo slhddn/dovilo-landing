@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Download Dovilo App — iOS, Android, Windows & Mac</title>
+  <meta name="description" content="Download Dovilo App for free on iOS and Android. Pro subscribers can also get the desktop app for Windows and Mac. Gamified productivity at its best.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://dovilo.app/downloads/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dovilo.app/downloads/">
+  <meta property="og:title" content="Download Dovilo App — iOS, Android, Windows & Mac">
+  <meta property="og:description" content="Get Dovilo on your device. Free on iOS & Android. Desktop app for Pro subscribers.">
+  <meta property="og:image" content="https://dovilo.app/hero.jpg">
+  <meta property="og:site_name" content="Dovilo App">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@doviloapp">
+  <meta name="twitter:title" content="Download Dovilo App — iOS, Android, Windows & Mac">
+  <meta name="twitter:description" content="Get Dovilo on your device. Free on iOS & Android. Desktop app for Pro subscribers.">
+  <meta name="twitter:image" content="https://dovilo.app/hero.jpg">
+
+  <meta name="theme-color" content="#0F1120">
+  <link rel="icon" href="../favicon.ico" type="image/x-icon">
+
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+    :root{
+      --bg:#0F1120;
+      --fg:#E8E6F0;
+      --accent:#D4880A;
+      --muted:#E8A832;
+      --dim:rgba(232,230,240,.12);
+      --dim2:rgba(232,230,240,.06);
+      --radius:12px;
+      --max:1120px;
+    }
+
+    html{scroll-behavior:smooth}
+
+    body{
+      font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+      background:var(--bg);
+      color:var(--fg);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+      min-height:100vh;
+      display:flex;flex-direction:column;
+    }
+
+    /* NAV */
+    nav{
+      display:flex;align-items:center;justify-content:center;
+      padding:20px clamp(24px,5vw,64px);
+      border-bottom:1px solid var(--dim2);
+    }
+    .logo{
+      display:flex;align-items:center;gap:10px;
+      font-size:1.125rem;font-weight:700;letter-spacing:-.02em;
+      color:var(--fg);text-decoration:none;
+    }
+    .logo img{width:32px;height:32px;border-radius:8px}
+    .logo span{color:var(--accent)}
+
+    /* MAIN */
+    main{
+      flex:1;
+      padding:64px clamp(24px,5vw,64px);
+      max-width:var(--max);
+      margin:0 auto;
+      width:100%;
+    }
+
+    .section-label{
+      font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--accent);margin-bottom:16px;text-align:center;
+    }
+    .section-title{
+      font-size:clamp(1.75rem,3.5vw,2.5rem);
+      font-weight:700;letter-spacing:-.02em;
+      text-align:center;margin-bottom:16px;
+    }
+    .section-sub{
+      font-size:1rem;color:rgba(240,253,250,.45);
+      text-align:center;margin-bottom:56px;
+    }
+
+    /* PLATFORM GROUP */
+    .platform-group{margin-bottom:56px}
+    .platform-group-title{
+      font-size:.8125rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+      color:rgba(240,253,250,.4);margin-bottom:20px;
+      padding-bottom:12px;border-bottom:1px solid var(--dim2);
+    }
+    .platform-group-title .tag{
+      display:inline-block;
+      font-size:.625rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+      padding:3px 10px;border-radius:100px;
+      background:var(--accent);color:var(--bg);
+      margin-left:8px;vertical-align:middle;
+    }
+
+    .platform-cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:20px;
+    }
+
+    .platform-card{
+      display:flex;align-items:center;gap:20px;
+      padding:24px 28px;
+      border-radius:var(--radius);
+      border:1px solid var(--dim2);
+      background:var(--dim2);
+      text-decoration:none;color:var(--fg);
+      transition:all .25s;
+    }
+    .platform-card:hover{
+      border-color:var(--dim);
+      background:var(--dim);
+      transform:translateY(-2px);
+      box-shadow:0 8px 32px rgba(0,0,0,.2);
+    }
+    .platform-card.highlighted{
+      border-color:var(--accent);
+      background:rgba(212,136,10,.06);
+    }
+    .platform-card.highlighted:hover{
+      border-color:var(--muted);
+      box-shadow:0 8px 32px rgba(212,136,10,.12);
+    }
+    .platform-card svg{width:36px;height:36px;flex-shrink:0;fill:var(--fg)}
+    .platform-card.highlighted svg{fill:var(--accent)}
+    .platform-info{display:flex;flex-direction:column;gap:2px}
+    .platform-name{font-size:1.0625rem;font-weight:600;letter-spacing:-.01em}
+    .platform-desc{font-size:.8125rem;color:rgba(240,253,250,.4);line-height:1.5}
+    .platform-card.highlighted .platform-desc{color:var(--muted)}
+
+    /* DETECTED OS BADGE */
+    .detected-badge{
+      display:none;
+      align-items:center;gap:6px;
+      font-size:.75rem;font-weight:500;
+      color:var(--accent);
+      margin-bottom:24px;
+      text-align:center;
+      justify-content:center;
+    }
+    .detected-badge.visible{display:flex}
+    .detected-badge::before{
+      content:'';width:6px;height:6px;border-radius:50%;
+      background:var(--accent);
+      animation:pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+    /* NOTE */
+    .note{
+      text-align:center;
+      font-size:.875rem;color:rgba(240,253,250,.35);
+      margin-top:8px;
+      line-height:1.6;
+    }
+    .note a{color:var(--accent);text-decoration:none}
+    .note a:hover{text-decoration:underline}
+
+    /* FOOTER */
+    footer{
+      padding:32px clamp(24px,5vw,64px);
+      border-top:1px solid var(--dim2);
+      text-align:center;
+    }
+    .footer-text{font-size:.8125rem;color:rgba(240,253,250,.3)}
+    .footer-text a{color:rgba(240,253,250,.45);text-decoration:none}
+    .footer-text a:hover{color:var(--fg)}
+
+    @media(max-width:640px){
+      .platform-cards{grid-template-columns:1fr}
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="logo">
+      <img src="../notify-icon.png" alt="Dovilo icon">
+      Dovilo App<span>&nbsp;Downloads</span>
+    </a>
+  </nav>
+
+  <main>
+    <p class="section-label">Download</p>
+    <h1 class="section-title">Get Dovilo App</h1>
+    <p class="section-sub">Choose your platform and start building your productivity city.</p>
+
+    <div class="detected-badge" id="detected-badge"></div>
+
+    <!-- MOBILE -->
+    <div class="platform-group" id="group-mobile">
+      <div class="platform-group-title">Mobile &mdash; Free to start</div>
+      <div class="platform-cards">
+        <a href="https://apps.apple.com/app/dovilo/id6761195015?ct=downloads_page&mt=8" class="platform-card" id="card-ios" aria-label="Download on the App Store">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div class="platform-info">
+            <div class="platform-name">iPhone & iPad</div>
+            <div class="platform-desc">Download on the App Store</div>
+          </div>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.dovilo.app&utm_source=website&utm_medium=downloads_page" class="platform-card" id="card-android" aria-label="Get it on Google Play">
+          <svg viewBox="0 0 24 24"><path d="M3.61 1.814L13.793 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .61-.92zM14.5 12.707l2.55 2.55-8.27 4.698 5.72-7.248zm4.89-2.29l1.81 1.028a.998.998 0 0 1 0 1.73L19.4 14.2l-2.83-2.2 2.82-2.283zM8.78 2.045l8.27 4.698-2.55 2.55-5.72-7.248z"/></svg>
+          <div class="platform-info">
+            <div class="platform-name">Android</div>
+            <div class="platform-desc">Get it on Google Play</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- DESKTOP -->
+    <div class="platform-group" id="group-desktop">
+      <div class="platform-group-title">Desktop <span class="tag">Pro</span></div>
+      <div class="platform-cards">
+        <a href="https://github.com/slhddn/dovilo-desktop-releases/releases/latest/download/Dovilo-Setup.exe?source=downloads_page" class="platform-card" id="card-windows" aria-label="Download for Windows">
+          <svg viewBox="0 0 24 24"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+          <div class="platform-info">
+            <div class="platform-name">Windows</div>
+            <div class="platform-desc">Download Dovilo-Setup.exe</div>
+          </div>
+        </a>
+        <a href="https://github.com/slhddn/dovilo-desktop-releases/releases/latest/download/Dovilo.dmg?source=downloads_page" class="platform-card" id="card-mac" aria-label="Download for Mac">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div class="platform-info">
+            <div class="platform-name">Mac</div>
+            <div class="platform-desc">Download Dovilo.dmg</div>
+          </div>
+        </a>
+      </div>
+      <p class="note">Requires an active <a href="/#pricing">Pro subscription</a>. Subscribe from the mobile app first.</p>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-text"><a href="/">dovilo.app</a> &mdash; &copy; 2026 Dovilo App</div>
+  </footer>
+
+  <script>
+    (function() {
+      var ua = navigator.userAgent || '';
+      var platform = navigator.platform || '';
+      var badge = document.getElementById('detected-badge');
+      var os = null;
+
+      if (/iPad|iPhone|iPod/.test(ua) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+        os = 'ios';
+      } else if (/Android/.test(ua)) {
+        os = 'android';
+      } else if (/Win/.test(platform)) {
+        os = 'windows';
+      } else if (/Mac/.test(platform)) {
+        os = 'mac';
+      }
+
+      var labels = {
+        ios: 'Looks like you\'re on an iPhone or iPad',
+        android: 'Looks like you\'re on Android',
+        windows: 'Looks like you\'re on Windows',
+        mac: 'Looks like you\'re on a Mac'
+      };
+
+      if (os && labels[os]) {
+        badge.textContent = labels[os];
+        badge.classList.add('visible');
+
+        var card = document.getElementById('card-' + os);
+        if (card) card.classList.add('highlighted');
+      }
+    })();
+  </script>
+
+</body>
+</html>

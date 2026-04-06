@@ -6,7 +6,7 @@
 
   <!-- Primary Meta -->
   <title>Dovilo App — Gamified To-Do List, Focus Timer & City Builder | Productivity App for iOS & Android</title>
-  <meta name="description" content="Dovilo App turns your to-do list into a thriving city. Complete tasks, stay focused with Pomodoro timers, earn rewards, and build an isometric town. Free gamified productivity app for iOS & Android.">
+  <meta name="description" content="Dovilo App turns your to-do list into a thriving city. Complete tasks, stay focused with Pomodoro timers, earn rewards, and build an isometric town. Free gamified productivity app for iOS, Android, Windows & Mac.">
   <meta name="keywords" content="to do list app, todo app, focus timer, pomodoro timer, productivity app, gamified productivity, city builder, task manager, habit tracker, focus app, study timer, concentration app, gamification, dovilo, to-do list gamification, build city from tasks, reward system productivity, iOS productivity app, Android productivity app, free to do app, best productivity app 2026, focus timer app, task management gamified, gamified to do list, productivity game">
   <meta name="author" content="Dovilo App">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -16,7 +16,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dovilo.app/">
   <meta property="og:title" content="Dovilo App — Gamified To-Do List, Focus Timer & City Builder">
-  <meta property="og:description" content="Turn your tasks into a thriving city. Complete to-dos, stay focused with Pomodoro timers, earn coins, and build your own isometric town. Free for iOS & Android.">
+  <meta property="og:description" content="Turn your tasks into a thriving city. Complete to-dos, stay focused with Pomodoro timers, earn coins, and build your own isometric town. Free for iOS & Android. Desktop app for Pro.">
   <meta property="og:image" content="https://dovilo.app/hero.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -57,7 +57,7 @@
     "description": "Dovilo App is a gamified productivity app that turns your to-do list into a thriving isometric city. Complete tasks, use Pomodoro-style focus timers, earn coins, and build buildings. A unique blend of task management, focus sessions, and city building.",
     "applicationCategory": "ProductivityApplication",
     "applicationSubCategory": "Task Management",
-    "operatingSystem": ["iOS", "Android"],
+    "operatingSystem": ["iOS", "Android", "Windows", "macOS"],
     "offers": [
       {
         "@type": "Offer",
@@ -97,6 +97,7 @@
       "Available in 5 languages: English, Turkish, Spanish, French, German",
       "Offline-first — works without internet",
       "Cloud sync across devices",
+      "Desktop app for Windows and Mac (Pro)",
       "No ads in free or paid tiers"
     ],
     "screenshot": "https://dovilo.app/ss.jpg",
@@ -170,7 +171,7 @@
         "name": "What is Dovilo App?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Dovilo App is a gamified productivity app that combines a to-do list, Pomodoro focus timer, and isometric city builder. Complete your tasks and focus sessions to earn coins and build a thriving virtual city. Available free on iOS and Android."
+          "text": "Dovilo App is a gamified productivity app that combines a to-do list, Pomodoro focus timer, and isometric city builder. Complete your tasks and focus sessions to earn coins and build a thriving virtual city. Available free on iOS and Android, with a desktop app for Windows and Mac (Pro subscription required)."
         }
       },
       {
@@ -178,7 +179,7 @@
         "name": "Is Dovilo App free?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, Dovilo App is free to use with full to-do management, unlimited focus sessions, basic city building, and no ads. Pro unlocks cloud sync, all buildings and decorations, advanced statistics, and custom themes starting at $2.49/month."
+          "text": "Yes, Dovilo App is free to use with full to-do management, unlimited focus sessions, basic city building, and no ads. Pro unlocks cloud sync, desktop app access (Windows &amp; Mac), all buildings and decorations, advanced statistics, and custom themes starting at $2.49/month."
         }
       },
       {
@@ -588,6 +589,31 @@
       font-size:1rem;font-weight:700;letter-spacing:-.01em;
     }
 
+    .download-desktop-label{
+      font-size:1.125rem;font-weight:600;
+      color:var(--fg);margin-top:48px;margin-bottom:4px;
+      display:flex;align-items:center;justify-content:center;gap:10px;
+    }
+    .download-desktop-note{
+      font-size:.8125rem;color:rgba(240,253,240,.35);margin-bottom:24px;
+    }
+    .pro-tag{
+      display:inline-block;
+      font-size:.625rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+      padding:3px 10px;border-radius:100px;
+      background:var(--accent);color:var(--bg);
+      vertical-align:middle;
+    }
+    .desktop-btn{
+      background:var(--dim2);color:var(--fg);
+      border:1px solid var(--dim);
+    }
+    .desktop-btn:hover{
+      background:var(--dim);
+      border-color:rgba(240,253,250,.25);
+    }
+    .desktop-btn svg{fill:var(--fg)}
+
     /* ─── FAQ ─── */
     .faq{
       padding:64px clamp(24px,5vw,64px) 64px;
@@ -773,10 +799,10 @@
       <li><a href="#download" onclick="closeMenu()">Download</a></li>
     </ul>
     <div class="nav-stores">
-      <a href="#" class="nav-store-link" aria-label="App Store" title="App Store">
+      <a href="https://apps.apple.com/app/dovilo/id6761195015?ct=website_nav&mt=8" class="nav-store-link" aria-label="App Store" title="App Store">
         <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
       </a>
-      <a href="#" class="nav-store-link" aria-label="Google Play" title="Google Play">
+      <a href="https://play.google.com/store/apps/details?id=com.dovilo.app&utm_source=website&utm_medium=nav" class="nav-store-link" aria-label="Google Play" title="Google Play">
         <svg viewBox="0 0 24 24"><path d="M3.61 1.814L13.793 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .61-.92zM14.5 12.707l2.55 2.55-8.27 4.698 5.72-7.248zm4.89-2.29l1.81 1.028a.998.998 0 0 1 0 1.73L19.4 14.2l-2.83-2.2 2.82-2.283zM8.78 2.045l8.27 4.698-2.55 2.55-5.72-7.248z"/></svg>
       </a>
       <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
@@ -799,11 +825,11 @@
           and watch your productivity skyline rise.
         </p>
         <div class="cta-group">
-          <a href="#" class="store-btn-sm" aria-label="App Store">
+          <a href="https://apps.apple.com/app/dovilo/id6761195015?ct=website_hero&mt=8" class="store-btn-sm" aria-label="App Store">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
             <div class="store-btn-text"><small>Download on the</small><strong>App Store</strong></div>
           </a>
-          <a href="#" class="store-btn-sm" aria-label="Google Play">
+          <a href="https://play.google.com/store/apps/details?id=com.dovilo.app&utm_source=website&utm_medium=hero" class="store-btn-sm" aria-label="Google Play">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.61 1.814L13.793 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .61-.92zM14.5 12.707l2.55 2.55-8.27 4.698 5.72-7.248zm4.89-2.29l1.81 1.028a.998.998 0 0 1 0 1.73L19.4 14.2l-2.83-2.2 2.82-2.283zM8.78 2.045l8.27 4.698-2.55 2.55-5.72-7.248z"/></svg>
             <div class="store-btn-text"><small>Get it on</small><strong>Google Play</strong></div>
           </a>
@@ -931,6 +957,7 @@
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>No ads, ever</li>
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Unlimited tasks &amp; categories</li>
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Cloud sync across devices</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Desktop app (Windows &amp; Mac)</li>
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Smart notification management</li>
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Advanced focus interface</li>
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>All buildings &amp; decorations &amp; upgrades</li>
@@ -967,7 +994,7 @@
     </div>
 
     <div style="text-align:center;margin-top:40px">
-      <a href="#download" class="btn btn-primary" style="padding:16px 48px;font-size:1rem">
+      <a href="/downloads" class="btn btn-primary" style="padding:16px 48px;font-size:1rem">
         Download &amp; Subscribe
       </a>
     </div>
@@ -1036,23 +1063,43 @@
   </section>
 
   <!-- DOWNLOAD -->
-  <section class="download" id="download" aria-label="Download Dovilo App for iOS and Android">
+  <section class="download" id="download" aria-label="Download Dovilo App for iOS, Android, Windows and Mac">
     <p class="section-label">Download</p>
     <h2 class="section-title">Get Dovilo App on your device</h2>
-    <p class="download-sub">Available on iOS and Android. Free to start.</p>
+
+    <p class="download-sub">Available on iOS, Android, Windows &amp; Mac. Free to start.</p>
     <div class="store-buttons">
-      <a href="#" class="store-btn" aria-label="Download on the App Store">
+      <a href="https://apps.apple.com/app/dovilo/id6761195015?ct=website_download&mt=8" class="store-btn" aria-label="Download on the App Store">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
         <div class="store-btn-text">
           <small>Download on the</small>
           <strong>App Store</strong>
         </div>
       </a>
-      <a href="#" class="store-btn" aria-label="Get it on Google Play">
+      <a href="https://play.google.com/store/apps/details?id=com.dovilo.app&utm_source=website&utm_medium=download" class="store-btn" aria-label="Get it on Google Play">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.61 1.814L13.793 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .61-.92zM14.5 12.707l2.55 2.55-8.27 4.698 5.72-7.248zm4.89-2.29l1.81 1.028a.998.998 0 0 1 0 1.73L19.4 14.2l-2.83-2.2 2.82-2.283zM8.78 2.045l8.27 4.698-2.55 2.55-5.72-7.248z"/></svg>
         <div class="store-btn-text">
           <small>Get it on</small>
           <strong>Google Play</strong>
+        </div>
+      </a>
+    </div>
+
+    <p class="download-desktop-label">Desktop App <span class="pro-tag">Pro</span></p>
+    <p class="download-desktop-note">Requires an active Pro subscription</p>
+    <div class="store-buttons">
+      <a href="https://github.com/slhddn/dovilo-desktop-releases/releases/latest/download/Dovilo-Setup.exe?source=website_download" class="store-btn desktop-btn" aria-label="Download for Windows">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+        <div class="store-btn-text">
+          <small>Download for</small>
+          <strong>Windows</strong>
+        </div>
+      </a>
+      <a href="https://github.com/slhddn/dovilo-desktop-releases/releases/latest/download/Dovilo.dmg?source=website_download" class="store-btn desktop-btn" aria-label="Download for Mac">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <div class="store-btn-text">
+          <small>Download for</small>
+          <strong>Mac</strong>
         </div>
       </a>
     </div>
@@ -1082,10 +1129,10 @@
     <p>Dovilo App is perfect for <strong>students</strong> who need a fun study companion, <strong>professionals</strong> who want to gamify their workflow, <strong>freelancers</strong> managing multiple projects, and anyone who struggles with <strong>procrastination</strong> or staying focused. If you've been looking for a productivity app that feels rewarding rather than repetitive, Dovilo App is designed for you.</p>
 
     <h3>Pricing</h3>
-    <p>Dovilo App is <strong>free to download and use</strong>. The free tier includes full task management, unlimited focus sessions, basic city building, and zero ads. <strong>Dovilo Pro</strong> unlocks cloud sync, all buildings and decorations, advanced statistics, custom themes, and priority support — available as Monthly ($2.49), Yearly ($19.99, best value), or Lifetime ($49.99).</p>
+    <p>Dovilo App is <strong>free to download and use</strong>. The free tier includes full task management, unlimited focus sessions, basic city building, and zero ads. <strong>Dovilo Pro</strong> unlocks cloud sync, desktop app access (Windows &amp; Mac), all buildings and decorations, advanced statistics, custom themes, and priority support — available as Monthly ($2.49), Yearly ($19.99, best value), or Lifetime ($49.99).</p>
 
     <h3>Download</h3>
-    <p>Dovilo App is available on the <strong>Apple App Store</strong> for iPhone and iPad, and on <strong>Google Play</strong> for Android devices. Download for free and start building your productivity city today.</p>
+    <p>Dovilo App is available on the <strong>Apple App Store</strong> for iPhone and iPad, on <strong>Google Play</strong> for Android devices, and as a <strong>desktop app for Windows and Mac</strong> (Pro subscription required). Download for free on mobile and start building your productivity city today.</p>
   </section>
 
   </main>
