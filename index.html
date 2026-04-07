@@ -694,11 +694,14 @@
     .footer-socials svg{width:16px;height:16px;fill:rgba(240,253,250,.45)}
     .footer-socials a:hover svg{fill:var(--fg)}
     .footer-links{display:flex;gap:24px;list-style:none}
+    .footer-links a,
     .footer-links button{
       background:none;border:none;cursor:pointer;
+      text-decoration:none;
       color:rgba(240,253,250,.4);font-size:.8125rem;
       font-family:inherit;transition:color .2s;
     }
+    .footer-links a:hover,
     .footer-links button:hover{color:var(--fg)}
 
     /* ─── MODAL ─── */
@@ -1153,8 +1156,8 @@
     </ul>
     <ul class="footer-links">
       <li><button onclick="openModal('about')">About</button></li>
-      <li><button onclick="openModal('terms')">Terms of Service</button></li>
-      <li><button onclick="openModal('privacy')">Privacy Policy</button></li>
+      <li><a href="/terms">Terms of Service</a></li>
+      <li><a href="/privacy">Privacy Policy</a></li>
     </ul>
   </footer>
 
@@ -1165,101 +1168,6 @@
       <h2>The Philosophy of Dovilo App</h2>
       <p>Dovilo App isn't just another to-do list; it's a living blueprint of your achievements. We believe that productivity shouldn't feel like a chore — it should feel like progress you can see.</p>
       <p>Our mission is to bridge the gap between abstract goals and tangible results. By turning your focus hours into bricks and your completed tasks into skyscrapers, we provide a visual sanctuary for your hard work. Whether you are a student, a creative, or a professional, Dovilo App helps you step into the "Mayor's Office" of your life and build the future you've always envisioned, one task at a time.</p>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="modal-terms">
-    <div class="modal">
-      <button class="modal-close" onclick="closeModals()">&times;</button>
-      <h2>Terms of Service</h2>
-      <p><em>Last updated: March 2026</em></p>
-
-      <p><strong>The Rules of the City</strong></p>
-      <p>Welcome to Dovilo App. By downloading, installing, or using Dovilo App ("the App"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use the App.</p>
-
-      <p><strong>1. Usage</strong></p>
-      <p>Dovilo App is provided as a productivity and gamification tool. You may use the App for personal, non-commercial purposes. You are solely responsible for the content of the tasks, notes, and data you create within the App. You agree not to use the App for any unlawful purpose or in any way that could damage, disable, or impair the service.</p>
-
-      <p><strong>2. Account &amp; Authentication</strong></p>
-      <p>You may use Dovilo App without creating an account. If you choose to enable cloud sync, you will authenticate via Google Sign-In or Apple Sign-In. You are responsible for maintaining the security of your account credentials and for all activity that occurs under your account.</p>
-
-      <p><strong>3. Subscriptions (Pro License)</strong></p>
-      <p>Dovilo App offers a free tier and a Pro subscription with enhanced features. Pro is available as a monthly ($2.49/month), yearly ($19.99/year), or lifetime ($49.99 one-time) purchase. All payments are processed through the Apple App Store or Google Play Store. Subscription terms, including auto-renewal, cancellation, and refund policies, are governed by the respective store's terms. We do not handle payment information directly.</p>
-
-      <p><strong>4. Data Integrity &amp; Backups</strong></p>
-      <p>While we offer cloud sync via Firebase to keep your data accessible across devices, we do not guarantee against data loss. Users are encouraged to maintain their own backups of critical task information. Dovilo App is provided on an "as is" basis without warranties of any kind, express or implied, including but not limited to warranties of merchantability or fitness for a particular purpose.</p>
-
-      <p><strong>5. Intellectual Property</strong></p>
-      <p>All content, design, graphics, code, and assets within Dovilo App are the intellectual property of Dovilo App and are protected by applicable copyright and trademark laws. You may not copy, modify, distribute, or reverse-engineer any part of the App.</p>
-
-      <p><strong>6. Limitation of Liability</strong></p>
-      <p>To the maximum extent permitted by law, Dovilo App shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the App, including but not limited to loss of data, loss of productivity, or inability to access the service.</p>
-
-      <p><strong>7. Termination</strong></p>
-      <p>We reserve the right to suspend or terminate your access to the App if you violate these Terms. You may delete your account at any time through the App settings. Upon deletion, your cloud-synced data will be permanently removed within 30 days.</p>
-
-      <p><strong>8. Modifications</strong></p>
-      <p>We reserve the right to update these Terms, app features, and subscription models at any time to ensure the best experience for our citizens. Changes will be communicated through the App or on our website. Continued use of Dovilo App after modifications constitutes acceptance of the updated Terms.</p>
-
-      <p><strong>9. Governing Law</strong></p>
-      <p>These Terms are governed by and construed in accordance with applicable laws. Any disputes arising from these Terms or your use of the App shall be resolved in the appropriate courts of jurisdiction.</p>
-
-      <p><strong>10. Contact</strong></p>
-      <p>If you have any questions about these Terms, please contact us at support@dovilo.app.</p>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="modal-privacy">
-    <div class="modal">
-      <button class="modal-close" onclick="closeModals()">&times;</button>
-      <h2>Privacy Policy</h2>
-      <p><em>Last updated: March 2026</em></p>
-
-      <p><strong>Your Privacy is Our Priority</strong></p>
-      <p>Dovilo App ("we", "our", "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our mobile application.</p>
-
-      <p><strong>1. Data Collection</strong></p>
-      <p>By default, Dovilo App stores all your tasks, city progress, focus session data, and app preferences locally on your device. During this anonymous phase, no personal data is collected, transmitted, or stored on external servers. You can use Dovilo App fully offline without ever sharing any information.</p>
-
-      <p><strong>2. Cloud Sync &amp; Authentication</strong></p>
-      <p>If you choose to enable cloud sync, we use Firebase Authentication to verify your identity via Google Sign-In or Apple Sign-In. In this case, the following data is stored securely on Firebase servers:</p>
-      <p>— Your unique User ID (generated by Firebase)<br>
-      — Your task and city progress data<br>
-      — App preferences and settings</p>
-      <p>We do not store your email address, password, or any other personal information beyond what is required for authentication. All data is encrypted in transit (TLS) and at rest on Firebase servers.</p>
-
-      <p><strong>3. Analytics</strong></p>
-      <p>To improve Dovilo App and understand how features are used, we use Firebase Analytics. This service collects aggregated, anonymized usage data such as feature engagement, session duration, and app performance metrics. This data does not identify you personally and is used solely for product improvement.</p>
-
-      <p><strong>4. Subscription Management</strong></p>
-      <p>We use RevenueCat to manage in-app subscriptions and purchases. RevenueCat processes transaction data provided by Apple App Store and Google Play Store. We do not have access to your payment details (credit card numbers, billing addresses, etc.). RevenueCat's privacy practices comply with GDPR and CCPA standards.</p>
-
-      <p><strong>5. Third-Party Services</strong></p>
-      <p>Dovilo App integrates with the following third-party services, each compliant with global privacy standards:</p>
-      <p>— Firebase (Google) — Authentication, cloud database, analytics<br>
-      — RevenueCat — Subscription and purchase management<br>
-      — Apple / Google — Sign-in providers and app distribution</p>
-      <p>We do not sell, rent, or share your personal data with any other third parties.</p>
-
-      <p><strong>6. Data Retention</strong></p>
-      <p>Local data remains on your device until you delete the app. Cloud-synced data is retained as long as your account is active. If you delete your account, all associated data is permanently removed from our servers within 30 days.</p>
-
-      <p><strong>7. Your Rights</strong></p>
-      <p>You have the right to:</p>
-      <p>— Access your data at any time through the app<br>
-      — Export your data from the app settings<br>
-      — Delete your account and all associated data from Settings &gt; Delete Account<br>
-      — Opt out of analytics by disabling it in app settings</p>
-      <p>If you are located in the EU, you also have rights under GDPR including the right to rectification, restriction of processing, and the right to lodge a complaint with a supervisory authority.</p>
-
-      <p><strong>8. Children's Privacy</strong></p>
-      <p>Dovilo App is not directed at children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal data, please contact us so we can delete it.</p>
-
-      <p><strong>9. Changes to This Policy</strong></p>
-      <p>We may update this Privacy Policy from time to time. Any changes will be posted within the app and on this page. Continued use of Dovilo App after changes constitutes acceptance of the updated policy.</p>
-
-      <p><strong>10. Contact</strong></p>
-      <p>If you have any questions about this Privacy Policy, please contact us at support@dovilo.app.</p>
     </div>
   </div>
 
