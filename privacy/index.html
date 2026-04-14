@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy — Dovilo</title>
-  <meta name="description" content="Dovilo Privacy Policy. Learn how we handle your data, what we collect, and your rights.">
+  <meta name="description" content="Dovilo Privacy Policy. Learn how we handle your data, what we collect, MCP/AI agent data handling, and your rights.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://dovilo.app/privacy">
   <link rel="icon" href="../favicon.ico" type="image/x-icon">
@@ -28,7 +28,7 @@
   <div class="container">
     <a href="/" class="back">&larr; Dovilo</a>
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: March 2026</p>
+    <p class="updated">Last updated: April 2026</p>
 
     <p><strong>Your Privacy is Our Priority</strong></p>
     <p>Dovilo ("we", "our", "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our mobile application.</p>
@@ -60,10 +60,21 @@
     </ul>
     <p>We do not sell, rent, or share your personal data with any other third parties.</p>
 
-    <h2>6. Data Retention</h2>
+    <h2>6. MCP Server &amp; AI Agent Integration (Desktop Pro)</h2>
+    <p>Dovilo Desktop includes an optional <strong>Model Context Protocol (MCP)</strong> server that lets external AI agents (e.g. Cursor, Claude Code) interact with your tasks. Important privacy points:</p>
+    <ul>
+      <li>The MCP server runs <strong>entirely locally</strong> on your machine. It listens only on a local port and is off by default — you must explicitly enable it.</li>
+      <li>Dovilo does not transmit your tasks, notes, or MCP traffic to our servers or any third party. Once enabled, only clients you connect to the local endpoint can read data.</li>
+      <li>Authentication is done with a locally generated API key; it never leaves your device unless you copy it into your MCP client.</li>
+      <li>Agents can only <strong>read and update</strong> tasks and steps you've allowed via Dovilo's per-task agent filter. Agents cannot create tasks or access data outside that filter.</li>
+      <li>Any information the agent itself sends to its own model provider (OpenAI, Anthropic, etc.) is governed by that provider's privacy policy — not ours.</li>
+    </ul>
+    <p>You can disable the MCP server at any time from Dovilo Desktop settings; this immediately terminates any open agent connections.</p>
+
+    <h2>7. Data Retention</h2>
     <p>Local data remains on your device until you delete the app. Cloud-synced data is retained as long as your account is active. If you delete your account, all associated data is permanently removed from our servers within 30 days.</p>
 
-    <h2>7. Your Rights</h2>
+    <h2>8. Your Rights</h2>
     <p>You have the right to:</p>
     <ul>
       <li>Access your data at any time through the app</li>
@@ -73,13 +84,13 @@
     </ul>
     <p>If you are located in the EU, you also have rights under GDPR including the right to rectification, restriction of processing, and the right to lodge a complaint with a supervisory authority.</p>
 
-    <h2>8. Children's Privacy</h2>
+    <h2>9. Children's Privacy</h2>
     <p>Dovilo is not directed at children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal data, please contact us so we can delete it.</p>
 
-    <h2>9. Changes to This Policy</h2>
+    <h2>10. Changes to This Policy</h2>
     <p>We may update this Privacy Policy from time to time. Any changes will be posted within the app and on this page. Continued use of Dovilo after changes constitutes acceptance of the updated policy.</p>
 
-    <h2>10. Contact</h2>
+    <h2>11. Contact</h2>
     <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:support@dovilo.app">support@dovilo.app</a>.</p>
   </div>
 </body>

@@ -183,6 +183,59 @@
       </div>
     </div>
 
+    <!-- AI Agents & MCP -->
+    <div class="faq-section-title">AI Agents &amp; MCP</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <h3>What is Dovilo's MCP integration?</h3>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Dovilo Desktop (Pro) ships with a built-in <strong>Model Context Protocol</strong> server that runs locally on your machine. Any MCP-compatible client — Cursor, Claude Code, and others — can connect and call Dovilo's exposed tools: <code>list_tasks</code>, <code>get_task</code>, <code>update_task_status</code>, <code>update_step_status</code>, and <code>add_agent_note</code>. Agents can only read and update; they cannot create tasks.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <h3>How do I connect Cursor or Claude Code?</h3>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Open Dovilo Desktop, toggle the MCP server on, and copy the generated API key. Paste the provided <code>dovilo-mcp.json</code> snippet into your client's config (e.g. <code>~/.cursor/mcp.json</code>). On next launch, your agent will see Dovilo as an available MCP server and can begin working on the tasks you've allowed.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <h3>Can agents create or modify tasks I didn't authorize?</h3>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>No. The MCP tool surface intentionally excludes task creation — agents can only read, update status, mark steps, and leave notes. You decide exactly which tasks an agent sees using Dovilo's per-task agent filter. Disabling the MCP server in Desktop settings immediately terminates every active agent connection.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <h3>Does the MCP integration send my data to the cloud?</h3>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>No. The MCP server runs entirely on your device and listens only on a local port. Dovilo itself doesn't transmit MCP traffic anywhere. The only external data flow is what your agent chooses to send to <em>its own</em> model provider (e.g. OpenAI, Anthropic) — that's governed by the agent and model provider's privacy policies, not ours.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <h3>Do I get notified when an agent works on my task?</h3>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Yes. You can choose between two notification modes: <strong>every step</strong> (each progress update the agent pushes) or <strong>start / finish / error only</strong> (quieter, summary-style). Agent notes are saved to the task and visible from the mobile app, so you can check in from anywhere.</p>
+      </div>
+    </div>
+
     <!-- Data & Privacy -->
     <div class="faq-section-title">Data &amp; Privacy</div>
 

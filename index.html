@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Primary Meta -->
-  <title>Dovilo — Gamified To-Do List, Focus Timer & City Builder | Productivity App for iOS & Android</title>
-  <meta name="description" content="Dovilo turns your to-do list into a thriving city. Complete tasks, stay focused with Pomodoro timers, earn rewards, and build an isometric town. Free gamified productivity app for iOS, Android, Windows & Mac.">
-  <meta name="keywords" content="to do list app, todo app, focus timer, pomodoro timer, productivity app, gamified productivity, city builder, task manager, habit tracker, focus app, study timer, concentration app, gamification, dovilo, to-do list gamification, build city from tasks, reward system productivity, iOS productivity app, Android productivity app, free to do app, best productivity app 2026, focus timer app, task management gamified, gamified to do list, productivity game">
+  <title>Dovilo — Agent-Ready To-Do List with MCP, Focus Timer & City Builder</title>
+  <meta name="description" content="Dovilo turns your to-do list into a thriving city. Complete tasks, stay focused with Pomodoro timers, earn rewards, and build an isometric town. Ships with a built-in MCP server — let Cursor, Claude Code, and AI agents read and update your tasks. Free for iOS, Android, Windows & Mac.">
+  <meta name="keywords" content="MCP to do list, agent-native task manager, AI agent productivity, Model Context Protocol, Cursor MCP, Claude Code MCP, MCP server desktop, AI task manager, to do list app, todo app, focus timer, pomodoro timer, productivity app, gamified productivity, city builder, task manager, habit tracker, focus app, study timer, concentration app, gamification, dovilo, to-do list gamification, build city from tasks, reward system productivity, iOS productivity app, Android productivity app, free to do app, best productivity app 2026, focus timer app, task management gamified, gamified to do list, productivity game">
   <meta name="author" content="Dovilo">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://dovilo.app/">
@@ -15,8 +15,8 @@
   <!-- Open Graph / Facebook / LinkedIn -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dovilo.app/">
-  <meta property="og:title" content="Dovilo — Gamified To-Do List, Focus Timer & City Builder">
-  <meta property="og:description" content="Turn your tasks into a thriving city. Complete to-dos, stay focused with Pomodoro timers, earn coins, and build your own isometric town. Free for iOS & Android. Desktop app for Pro.">
+  <meta property="og:title" content="Dovilo — Agent-Ready To-Do with MCP, Focus Timer & City Builder">
+  <meta property="og:description" content="Turn your tasks into a thriving city — and let AI agents help. Dovilo Desktop runs a built-in MCP server for Cursor, Claude Code, and more. Free for iOS & Android.">
   <meta property="og:image" content="https://dovilo.app/hero.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -28,8 +28,8 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@doviloapp">
   <meta name="twitter:creator" content="@doviloapp">
-  <meta name="twitter:title" content="Dovilo — Gamified To-Do List, Focus Timer & City Builder">
-  <meta name="twitter:description" content="Turn your tasks into a thriving city. Complete to-dos, stay focused, earn rewards, and build an isometric town. Free for iOS & Android.">
+  <meta name="twitter:title" content="Dovilo — Agent-Ready To-Do with MCP, Focus Timer & City Builder">
+  <meta name="twitter:description" content="Turn your tasks into a thriving city — and let AI agents help via MCP. Works with Cursor, Claude Code, and any MCP client. Free for iOS & Android.">
   <meta name="twitter:image" content="https://dovilo.app/hero.jpg">
   <meta name="twitter:image:alt" content="Dovilo — gamified productivity with city building">
 
@@ -54,7 +54,7 @@
     "@type": "SoftwareApplication",
     "name": "Dovilo",
     "alternateName": ["Dovilo", "Dovilo To-Do", "Dovilo Focus Timer"],
-    "description": "Dovilo is a gamified productivity app that turns your to-do list into a thriving isometric city. Complete tasks, use Pomodoro-style focus timers, earn coins, and build buildings. A unique blend of task management, focus sessions, and city building.",
+    "description": "Dovilo is an agent-ready, gamified productivity app that turns your to-do list into a thriving isometric city. Complete tasks, use Pomodoro-style focus timers, earn coins, and build buildings. Dovilo Desktop ships with a built-in MCP (Model Context Protocol) server, so AI agents like Cursor and Claude Code can read your tasks, update status, and leave notes while you stay in control.",
     "applicationCategory": "ProductivityApplication",
     "applicationSubCategory": "Task Management",
     "operatingSystem": ["iOS", "Android", "Windows", "macOS"],
@@ -93,6 +93,10 @@
       "Pomodoro-style focus timer with deep work sessions",
       "Isometric city builder — completed tasks become buildings",
       "Reward market with coins, buildings, and decorations",
+      "Agent-ready: built-in MCP (Model Context Protocol) server on Desktop",
+      "Works with Cursor, Claude Code, and any MCP-compatible client",
+      "Step-level progress updates from agents with configurable notifications",
+      "Per-task agent filter — you decide what agents can see",
       "Dark and light themes",
       "Available in 5 languages: English, Turkish, Spanish, French, German",
       "Offline-first — works without internet",
@@ -204,6 +208,22 @@
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Yes, Dovilo is offline-first. All your tasks, focus sessions, and city progress are stored locally on your device. Cloud sync is an optional Pro feature for keeping data across multiple devices."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Dovilo's MCP integration?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Dovilo Desktop (Pro) ships with a built-in Model Context Protocol (MCP) server that runs locally on your machine — no cloud, no external data. You can toggle it on from the desktop app, and MCP clients like Cursor and Claude Code can then list tasks, read details, update status, track steps, and leave agent notes. Agents cannot create tasks; they only read, update, and annotate what you've allowed through a per-task filter."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Dovilo work with Cursor and Claude Code?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Dovilo Desktop is an MCP host, so any MCP-compatible client — including Cursor and Claude Code — can connect with a single dovilo-mcp.json config and API key from the desktop app. Once connected, the agent can pick up tasks you've allowed, update progress step-by-step, and leave notes you see on mobile."
         }
       }
     ]
@@ -370,15 +390,37 @@
     @media (prefers-reduced-motion:reduce){
       .hero-phone.left,.hero-phone.center,.hero-phone.right{animation:none}
     }
+    .badges{
+      display:flex;flex-wrap:wrap;gap:8px;
+      margin-bottom:32px;
+      align-items:center;
+    }
     .badge{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:6px 16px;border-radius:100px;
+      display:inline-flex;align-items:center;gap:7px;
+      padding:6px 14px;border-radius:100px;
       background:var(--dim);
       font-size:.8125rem;font-weight:500;color:var(--muted);
-      margin-bottom:32px;letter-spacing:.02em;
+      letter-spacing:.02em;
+      text-decoration:none;
+      white-space:nowrap;
     }
     .badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);
       animation:pulse 2s ease-in-out infinite}
+    .badge-link{
+      background:linear-gradient(135deg,rgba(var(--accent-rgb),.18),rgba(var(--accent-rgb),.08));
+      border:1px solid rgba(var(--accent-rgb),.35);
+      color:var(--accent);
+      cursor:pointer;
+      transition:transform .2s ease,background .25s ease,border-color .25s ease,box-shadow .25s ease;
+    }
+    .badge-link::before{display:none}
+    .badge-link svg{stroke:var(--accent);animation:pulse 2.2s ease-in-out infinite;transform-origin:center}
+    .badge-link:hover{
+      transform:translateY(-1px);
+      background:linear-gradient(135deg,rgba(var(--accent-rgb),.26),rgba(var(--accent-rgb),.14));
+      border-color:rgba(var(--accent-rgb),.55);
+      box-shadow:0 8px 24px -8px rgba(var(--accent-rgb),.45);
+    }
     @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 
     h1{
@@ -458,6 +500,126 @@
       color:var(--fg);
       font-weight:500;
       margin:0;
+    }
+
+    /* ─── AI AGENTS ─── */
+    .ai-section{
+      padding:80px clamp(24px,5vw,64px);
+      max-width:var(--max);margin:0 auto;
+      position:relative;
+    }
+    .ai-inner{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:clamp(32px,5vw,64px);
+      align-items:center;
+    }
+    .ai-copy h2{
+      font-size:clamp(1.75rem,3.5vw,2.5rem);
+      font-weight:700;letter-spacing:-.02em;
+      margin-bottom:16px;
+    }
+    .ai-copy h2 em{
+      font-style:normal;color:var(--accent);
+    }
+    .ai-lead{
+      font-size:1rem;color:rgba(var(--fg-rgb),.6);
+      line-height:1.7;margin-bottom:28px;
+    }
+    .ai-points{list-style:none;padding:0;margin:0 0 28px}
+    .ai-points li{
+      display:flex;gap:12px;align-items:flex-start;
+      padding:10px 0;
+      font-size:.9375rem;color:rgba(var(--fg-rgb),.75);
+    }
+    .ai-points svg{
+      width:20px;height:20px;flex-shrink:0;margin-top:2px;
+      stroke:var(--accent);fill:none;stroke-width:2;
+      stroke-linecap:round;stroke-linejoin:round;
+    }
+    .ai-points li strong{color:var(--fg);font-weight:600}
+    .ai-clients{
+      display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+      padding-top:20px;border-top:1px solid var(--dim2);
+    }
+    .ai-clients-label{
+      font-size:.75rem;font-weight:600;letter-spacing:.08em;
+      text-transform:uppercase;color:rgba(var(--fg-rgb),.4);
+      margin-right:4px;
+    }
+    .ai-chip{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 12px;border-radius:100px;
+      background:var(--dim2);border:1px solid var(--dim2);
+      font-size:.8125rem;font-weight:500;color:rgba(var(--fg-rgb),.8);
+    }
+    .ai-chip svg{width:14px;height:14px;stroke:var(--accent);fill:none;stroke-width:2}
+
+    /* Code terminal */
+    .ai-demo{
+      position:relative;
+    }
+    .code-block{
+      background:#0c1012;
+      border:1px solid var(--dim);
+      border-radius:14px;
+      box-shadow:0 20px 50px -15px rgba(0,0,0,.5),0 0 0 1px rgba(var(--accent-rgb),.08);
+      overflow:hidden;
+      font-family:'SF Mono',ui-monospace,Menlo,Monaco,Consolas,monospace;
+      font-size:.8125rem;
+      line-height:1.7;
+    }
+    .code-head{
+      display:flex;align-items:center;gap:8px;
+      padding:10px 14px;
+      background:linear-gradient(180deg,#15191b,#0f1214);
+      border-bottom:1px solid var(--dim2);
+    }
+    .code-dot{width:10px;height:10px;border-radius:50%}
+    .code-dot.r{background:#ff5f57}
+    .code-dot.y{background:#febc2e}
+    .code-dot.g{background:#28c840}
+    .code-title{
+      flex:1;text-align:center;
+      font-size:.75rem;color:rgba(var(--fg-rgb),.4);
+      margin-right:44px;
+    }
+    .code-body{
+      padding:18px 20px;
+      color:rgba(var(--fg-rgb),.8);
+      white-space:pre-wrap;word-break:break-word;
+    }
+    .code-body .k{color:var(--accent)}
+    .code-body .s{color:#7dd3a7}
+    .code-body .c{color:rgba(var(--fg-rgb),.35);font-style:italic}
+    .code-body .p{color:rgba(var(--fg-rgb),.5)}
+    .code-tools{
+      margin-top:16px;
+      display:flex;flex-wrap:wrap;gap:6px;
+      font-family:inherit;
+    }
+    .code-tools .tool{
+      font-family:'SF Mono',ui-monospace,Menlo,Monaco,Consolas,monospace;
+      font-size:.75rem;
+      padding:4px 10px;border-radius:6px;
+      background:rgba(var(--accent-rgb),.12);
+      color:var(--muted);
+      border:1px solid rgba(var(--accent-rgb),.2);
+    }
+    .ai-footer-note{
+      margin-top:20px;font-size:.8125rem;
+      color:rgba(var(--fg-rgb),.45);
+      display:flex;align-items:center;gap:8px;
+    }
+    .ai-footer-note .pro-pill{
+      font-size:.6875rem;font-weight:700;letter-spacing:.06em;
+      background:var(--accent);color:#161B1D;
+      padding:2px 8px;border-radius:100px;
+    }
+
+    @media(max-width:860px){
+      .ai-inner{grid-template-columns:1fr}
+      .ai-demo{order:-1}
     }
 
     /* ─── SHOWCASE ─── */
@@ -1036,6 +1198,7 @@
     <a href="#" class="logo"><img src="notify-icon.png" alt="Dovilo icon">Dovilo<span class="logo-subtitle">&nbsp;— Focus, Build &amp; To-Do</span></a>
     <ul id="nav-menu">
       <li><a href="#features" onclick="closeMenu()">Features</a></li>
+      <li><a href="#agents" onclick="closeMenu()">AI Agents</a></li>
       <li><a href="#pricing" onclick="closeMenu()">Pricing</a></li>
       <li><a href="#download" onclick="closeMenu()">Download</a></li>
     </ul>
@@ -1059,7 +1222,13 @@
   <section class="hero" aria-label="Hero — Dovilo gamified productivity">
     <div class="hero-inner">
       <div class="hero-content">
-        <div class="badge">Productivity, gamified</div>
+        <div class="badges">
+          <span class="badge">Productivity, gamified</span>
+          <a href="#agents" class="badge badge-link" aria-label="Learn about AI agent integration">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+            Agent-ready · MCP
+          </a>
+        </div>
         <h1>Dovilo: Focus, Build <em>&amp;</em> To-Do</h1>
         <p class="subtitle">
           Turn your tasks into a thriving city. Stay focused, get rewarded,
@@ -1141,6 +1310,15 @@
 
       <div class="feature-card">
         <div class="feature-icon">
+          <!-- bar-chart / stats -->
+          <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 16V10M12 16V6M17 16v-4"/></svg>
+        </div>
+        <h3>Track Progress</h3>
+        <p>Completion rate, best days, streaks, and monthly trends. See what's working and double down on it.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
           <!-- moon/sun -->
           <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </div>
@@ -1157,6 +1335,91 @@
         <p>Available in English, Turkish, Spanish, French, and German. Your language, your way.</p>
       </div>
 
+      <div class="feature-card">
+        <div class="feature-icon">
+          <!-- cpu / agent -->
+          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
+        </div>
+        <h3>Agent-Ready (MCP)</h3>
+        <p>Built-in MCP server on Desktop. Let Cursor, Claude Code, and AI agents read your tasks, update progress, and leave notes.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- AI AGENTS -->
+  <section class="ai-section" id="agents" aria-label="AI agents and MCP integration">
+    <div class="ai-inner">
+      <div class="ai-copy">
+        <p class="section-label" style="text-align:left">Agent-Ready</p>
+        <h2>Your tasks, now <em>agent-native</em></h2>
+        <p class="ai-lead">Dovilo Desktop ships with a built-in <strong style="color:var(--fg)">MCP (Model Context Protocol)</strong> server. Let Cursor, Claude Code, or any MCP client read your tasks, update status step-by-step, and leave notes — while you stay in full control.</p>
+
+        <ul class="ai-points">
+          <li>
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 12l2 2 4-4"/></svg>
+            <span><strong>Local-first, no cloud</strong> — the MCP server runs on your machine. Zero external data leaves Dovilo.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            <span><strong>One-click connect</strong> — toggle the server in-app, drop the <code style="font-family:inherit;color:var(--muted)">dovilo-mcp.json</code> into your client, done.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="20" cy="18" r="2"/></svg>
+            <span><strong>Per-task agent filter</strong> — you decide exactly which tasks and steps agents can see.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span><strong>Step-level progress</strong> — agents push status updates in real time. Get notified on every step or just start/finish/error.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span><strong>Agent notes on mobile</strong> — the agent annotates the task; you read the notes from anywhere.</span>
+          </li>
+        </ul>
+
+        <div class="ai-clients">
+          <span class="ai-clients-label">Works with</span>
+          <span class="ai-chip">Cursor</span>
+          <span class="ai-chip">Claude Code</span>
+          <span class="ai-chip">Any MCP client</span>
+        </div>
+
+        <p class="ai-footer-note">
+          Available on Dovilo Desktop <span class="pro-pill">PRO</span>
+          <span>· Windows &amp; macOS</span>
+        </p>
+      </div>
+
+      <div class="ai-demo" data-reveal>
+        <div class="code-block">
+          <div class="code-head">
+            <span class="code-dot r"></span>
+            <span class="code-dot y"></span>
+            <span class="code-dot g"></span>
+            <span class="code-title">dovilo-mcp.json</span>
+          </div>
+          <div class="code-body"><span class="c">// Paste into your MCP client — Cursor, Claude Code, etc.</span>
+{
+  <span class="k">"mcpServers"</span><span class="p">:</span> {
+    <span class="k">"dovilo"</span><span class="p">:</span> {
+      <span class="k">"url"</span><span class="p">:</span> <span class="s">"http://localhost:4242/mcp"</span><span class="p">,</span>
+      <span class="k">"headers"</span><span class="p">:</span> {
+        <span class="k">"Authorization"</span><span class="p">:</span> <span class="s">"Bearer &lt;api-key&gt;"</span>
+      }
+    }
+  }
+}</div>
+        </div>
+
+        <div class="code-tools" aria-label="Exposed MCP tools">
+          <span class="tool">list_tasks</span>
+          <span class="tool">get_task</span>
+          <span class="tool">update_task_status</span>
+          <span class="tool">update_step_status</span>
+          <span class="tool">add_agent_note</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1201,8 +1464,8 @@
   <!-- STATS -->
   <section class="stats">
     <div>
-      <div class="stat-number">6</div>
-      <div class="stat-label">Core features</div>
+      <div class="stat-number">4</div>
+      <div class="stat-label">Core pillars</div>
     </div>
     <div>
       <div class="stat-number">5</div>
@@ -1245,6 +1508,7 @@
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Unlimited tasks &amp; categories</li>
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Cloud sync across devices</li>
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Desktop app (Windows &amp; Mac)</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>MCP server &amp; AI agent integration (Cursor, Claude Code)</li>
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Smart notification management</li>
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Advanced focus interface</li>
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>All buildings &amp; decorations &amp; upgrades</li>
@@ -1335,6 +1599,26 @@
 
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
+          <h3>What is Dovilo's MCP integration?</h3>
+          <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a">
+          <p>Dovilo Desktop (Pro) ships with a built-in <strong>Model Context Protocol</strong> server that runs locally on your machine. Toggle it on, and any MCP client — like Cursor or Claude Code — can <code>list_tasks</code>, <code>get_task</code>, <code>update_task_status</code>, <code>update_step_status</code>, and <code>add_agent_note</code>. Agents can only read and update; they cannot create tasks, and you control exactly what they see via a per-task filter.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <h3>How do I connect Cursor or Claude Code?</h3>
+          <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a">
+          <p>Open Dovilo Desktop, enable the MCP server, copy the generated API key, and paste the provided <code>dovilo-mcp.json</code> snippet into your client's config. Once connected, the agent picks up the tasks you've allowed and pushes progress updates step-by-step. You choose notification granularity — every step, or just start/finish/error.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
           <h3>How do I cancel my subscription?</h3>
           <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
         </div>
@@ -1402,8 +1686,8 @@
     <h2>What is Dovilo?</h2>
     <p>Dovilo is a <strong>gamified to-do list and productivity app</strong> that transforms your daily tasks into an <strong>isometric city builder</strong>. Unlike traditional task managers, Dovilo rewards your productivity — every completed task and focus session earns coins that you can spend on buildings, decorations, and upgrades for your virtual city.</p>
 
-    <h3>Three Pillars, One App</h3>
-    <p>Dovilo brings together a <strong>full-featured to-do list</strong>, a <strong>Pomodoro-style focus timer</strong>, and a <strong>city building game</strong> into one seamless experience. Most productivity tools stop at checklists — Dovilo goes further by turning your progress into a growing city skyline with offices, houses, markets, parks, and more.</p>
+    <h3>Four Pillars, One App</h3>
+    <p>Dovilo brings together a <strong>full-featured to-do list</strong>, a <strong>Pomodoro-style focus timer</strong>, an <strong>isometric city builder</strong>, and an <strong>MCP-based AI agent layer</strong> into one seamless experience. Most productivity tools stop at checklists — Dovilo goes further by turning your progress into a growing city skyline and letting AI agents like Cursor and Claude Code pick up tasks on your desktop.</p>
 
     <h3>Key Features</h3>
     <ul>
@@ -1415,10 +1699,14 @@
       <li><strong>5 Languages</strong> — English, Turkish, Spanish, French, and German. Full localization for a global audience.</li>
       <li><strong>Offline-First</strong> — Works without internet. Your data is stored locally. Optional cloud sync for Pro users.</li>
       <li><strong>No Ads</strong> — Dovilo is completely ad-free, even on the free tier.</li>
+      <li><strong>Agent-Ready via MCP</strong> — Dovilo Desktop (Pro) runs a built-in Model Context Protocol server. Cursor, Claude Code, and any MCP-compatible agent can list tasks, update status, track steps, and leave notes — locally, with no cloud dependency and a per-task filter you control.</li>
     </ul>
 
+    <h3>Built for AI Agents</h3>
+    <p>Dovilo is the first <strong>agent-native gamified task manager</strong>. The desktop app exposes five MCP tools — <code>list_tasks</code>, <code>get_task</code>, <code>update_task_status</code>, <code>update_step_status</code>, and <code>add_agent_note</code> — so your AI coding agent can pick up a task, execute step-by-step, and report back. Agents can only read and update; they cannot create tasks, keeping you firmly in control of your workflow.</p>
+
     <h3>Who is Dovilo for?</h3>
-    <p>Dovilo is perfect for <strong>students</strong> who need a fun study companion, <strong>professionals</strong> who want to gamify their workflow, <strong>freelancers</strong> managing multiple projects, and anyone who struggles with <strong>procrastination</strong> or staying focused. If you've been looking for a productivity app that feels rewarding rather than repetitive, Dovilo is designed for you.</p>
+    <p>Dovilo is perfect for <strong>students</strong> who need a fun study companion, <strong>professionals</strong> who want to gamify their workflow, <strong>freelancers</strong> managing multiple projects, <strong>developers</strong> who already run Cursor or Claude Code and want agent-driven task progress, and anyone who struggles with <strong>procrastination</strong> or staying focused. If you've been looking for a productivity app that feels rewarding rather than repetitive — and that plays nicely with AI agents — Dovilo is designed for you.</p>
 
     <h3>Pricing</h3>
     <p>Dovilo is <strong>free to download and use</strong>. The free tier includes full task management, unlimited focus sessions, basic city building, and zero ads. <strong>Dovilo Pro</strong> unlocks cloud sync, desktop app access (Windows &amp; Mac), all buildings and decorations, advanced statistics, custom themes, and priority support — available as Monthly ($2.49), Yearly ($19.99, best value), or Lifetime ($49.99).</p>
