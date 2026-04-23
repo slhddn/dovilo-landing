@@ -215,7 +215,7 @@
         "name": "What is Dovilo's MCP integration?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Dovilo Desktop (Pro) ships with a built-in Model Context Protocol (MCP) server that runs locally on your machine — no cloud, no external data. You can toggle it on from the desktop app, and MCP clients like Cursor and Claude Code can then list tasks, read details, update status, track steps, and leave agent notes. Agents cannot create tasks; they only read, update, and annotate what you've allowed through a per-task filter."
+          "text": "Dovilo Desktop (Pro) ships with a built-in Model Context Protocol (MCP) server that runs locally on your machine — no cloud, no external data. You can toggle it on from the desktop app, and MCP clients like Cursor and Claude Code can then list tasks, read project context, update status, add and skip steps, and append agent notes. Agents cannot create tasks; they only read, update, and annotate tasks inside the projects you've allowed through a per-project scope."
         }
       },
       {
@@ -223,7 +223,7 @@
         "name": "Does Dovilo work with Cursor and Claude Code?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. Dovilo Desktop is an MCP host, so any MCP-compatible client — including Cursor and Claude Code — can connect with a single dovilo-mcp.json config and API key from the desktop app. Once connected, the agent can pick up tasks you've allowed, update progress step-by-step, and leave notes you see on mobile."
+          "text": "Yes. Dovilo Desktop runs the MCP server locally, and AI clients connect through the @dovilo-app/mcp stdio bridge (invoked via npx — no manual install). Claude Desktop is auto-configured on toggle; for Cursor, Claude Code, or any MCP client, copy the snippet shown in the desktop app into your client's config and paste in the generated API key. Once connected, the agent picks up tasks you've allowed, updates progress step-by-step, and leaves notes you see on mobile."
         }
       }
     ]
@@ -329,66 +329,99 @@
       position:relative;
       justify-self:center;
       width:100%;
-      min-height:540px;
-      display:flex;align-items:center;justify-content:center;
+      min-height:600px;
     }
     .hero-img::before{
       content:"";position:absolute;inset:-10% -15%;z-index:0;
       background:
-        radial-gradient(45% 50% at 50% 55%,rgba(var(--accent-rgb),.28),transparent 65%),
+        radial-gradient(45% 50% at 50% 60%,rgba(var(--accent-rgb),.28),transparent 65%),
         radial-gradient(35% 40% at 20% 40%,rgba(var(--accent-rgb),.12),transparent 70%),
         radial-gradient(35% 40% at 80% 40%,rgba(var(--accent-rgb),.12),transparent 70%);
       filter:blur(6px);
       pointer-events:none;
     }
+    /* Scattered-photos hero: phones placed on an imaginary desk */
     .hero-phones{
-      position:relative;z-index:1;
-      display:flex;align-items:center;justify-content:center;
-      width:100%;
+      position:absolute;inset:0;z-index:1;
     }
     .hero-phone{
-      width:230px;
+      position:absolute;
       aspect-ratio:9/19.5;
-      border-radius:36px;
+      border-radius:32px;
       padding:0;
       background:transparent;
       box-shadow:
-        0 30px 60px -20px rgba(0,0,0,.7),
+        0 30px 60px -18px rgba(0,0,0,.75),
+        0 12px 24px -10px rgba(0,0,0,.45),
         0 0 0 1px rgba(255,255,255,.05);
-      position:relative;
       transition:transform .5s ease,box-shadow .5s ease;
+      --tx:0%;--rot:0deg;
+      transform:translateX(var(--tx)) rotate(var(--rot));
     }
     .hero-phone-screen{
-      width:100%;height:100%;border-radius:36px;overflow:hidden;background:#fff;
+      width:100%;height:100%;border-radius:32px;overflow:hidden;background:#fff;
     }
     .hero-phone-screen img{display:block;width:100%;height:100%;object-fit:cover}
 
-    .hero-phone.left{
-      transform:translateX(42%) translateY(24px) rotate(-7deg) scale(.92);
-      z-index:1;animation:float-l 7s ease-in-out infinite;
+    /* My Day — upper-left */
+    .hero-phone.p-tasks{
+      width:182px;
+      top:3%;left:2%;
+      --rot:-13deg;
+      z-index:2;
+      animation:scatter-float 6.8s ease-in-out infinite;
+      animation-delay:.6s;
     }
-    .hero-phone.center{
-      z-index:3;transform:translateY(-8px);
-      animation:float-c 6s ease-in-out infinite;
+    /* Agent task list (AI) — upper-right */
+    .hero-phone.p-ai{
+      width:182px;
+      top:3%;right:2%;
+      --rot:12deg;
+      z-index:2;
+      animation:scatter-float 7.2s ease-in-out infinite;
+      animation-delay:1.2s;
     }
-    .hero-phone.right{
-      transform:translateX(-42%) translateY(24px) rotate(7deg) scale(.92);
-      z-index:1;animation:float-r 7s ease-in-out infinite;
+    /* Statistics — centered, behind others, peeking up from middle */
+    .hero-phone.p-stats{
+      width:188px;
+      top:0;left:50%;
+      --tx:-50%;--rot:4deg;
+      z-index:1;
+      animation:scatter-float 7.5s ease-in-out infinite;
+      animation-delay:1.8s;
     }
-    @keyframes float-c{
-      0%,100%{transform:translateY(-8px)}
-      50%{transform:translateY(-22px)}
+    /* Dovilo (city) — bottom-left, front */
+    .hero-phone.p-city{
+      width:200px;
+      top:40%;left:50%;
+      --tx:-102%;--rot:-7deg;
+      z-index:4;
+      animation:scatter-float 6s ease-in-out infinite;
     }
-    @keyframes float-l{
-      0%,100%{transform:translateX(42%) translateY(24px) rotate(-7deg) scale(.92)}
-      50%{transform:translateX(42%) translateY(10px) rotate(-7deg) scale(.92)}
+    /* Planned — bottom-right, slight gap from city */
+    .hero-phone.p-planned{
+      width:186px;
+      top:42%;left:50%;
+      --tx:2%;--rot:8deg;
+      z-index:3;
+      animation:scatter-float 7s ease-in-out infinite;
+      animation-delay:2.4s;
     }
-    @keyframes float-r{
-      0%,100%{transform:translateX(-42%) translateY(24px) rotate(7deg) scale(.92)}
-      50%{transform:translateX(-42%) translateY(10px) rotate(7deg) scale(.92)}
+    @keyframes scatter-float{
+      0%,100%{transform:translateX(var(--tx)) translateY(0) rotate(var(--rot))}
+      50%{transform:translateX(var(--tx)) translateY(-10px) rotate(var(--rot))}
     }
     @media (prefers-reduced-motion:reduce){
-      .hero-phone.left,.hero-phone.center,.hero-phone.right{animation:none}
+      .hero-phone.p-city,.hero-phone.p-tasks,.hero-phone.p-planned,.hero-phone.p-ai,.hero-phone.p-stats{animation:none}
+    }
+    /* Intermediate width — hero-img narrows before mobile kicks in */
+    @media (min-width:769px) and (max-width:1024px){
+      .hero-img{min-height:520px}
+      .hero-phone.p-tasks{width:152px}
+      .hero-phone.p-ai{width:152px}
+      .hero-phone.p-stats{width:160px}
+      .hero-phone.p-city{width:172px;--tx:-102%}
+      .hero-phone.p-planned{width:160px;--tx:2%}
     }
     .badges{
       display:flex;flex-wrap:wrap;gap:8px;
@@ -643,7 +676,7 @@
 
     /* Desktop screenshot — native macOS window chrome shown as-is */
     .mac-window{
-      max-width:1000px;margin:0 auto 72px;
+      max-width:1000px;margin:0 auto 24px;
       position:relative;
       opacity:0;transform:translateY(24px);
       transition:opacity .9s ease,transform .9s ease;
@@ -651,6 +684,27 @@
     }
     .mac-window.in-view{opacity:1;transform:translateY(0)}
     .mac-window img{display:block;width:100%;height:auto}
+    .mac-caption{
+      max-width:1000px;margin:0 auto 14px;
+      display:flex;align-items:center;gap:10px;
+      font-size:.875rem;color:var(--muted);
+      letter-spacing:.01em;
+    }
+    .mac-caption .mac-caption-tag{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:4px 10px;border-radius:100px;
+      background:var(--dim);color:var(--fg);
+      font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    }
+    .mac-caption .mac-caption-tag.ai{
+      background:rgba(var(--accent-rgb),.18);
+      color:var(--accent);
+    }
+    .mac-stack-gap{height:48px}
+    @media(max-width:768px){
+      .mac-caption{font-size:.8125rem;flex-wrap:wrap;gap:8px;padding:0 8px}
+      .mac-stack-gap{height:32px}
+    }
 
     /* Phone deck — interactive fanned arrangement */
     .phone-deck{
@@ -696,11 +750,12 @@
       50%{transform:translate3d(var(--tx),calc(var(--ty) - 10px),0) rotate(var(--rot)) rotateY(var(--rotY)) scale(var(--scale))}
     }
 
-    .phone:nth-child(1){--tx:120px;--ty:40px;--rot:-14deg;--scale:.88;--z:1;--fd:0s}
-    .phone:nth-child(2){--tx:60px;--ty:10px;--rot:-7deg;--scale:.94;--z:2;--fd:.5s}
-    .phone:nth-child(3){--tx:0;--ty:-10px;--rot:0deg;--scale:1.02;--z:3;--fd:1s}
-    .phone:nth-child(4){--tx:-60px;--ty:10px;--rot:7deg;--scale:.94;--z:2;--fd:1.5s}
-    .phone:nth-child(5){--tx:-120px;--ty:40px;--rot:14deg;--scale:.88;--z:1;--fd:2s}
+    .phone:nth-child(1){--tx:180px;--ty:44px;--rot:-16deg;--scale:.84;--z:1;--fd:0s}
+    .phone:nth-child(2){--tx:108px;--ty:18px;--rot:-10deg;--scale:.9;--z:2;--fd:.4s}
+    .phone:nth-child(3){--tx:40px;--ty:-6px;--rot:-4deg;--scale:.98;--z:3;--fd:.8s}
+    .phone:nth-child(4){--tx:-40px;--ty:-6px;--rot:4deg;--scale:.98;--z:3;--fd:1.2s}
+    .phone:nth-child(5){--tx:-108px;--ty:18px;--rot:10deg;--scale:.9;--z:2;--fd:1.6s}
+    .phone:nth-child(6){--tx:-180px;--ty:44px;--rot:16deg;--scale:.84;--z:1;--fd:2s}
 
     .phone::after{
       content:"";position:absolute;inset:-20px;border-radius:inherit;z-index:-1;
@@ -762,12 +817,14 @@
     .phone:hover .phone-label{opacity:1;transform:translateX(-50%) translateY(0)}
 
     @media (min-width:721px) and (max-width:900px){
-      .phone{width:150px;border-radius:26px;padding:6px}
+      .phone{width:140px;border-radius:24px;padding:6px}
       .phone-screen{border-radius:20px}
-      .phone:nth-child(1){--tx:78px;--ty:28px}
-      .phone:nth-child(2){--tx:40px;--ty:8px}
-      .phone:nth-child(4){--tx:-40px;--ty:8px}
-      .phone:nth-child(5){--tx:-78px;--ty:28px}
+      .phone:nth-child(1){--tx:112px;--ty:30px}
+      .phone:nth-child(2){--tx:68px;--ty:12px}
+      .phone:nth-child(3){--tx:24px;--ty:-4px}
+      .phone:nth-child(4){--tx:-24px;--ty:-4px}
+      .phone:nth-child(5){--tx:-68px;--ty:12px}
+      .phone:nth-child(6){--tx:-112px;--ty:30px}
     }
 
     /* Mobile — swap fan layout for a swipeable horizontal carousel */
@@ -776,23 +833,27 @@
         perspective:none;
         padding:24px 0 28px;
         isolation:isolate;
+        overflow:hidden;
       }
       .phone-deck::before{opacity:.5}
       .phone-deck-inner{
+        --phone-w:min(70vw,240px);
+        --side-pad:calc((100vw - var(--phone-w)) / 2);
         display:flex;gap:20px;
         overflow-x:auto;
         scroll-snap-type:x mandatory;
         -webkit-overflow-scrolling:touch;
-        padding:50px max(20px,calc((100vw - 240px) / 2)) 24px;
-        scroll-padding-inline:max(20px,calc((100vw - 240px) / 2));
+        padding:50px var(--side-pad) 24px;
+        scroll-padding-inline:var(--side-pad);
         scrollbar-width:none;
       }
       .phone-deck-inner::-webkit-scrollbar{display:none}
       .phone,
       .phone-deck .phone:nth-child(n){
-        width:min(70vw,240px);
+        width:var(--phone-w);
         flex:0 0 auto;
         scroll-snap-align:center;
+        scroll-snap-stop:always;
         animation:none;
         --tx:0px;--ty:0px;--rot:0deg;--rotY:0deg;--scale:1;
         transform:none;
@@ -1174,9 +1235,14 @@
         text-align:center;
       }
       .hero-content{align-items:center;text-align:center}
-      .hero-img{order:-1;min-height:420px}
-      .hero-phone{width:170px;border-radius:28px;padding:7px}
-      .hero-phone-screen{border-radius:22px}
+      .hero-img{order:-1;min-height:clamp(420px,112vw,520px);overflow:hidden}
+      .hero-phone{border-radius:24px;padding:0}
+      .hero-phone-screen{border-radius:24px}
+      .hero-phone.p-tasks{width:32%;top:2%;left:1%}
+      .hero-phone.p-ai{width:32%;top:2%;right:1%}
+      .hero-phone.p-stats{width:36%;top:-2%}
+      .hero-phone.p-city{width:40%;top:36%;left:10%;--tx:0}
+      .hero-phone.p-planned{width:36%;top:38%;left:55%;--tx:0}
       .hero{padding-top:100px;padding-bottom:32px}
 
       /* Mobile nav */
@@ -1278,18 +1344,24 @@
             <div class="store-btn-text"><small>Soon on</small><strong>Google Play</strong></div>
           </button>
         </div>
-        <p class="launch-date">Launching May 16 — Be the first to know</p>
+        <p class="launch-date">Launching May 18 — Be the first to know</p>
       </div>
       <div class="hero-img">
         <div class="hero-phones">
-          <div class="hero-phone left">
-            <div class="hero-phone-screen"><img src="screenshots/mobile-city.png" alt="Dovilo isometric city built from completed tasks" loading="eager"></div>
+          <div class="hero-phone p-stats">
+            <div class="hero-phone-screen"><img src="screenshots/mobile-stats.png" alt="Dovilo statistics dashboard with completion rate and monthly trend" loading="eager"></div>
           </div>
-          <div class="hero-phone center">
+          <div class="hero-phone p-tasks">
             <div class="hero-phone-screen"><img src="screenshots/mobile-tasks.png" alt="Dovilo My Day task list with today's tasks" loading="eager"></div>
           </div>
-          <div class="hero-phone right">
-            <div class="hero-phone-screen"><img src="screenshots/mobile-stats.png" alt="Dovilo statistics dashboard with completion rate and monthly trend" loading="eager"></div>
+          <div class="hero-phone p-ai">
+            <div class="hero-phone-screen"><img src="screenshots/mobile-ai.png" alt="Dovilo mobile AI Tasks — follow agent progress from your phone" loading="eager"></div>
+          </div>
+          <div class="hero-phone p-planned">
+            <div class="hero-phone-screen"><img src="screenshots/mobile-planned.png" alt="Dovilo planned tasks grouped by day" loading="eager"></div>
+          </div>
+          <div class="hero-phone p-city">
+            <div class="hero-phone-screen"><img src="screenshots/mobile-city.png" alt="Dovilo isometric city built from completed tasks" loading="eager"></div>
           </div>
         </div>
       </div>
@@ -1392,11 +1464,11 @@
           </li>
           <li>
             <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-            <span><strong>One-click connect</strong> — toggle the server in-app, drop the <code style="font-family:inherit;color:var(--muted)">dovilo-mcp.json</code> into your client, done.</span>
+            <span><strong>One-click connect</strong> — Claude Desktop is auto-wired on toggle. For Cursor or any other client, copy the snippet (stdio bridge via <code style="font-family:inherit;color:var(--muted)">npx @dovilo-app/mcp</code>) — no manual install needed.</span>
           </li>
           <li>
             <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="20" cy="18" r="2"/></svg>
-            <span><strong>Per-task agent filter</strong> — you decide exactly which tasks and steps agents can see.</span>
+            <span><strong>Per-project scope</strong> — pick which projects agents can see. Tasks outside the scope stay invisible.</span>
           </li>
           <li>
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -1429,14 +1501,13 @@
             <span class="code-dot g"></span>
             <span class="code-title">dovilo-mcp.json</span>
           </div>
-          <div class="code-body"><span class="c">// Paste into your MCP client — Cursor, Claude Code, etc.</span>
+          <div class="code-body"><span class="c">// Auto-written to Claude Desktop; copy into Cursor / Claude Code manually.</span>
 {
   <span class="k">"mcpServers"</span><span class="p">:</span> {
-    <span class="k">"dovilo"</span><span class="p">:</span> {
-      <span class="k">"url"</span><span class="p">:</span> <span class="s">"http://localhost:4242/mcp"</span><span class="p">,</span>
-      <span class="k">"headers"</span><span class="p">:</span> {
-        <span class="k">"Authorization"</span><span class="p">:</span> <span class="s">"Bearer &lt;api-key&gt;"</span>
-      }
+    <span class="k">"Dovilo"</span><span class="p">:</span> {
+      <span class="k">"command"</span><span class="p">:</span> <span class="s">"npx"</span><span class="p">,</span>
+      <span class="k">"args"</span><span class="p">:</span> [<span class="s">"-y"</span><span class="p">,</span> <span class="s">"@dovilo-app/mcp@latest"</span>]<span class="p">,</span>
+      <span class="k">"env"</span><span class="p">:</span> { <span class="k">"DOVILO_API_KEY"</span><span class="p">:</span> <span class="s">"&lt;api-key&gt;"</span> }
     }
   }
 }</div>
@@ -1445,9 +1516,12 @@
         <div class="code-tools" aria-label="Exposed MCP tools">
           <span class="tool">list_tasks</span>
           <span class="tool">get_task</span>
-          <span class="tool">update_task_status</span>
-          <span class="tool">update_step_status</span>
-          <span class="tool">add_agent_note</span>
+          <span class="tool">read_context</span>
+          <span class="tool">update_status</span>
+          <span class="tool">update_step</span>
+          <span class="tool">add_step</span>
+          <span class="tool">skip_step</span>
+          <span class="tool">append_note</span>
         </div>
       </div>
     </div>
@@ -1458,9 +1532,23 @@
     <div class="showcase-head">
       <div class="section-label">See it in action</div>
       <h2>Your productivity, on every screen</h2>
-      <p>From your pocket to your desk — Dovilo stays in sync. Plan on mobile, focus on desktop, build your city from anywhere.</p>
+      <p>From your pocket to your desk — Dovilo stays in sync. Plan on mobile, run AI agents on desktop, build your city from anywhere.</p>
     </div>
 
+    <p class="mac-caption">
+      <span class="mac-caption-tag ai">AI · Desktop</span>
+      Watch Claude Code execute a multi-step task — step-by-step progress, agent notes, and full control.
+    </p>
+    <div class="mac-window" data-reveal>
+      <img src="screenshots/desktop-ai.png" alt="Dovilo desktop app — AI Tasks view showing Claude Code running a multi-step task with progress steps and agent notes" loading="lazy">
+    </div>
+
+    <div class="mac-stack-gap"></div>
+
+    <p class="mac-caption">
+      <span class="mac-caption-tag">Classic · Desktop</span>
+      Your daily command center — My Day, lists, priorities, and detail panel.
+    </p>
     <div class="mac-window" data-reveal>
       <img src="screenshots/desktop.png" alt="Dovilo desktop app — My Day task list with a selected task detail panel showing due date, list and reminder options" loading="lazy">
     </div>
@@ -1486,6 +1574,10 @@
         <div class="phone">
           <span class="phone-label">Track</span>
           <div class="phone-screen"><img src="screenshots/mobile-stats.png" alt="Dovilo statistics dashboard" loading="lazy"></div>
+        </div>
+        <div class="phone">
+          <span class="phone-label">AI</span>
+          <div class="phone-screen"><img src="screenshots/mobile-ai.png" alt="Dovilo mobile AI Tasks view — follow agent progress from your phone" loading="lazy"></div>
         </div>
       </div>
     </div>
@@ -1633,7 +1725,7 @@
           <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
         </div>
         <div class="faq-a">
-          <p>Dovilo Desktop (Pro) ships with a built-in <strong>Model Context Protocol</strong> server that runs locally on your machine. Toggle it on, and any MCP client — like Cursor or Claude Code — can <code>list_tasks</code>, <code>get_task</code>, <code>update_task_status</code>, <code>update_step_status</code>, and <code>add_agent_note</code>. Agents can only read and update; they cannot create tasks, and you control exactly what they see via a per-task filter.</p>
+          <p>Dovilo Desktop (Pro) ships with a built-in <strong>Model Context Protocol</strong> server that runs locally on your machine. Toggle it on, and any MCP client — like Cursor or Claude Code — can <code>list_tasks</code>, <code>get_task</code>, <code>read_context</code>, <code>update_status</code>, <code>update_step</code>, <code>add_step</code>, <code>skip_step</code>, and <code>append_note</code>. Agents can only read and update; they cannot create tasks, and you control exactly which projects they see via a per-project scope.</p>
         </div>
       </div>
 
@@ -1643,7 +1735,7 @@
           <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
         </div>
         <div class="faq-a">
-          <p>Open Dovilo Desktop, enable the MCP server, copy the generated API key, and paste the provided <code>dovilo-mcp.json</code> snippet into your client's config. Once connected, the agent picks up the tasks you've allowed and pushes progress updates step-by-step. You choose notification granularity — every step, or just start/finish/error.</p>
+          <p>Open Dovilo Desktop and enable the MCP server. For Claude Desktop, the config is written automatically — just restart it. For Cursor, Claude Code, or any other MCP client, copy the snippet shown in the desktop app (it uses <code>npx @dovilo-app/mcp</code> as a stdio bridge and reads your key from <code>DOVILO_API_KEY</code>) and paste it into that client's MCP config. You control notification granularity — every step, or just start/finish/error.</p>
         </div>
       </div>
 
@@ -1669,7 +1761,7 @@
     <h2 class="section-title">Get Dovilo on your device</h2>
 
     <div class="waitlist-banner">
-      <p class="waitlist-banner-text">Launching May 16 — Get notified when we go live</p>
+      <p class="waitlist-banner-text">Launching May 18 — Get notified when we go live</p>
       <button data-tally-open="dWDYRN" data-tally-layout="modal" data-tally-auto-close="3000" class="btn btn-primary waitlist-btn">Join the Waitlist</button>
     </div>
 
@@ -1729,11 +1821,11 @@
       <li><strong>5 Languages</strong> — English, Turkish, Spanish, French, and German. Full localization for a global audience.</li>
       <li><strong>Offline-First</strong> — Works without internet. Your data is stored locally. Optional cloud sync for Pro users.</li>
       <li><strong>No Ads</strong> — Dovilo is completely ad-free, even on the free tier.</li>
-      <li><strong>Agent-Ready via MCP</strong> — Dovilo Desktop (Pro) runs a built-in Model Context Protocol server. Cursor, Claude Code, and any MCP-compatible agent can list tasks, update status, track steps, and leave notes — locally, with no cloud dependency and a per-task filter you control.</li>
+      <li><strong>Agent-Ready via MCP</strong> — Dovilo Desktop (Pro) runs a built-in Model Context Protocol server. Cursor, Claude Code, and any MCP-compatible agent can list tasks, read project context, update status, add and skip steps, and append notes — locally, with no cloud dependency and a per-project scope you control.</li>
     </ul>
 
     <h3>Built for AI Agents</h3>
-    <p>Dovilo is the first <strong>agent-native gamified task manager</strong>. The desktop app exposes five MCP tools — <code>list_tasks</code>, <code>get_task</code>, <code>update_task_status</code>, <code>update_step_status</code>, and <code>add_agent_note</code> — so your AI coding agent can pick up a task, execute step-by-step, and report back. Agents can only read and update; they cannot create tasks, keeping you firmly in control of your workflow.</p>
+    <p>Dovilo is the first <strong>agent-native gamified task manager</strong>. The desktop app exposes eight MCP tools — <code>list_tasks</code>, <code>get_task</code>, <code>read_context</code>, <code>update_status</code>, <code>update_step</code>, <code>add_step</code>, <code>skip_step</code>, and <code>append_note</code> — so your AI coding agent can pick up a task, read project context, execute step-by-step, and report back. Agents can only read and update; they cannot create tasks, keeping you firmly in control of your workflow.</p>
 
     <h3>Who is Dovilo for?</h3>
     <p>Dovilo is perfect for <strong>students</strong> who need a fun study companion, <strong>professionals</strong> who want to gamify their workflow, <strong>freelancers</strong> managing multiple projects, <strong>developers</strong> who already run Cursor or Claude Code and want agent-driven task progress, and anyone who struggles with <strong>procrastination</strong> or staying focused. If you've been looking for a productivity app that feels rewarding rather than repetitive — and that plays nicely with AI agents — Dovilo is designed for you.</p>
