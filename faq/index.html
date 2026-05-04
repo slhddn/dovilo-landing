@@ -192,17 +192,27 @@
         <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="faq-a">
-        <p>Dovilo Desktop (Pro) ships with a built-in <strong>Model Context Protocol</strong> server that runs locally on your machine. Any MCP-compatible client — Cursor, Claude Code, and others — can connect and call Dovilo's exposed tools: <code>list_tasks</code>, <code>get_task</code>, <code>update_task_status</code>, <code>update_step_status</code>, and <code>add_agent_note</code>. Agents can only read and update; they cannot create tasks.</p>
+        <p>Dovilo Desktop (Pro) ships with a built-in <strong>Model Context Protocol</strong> server that runs locally on your machine. Any MCP-compatible client — <strong>Claude Code, Cursor, Claude Desktop, Windsurf, Codex CLI, Gemini CLI</strong>, and others — can connect and call Dovilo's tools: <code>list_tasks</code>, <code>get_task</code>, <code>read_context</code>, <code>update_status</code>, <code>update_step</code>, <code>add_step</code>, <code>skip_step</code>, <code>append_note</code>, and <code>append_telemetry</code>. Agents can only read and update; they cannot create tasks.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggle(this)">
-        <h3>How do I connect Cursor or Claude Code?</h3>
+        <h3>How do I connect Claude Code, Cursor, or another AI agent?</h3>
         <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="faq-a">
-        <p>Open Dovilo Desktop, toggle the MCP server on, and copy the generated API key. Paste the provided <code>dovilo-mcp.json</code> snippet into your client's config (e.g. <code>~/.cursor/mcp.json</code>). On next launch, your agent will see Dovilo as an available MCP server and can begin working on the tasks you've allowed.</p>
+        <p>Open Dovilo Desktop and go to <strong>Settings → AI → Connect AI</strong>. Pick your IDE and Dovilo generates the right config for it: <strong>Claude Desktop</strong> is auto-wired in one click; <strong>Claude Code, Cursor CLI, Codex CLI, and Gemini CLI</strong> get a single <code>mcp add</code> command; <strong>Cursor (GUI), Windsurf, and custom MCP clients</strong> get a JSON snippet to paste. Restart your AI client and it will see Dovilo as an available MCP server.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <h3>Which AI clients does Dovilo support?</h3>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>The Connect AI flow has presets for <strong>Claude Desktop</strong>, <strong>Claude Code</strong>, <strong>Cursor</strong> (GUI &amp; CLI), <strong>Windsurf</strong>, <strong>Codex CLI</strong>, and <strong>Gemini CLI</strong>. Anything else that speaks the MCP protocol can also connect using the generic snippet — Dovilo doesn't lock you to a specific vendor.</p>
       </div>
     </div>
 
@@ -212,7 +222,7 @@
         <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="faq-a">
-        <p>No. The MCP tool surface intentionally excludes task creation — agents can only read, update status, mark steps, and leave notes. You decide exactly which tasks an agent sees using Dovilo's per-task agent filter. Disabling the MCP server in Desktop settings immediately terminates every active agent connection.</p>
+        <p>No. The MCP tool surface intentionally excludes task creation — agents can only read, update status, mark steps, leave notes, and report telemetry. You decide exactly which tasks an agent sees through a per-project scope and a project brief that the agent reads first. Disabling MCP in Desktop settings immediately terminates every active agent connection.</p>
       </div>
     </div>
 
@@ -232,7 +242,7 @@
         <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="faq-a">
-        <p>Yes. You can choose between two notification modes: <strong>every step</strong> (each progress update the agent pushes) or <strong>start / finish / error only</strong> (quieter, summary-style). Agent notes are saved to the task and visible from the mobile app, so you can check in from anywhere.</p>
+        <p>Yes. You can choose between two notification modes: <strong>every step</strong> (each progress update the agent pushes) or <strong>start / finish / error only</strong> (quieter, summary-style). Agent notes and telemetry (tokens, cost, duration) are saved to the task and visible from the mobile app, so you can check in from anywhere.</p>
       </div>
     </div>
 
