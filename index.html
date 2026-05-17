@@ -226,6 +226,14 @@
           "@type": "Answer",
           "text": "Claude Desktop is auto-wired in one click. Claude Code, Cursor CLI, Codex CLI, and Gemini CLI connect with a single command from the Connect AI flow. Cursor (GUI), Windsurf, and any custom MCP client paste a generated snippet into their config. Dovilo writes the right snippet for whichever IDE you pick."
         }
+      },
+      {
+        "@type": "Question",
+        "name": "Can Dovilo send task events to Slack, Linear, or my own service?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Dovilo Desktop fires HMAC-signed HTTPS webhooks on every task change — task.created and task.status_changed — so you can bridge Dovilo into Slack, Linear, n8n, LangGraph, or any custom receiver. Each delivery includes a Stripe-style X-Dovilo-Signature header for verification, a unique X-Dovilo-Delivery id for idempotency, FIFO ordering per task, and up to 5 retries on transient failures. Open a project, expand Webhooks, paste your URL, generate a signing secret, and click Enable. Full payload schema, signature verification examples in Node, Python, and Go, and the retry policy live in the webhooks reference at https://dovilo.app/docs/webhooks."
+        }
       }
     ]
   }
@@ -506,36 +514,6 @@
     }
     .btn-ghost:hover{border-color:rgba(var(--fg-rgb),.25);background:var(--dim2)}
 
-    .waitlist-btn{
-      animation:pulse-glow 2.5s ease-in-out infinite;
-    }
-    @keyframes pulse-glow{
-      0%,100%{box-shadow:0 0 0 0 rgba(var(--accent-rgb),.4)}
-      50%{box-shadow:0 0 20px 6px rgba(var(--accent-rgb),.2)}
-    }
-    .launch-date{
-      margin-top:16px;
-      font-size:.875rem;
-      color:rgba(var(--fg-rgb),.45);
-      font-weight:500;
-      letter-spacing:.02em;
-    }
-    .waitlist-banner{
-      background:linear-gradient(135deg,rgba(var(--accent-rgb),.1),rgba(var(--accent-rgb),.05));
-      border:1px solid rgba(var(--accent-rgb),.2);
-      border-radius:var(--radius);
-      padding:24px 32px;
-      margin-bottom:32px;
-      display:flex;align-items:center;justify-content:center;gap:20px;
-      flex-wrap:wrap;
-    }
-    .waitlist-banner-text{
-      font-size:1.05rem;
-      color:var(--fg);
-      font-weight:500;
-      margin:0;
-    }
-
     /* ─── AI AGENTS ─── */
     .ai-section{
       padding:80px clamp(24px,5vw,64px);
@@ -651,9 +629,80 @@
       padding:2px 8px;border-radius:100px;
     }
 
+    /* Developer resources panel */
+    .ai-resources{
+      margin-top:56px;
+      padding-top:40px;
+      border-top:1px solid var(--dim2);
+    }
+    .ai-resources-head{
+      display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:20px;
+    }
+    .ai-resources-label{
+      font-size:.75rem;font-weight:600;letter-spacing:.1em;
+      text-transform:uppercase;color:var(--accent);
+    }
+    .ai-resources-sub{
+      font-size:.9375rem;color:rgba(var(--fg-rgb),.55);
+      max-width:60ch;
+    }
+    .ai-resources-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+    .ai-resource{
+      display:flex;align-items:flex-start;gap:14px;
+      padding:20px 22px;
+      border:1px solid var(--dim2);
+      border-radius:14px;
+      background:rgba(var(--fg-rgb),.02);
+      text-decoration:none;color:inherit;
+      transition:border-color .15s ease, background .15s ease, transform .15s ease;
+    }
+    .ai-resource:hover{
+      border-color:rgba(var(--accent-rgb),.45);
+      background:rgba(var(--accent-rgb),.06);
+      transform:translateY(-2px);
+    }
+    .ai-resource-icon{
+      flex-shrink:0;
+      width:40px;height:40px;border-radius:10px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(var(--accent-rgb),.12);
+      border:1px solid rgba(var(--accent-rgb),.2);
+    }
+    .ai-resource-icon svg{
+      width:20px;height:20px;
+      stroke:var(--accent);fill:none;stroke-width:2;
+      stroke-linecap:round;stroke-linejoin:round;
+    }
+    .ai-resource-icon.icon-play svg{fill:var(--accent);stroke:none}
+    .ai-resource-body{display:flex;flex-direction:column;gap:4px;min-width:0}
+    .ai-resource-kind{
+      font-size:.6875rem;font-weight:600;letter-spacing:.08em;
+      text-transform:uppercase;color:rgba(var(--fg-rgb),.45);
+    }
+    .ai-resource-title{
+      font-size:.9375rem;font-weight:600;color:var(--fg);
+      display:flex;align-items:center;gap:6px;
+    }
+    .ai-resource-title .arrow{
+      color:var(--accent);
+      transition:transform .15s ease;
+    }
+    .ai-resource:hover .ai-resource-title .arrow{transform:translateX(2px)}
+    .ai-resource-desc{
+      font-size:.8125rem;color:rgba(var(--fg-rgb),.6);
+      line-height:1.5;
+    }
+
     @media(max-width:860px){
       .ai-inner{grid-template-columns:1fr}
       .ai-demo{order:-1}
+      .ai-resources-grid{grid-template-columns:1fr}
     }
 
     /* ─── SHOWCASE ─── */
@@ -1332,20 +1381,15 @@
           and watch your productivity skyline rise.
         </p>
         <div class="cta-group">
-          <button data-tally-open="dWDYRN" data-tally-layout="modal" data-tally-auto-close="3000" class="btn btn-primary waitlist-btn" aria-label="Join the Waitlist">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M22 17H2a3 3 0 003 3h14a3 3 0 003-3zM6 15V4a1 1 0 011-1h10a1 1 0 011 1v11"/><path d="M12 7v4m0 0l-2-2m2 2l2-2"/></svg>
-            Join the Waitlist
-          </button>
-          <button data-tally-open="dWDYRN" data-tally-layout="modal" data-tally-auto-close="3000" class="store-btn-sm" aria-label="App Store — Coming Soon">
+          <a href="https://apps.apple.com/app/dovilo/id6761195015?ct=website_hero&mt=8" class="store-btn-sm" aria-label="Download on the App Store">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-            <div class="store-btn-text"><small>Soon on</small><strong>App Store</strong></div>
-          </button>
-          <button data-tally-open="dWDYRN" data-tally-layout="modal" data-tally-auto-close="3000" class="store-btn-sm" aria-label="Google Play — Coming Soon">
+            <div class="store-btn-text"><small>Download on the</small><strong>App Store</strong></div>
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.dovilo.app&utm_source=website&utm_medium=hero" class="store-btn-sm" aria-label="Get it on Google Play">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.61 1.814L13.793 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .61-.92zM14.5 12.707l2.55 2.55-8.27 4.698 5.72-7.248zm4.89-2.29l1.81 1.028a.998.998 0 0 1 0 1.73L19.4 14.2l-2.83-2.2 2.82-2.283zM8.78 2.045l8.27 4.698-2.55 2.55-5.72-7.248z"/></svg>
-            <div class="store-btn-text"><small>Soon on</small><strong>Google Play</strong></div>
-          </button>
+            <div class="store-btn-text"><small>Get it on</small><strong>Google Play</strong></div>
+          </a>
         </div>
-        <p class="launch-date">Launching May 18 — Be the first to know</p>
       </div>
       <div class="hero-img">
         <div class="hero-phones">
@@ -1456,7 +1500,7 @@
       <div class="ai-copy">
         <p class="section-label" style="text-align:left">Agent-Ready</p>
         <h2>Your tasks, now <em>agent-native</em></h2>
-        <p class="ai-lead">Dovilo Desktop ships with a built-in <strong style="color:var(--fg)">MCP (Model Context Protocol)</strong> server. Connect Claude Code, Cursor, Claude Desktop, Windsurf, Codex CLI, or Gemini CLI in one click and let your agent run tasks step-by-step — while you stay in full control.</p>
+        <p class="ai-lead">Dovilo Desktop ships with a built-in <strong style="color:var(--fg)">MCP (Model Context Protocol)</strong> server <em>and</em> outbound <strong style="color:var(--fg)">signed webhooks</strong>. Plug in Claude Code, Cursor, Claude Desktop, Windsurf, Codex CLI, or Gemini CLI in one click — and pipe every task change into Slack, Linear, n8n, LangGraph, or your own automation. You stay in full control.</p>
 
         <ul class="ai-points">
           <li>
@@ -1478,6 +1522,10 @@
           <li>
             <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             <span><strong>Notes &amp; telemetry on mobile</strong> — read every note an agent leaves and see how long, how many tokens, and how much each task cost — from your phone.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 005.66 0l3-3a4 4 0 00-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 00-5.66 0l-3 3a4 4 0 005.66 5.66l1-1"/></svg>
+            <span><strong>Webhooks for any tool</strong> — signed HTTPS events fire on every task change. Pipe Dovilo into Slack, Linear, n8n, LangGraph, or your own automation. <a href="/docs/webhooks" style="color:var(--accent);font-weight:600;text-decoration:none">Read the reference &rarr;</a></span>
           </li>
         </ul>
 
@@ -1530,6 +1578,49 @@
           <span class="tool">append_note</span>
           <span class="tool">append_telemetry</span>
         </div>
+      </div>
+    </div>
+
+    <div class="ai-resources" data-reveal>
+      <div class="ai-resources-head">
+        <span class="ai-resources-label">For developers</span>
+        <p class="ai-resources-sub">Bridge Dovilo into your own automation, agent framework, or chat tool — signed webhooks, a reference receiver, and a full walkthrough.</p>
+      </div>
+      <div class="ai-resources-grid">
+
+        <a class="ai-resource" href="/docs/webhooks">
+          <div class="ai-resource-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 005.66 0l3-3a4 4 0 00-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 00-5.66 0l-3 3a4 4 0 005.66 5.66l1-1"/></svg>
+          </div>
+          <div class="ai-resource-body">
+            <span class="ai-resource-kind">Reference docs</span>
+            <span class="ai-resource-title">Webhooks <span class="arrow">&rarr;</span></span>
+            <span class="ai-resource-desc">HMAC-signed task events: payload schema, signature verification, retry policy.</span>
+          </div>
+        </a>
+
+        <a class="ai-resource" href="https://github.com/slhddn/dovilo-langgraph-demo" target="_blank" rel="noopener">
+          <div class="ai-resource-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          </div>
+          <div class="ai-resource-body">
+            <span class="ai-resource-kind">Example receiver</span>
+            <span class="ai-resource-title">LangGraph demo <span class="arrow">&rarr;</span></span>
+            <span class="ai-resource-desc">End-to-end LangGraph receiver that verifies signatures and drives an agent through MCP.</span>
+          </div>
+        </a>
+
+        <a class="ai-resource" href="https://www.youtube.com/watch?v=id_7T8qUfpg" target="_blank" rel="noopener">
+          <div class="ai-resource-icon icon-play" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="ai-resource-body">
+            <span class="ai-resource-kind">Walkthrough video</span>
+            <span class="ai-resource-title">Webhook + MCP setup <span class="arrow">&rarr;</span></span>
+            <span class="ai-resource-desc">Watch the full integration: signing secret, signature check, and wiring the agent loop.</span>
+          </div>
+        </a>
+
       </div>
     </div>
   </section>
@@ -1674,9 +1765,9 @@
     </div>
 
     <div style="text-align:center;margin-top:40px">
-      <button data-tally-open="dWDYRN" data-tally-layout="modal" data-tally-auto-close="3000" class="btn btn-primary waitlist-btn" style="padding:16px 48px;font-size:1rem">
-        Join the Waitlist
-      </button>
+      <a href="#download" class="btn btn-primary" style="padding:16px 48px;font-size:1rem">
+        Get Dovilo
+      </a>
     </div>
   </section>
 
@@ -1748,6 +1839,16 @@
 
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
+          <h3>Can Dovilo send task events to Slack, Linear, or my own service?</h3>
+          <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a">
+          <p>Yes. Dovilo Desktop fires <strong>HMAC-signed HTTPS webhooks</strong> on every task change — <code>task.created</code> and <code>task.status_changed</code> — so you can bridge Dovilo into Slack, Linear, n8n, LangGraph, or any custom receiver. Each delivery includes a Stripe-style <code>X-Dovilo-Signature</code> header for verification, a unique <code>X-Dovilo-Delivery</code> id for idempotency, FIFO ordering per task, and up to 5 retries on transient failures. Open a project → <strong>Webhooks</strong>, paste your URL, generate a signing secret, and click Enable. Full payload schema, signature verification examples (Node, Python, Go), and the retry policy live in the <a href="/docs/webhooks">webhooks reference</a>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
           <h3>How do I cancel my subscription?</h3>
           <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
         </div>
@@ -1766,11 +1867,6 @@
   <section class="download" id="download" aria-label="Download Dovilo for iOS, Android, Windows and Mac">
     <p class="section-label">Download</p>
     <h2 class="section-title">Get Dovilo on your device</h2>
-
-    <div class="waitlist-banner">
-      <p class="waitlist-banner-text">Launching May 18 — Get notified when we go live</p>
-      <button data-tally-open="dWDYRN" data-tally-layout="modal" data-tally-auto-close="3000" class="btn btn-primary waitlist-btn">Join the Waitlist</button>
-    </div>
 
     <p class="download-sub">Available on iOS, Android, Windows &amp; Mac. Free to start.</p>
     <div class="store-buttons">
@@ -1816,7 +1912,7 @@
     <p>Dovilo is a <strong>gamified to-do list and productivity app</strong> that transforms your daily tasks into an <strong>isometric city builder</strong>. Unlike traditional task managers, Dovilo rewards your productivity — every completed task and focus session earns coins that you can spend on buildings, decorations, and upgrades for your virtual city.</p>
 
     <h3>Four Pillars, One App</h3>
-    <p>Dovilo brings together a <strong>full-featured to-do list</strong>, a <strong>Pomodoro-style focus timer</strong>, an <strong>isometric city builder</strong>, and an <strong>MCP-based AI agent layer</strong> into one seamless experience. Most productivity tools stop at checklists — Dovilo goes further by turning your progress into a growing city skyline and letting AI agents like Claude Code, Cursor, Windsurf, Codex CLI, and Gemini CLI pick up tasks on your desktop.</p>
+    <p>Dovilo brings together a <strong>full-featured to-do list</strong>, a <strong>Pomodoro-style focus timer</strong>, an <strong>isometric city builder</strong>, and an <strong>MCP + signed webhooks agent layer</strong> into one seamless experience. Most productivity tools stop at checklists — Dovilo goes further by turning your progress into a growing city skyline, letting AI agents like Claude Code, Cursor, Windsurf, Codex CLI, and Gemini CLI pick up tasks on your desktop, and firing HMAC-signed HTTPS events so Slack, Linear, n8n, LangGraph, or any custom receiver can react to task changes in real time.</p>
 
     <h3>Key Features</h3>
     <ul>
@@ -1829,10 +1925,11 @@
       <li><strong>Offline-First</strong> — Works without internet. Your data is stored locally. Optional cloud sync for Pro users.</li>
       <li><strong>No Ads</strong> — Dovilo is completely ad-free, even on the free tier.</li>
       <li><strong>Agent-Ready via MCP</strong> — Dovilo Desktop (Pro) runs a built-in Model Context Protocol server. Claude Code, Cursor, Claude Desktop, Windsurf, Codex CLI, Gemini CLI, and any MCP-compatible agent can list tasks, read project context, update status, add and skip steps, append notes, and report telemetry — locally, with no cloud dependency and a per-project scope you control.</li>
+      <li><strong>Signed Webhooks for any tool</strong> — Dovilo Desktop fires HMAC-SHA256-signed HTTPS events on every task change (<code>task.created</code>, <code>task.status_changed</code>). Subscribe per project to bridge Dovilo into Slack, Linear, n8n, LangGraph, your own automation, or an LLM agent — with a 5-minute replay window, FIFO ordering per task, 5-attempt retry, and built-in idempotency via the <code>X-Dovilo-Delivery</code> header. Full schema and verification examples in the <a href="/docs/webhooks">webhooks reference</a>.</li>
     </ul>
 
     <h3>Built for AI Agents</h3>
-    <p>Dovilo is the first <strong>agent-native gamified task manager</strong>. The desktop app exposes nine MCP tools — <code>list_tasks</code>, <code>get_task</code>, <code>read_context</code>, <code>update_status</code>, <code>update_step</code>, <code>add_step</code>, <code>skip_step</code>, <code>append_note</code>, and <code>append_telemetry</code> — so your AI coding agent can pick up a task, read project context and the project brief, execute step-by-step, and report back with notes plus model/token/cost telemetry. Agents can only read and update; they cannot create tasks, keeping you firmly in control of your workflow.</p>
+    <p>Dovilo is the first <strong>agent-native gamified task manager</strong>. The desktop app exposes nine MCP tools — <code>list_tasks</code>, <code>get_task</code>, <code>read_context</code>, <code>update_status</code>, <code>update_step</code>, <code>add_step</code>, <code>skip_step</code>, <code>append_note</code>, and <code>append_telemetry</code> — so your AI coding agent can pick up a task, read project context and the project brief, execute step-by-step, and report back with notes plus model/token/cost telemetry. Agents can only read and update; they cannot create tasks, keeping you firmly in control of your workflow. The same desktop client also emits <strong>signed outbound webhooks</strong> for <code>task.created</code> and <code>task.status_changed</code>, so you can wire Dovilo into Slack, Linear, n8n, LangGraph, or any HTTPS receiver — see the <a href="/docs/webhooks">webhooks reference</a> and the open-source <a href="https://github.com/slhddn/dovilo-langgraph-demo" target="_blank" rel="noopener">LangGraph demo</a> for a working integration.</p>
 
     <h3>Who is Dovilo for?</h3>
     <p>Dovilo is perfect for <strong>students</strong> who need a fun study companion, <strong>professionals</strong> who want to gamify their workflow, <strong>freelancers</strong> managing multiple projects, <strong>developers</strong> who already run Claude Code, Cursor, Windsurf, Codex CLI, or Gemini CLI and want agent-driven task progress, and anyone who struggles with <strong>procrastination</strong> or staying focused. If you've been looking for a productivity app that feels rewarding rather than repetitive — and that plays nicely with AI agents — Dovilo is designed for you.</p>
@@ -1862,6 +1959,7 @@
     </ul>
     <ul class="footer-links">
       <li><button onclick="openModal('about')">About</button></li>
+      <li><a href="/docs/webhooks">Webhooks</a></li>
       <li><a href="/terms">Terms of Service</a></li>
       <li><a href="/privacy">Privacy Policy</a></li>
     </ul>
@@ -1876,9 +1974,6 @@
       <p>Our mission is to bridge the gap between abstract goals and tangible results. By turning your focus hours into bricks and your completed tasks into skyscrapers, we provide a visual sanctuary for your hard work. Whether you are a student, a creative, or a professional, Dovilo helps you step into the "Mayor's Office" of your life and build the future you've always envisioned, one task at a time.</p>
     </div>
   </div>
-
-  <!-- Tally.so Waitlist Form -->
-  <script src="https://tally.so/widgets/embed.js"></script>
 
   <script>
     function toggleMenu() {

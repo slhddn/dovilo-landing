@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dovilo Webhooks — Developer Reference</title>
+  <meta name="description" content="HMAC-signed task events you can subscribe to. Payload schema, signature verification, retry policy.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://dovilo.app/docs/webhooks">
+  <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Dovilo Webhooks — Developer Reference">
+  <meta property="og:description" content="HMAC-signed task events you can subscribe to. Payload schema, signature verification, retry policy.">
+  <meta property="og:url" content="https://dovilo.app/docs/webhooks">
+  <meta property="og:site_name" content="Dovilo">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Dovilo Webhooks — Developer Reference">
+  <meta name="twitter:description" content="HMAC-signed task events you can subscribe to. Payload schema, signature verification, retry policy.">
+
+  <!-- Syntax highlighting (used by this docs page only). -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#161B1D;
+      --bg-2:#1F2426;
+      --fg:#E8EAEB;
+      --accent:#D4880A;
+      --muted:#E8A832;
+      --fg-rgb:232,234,235;
+      --accent-rgb:212,136,10;
+      --dim:rgba(var(--fg-rgb),.12);
+      --dim2:rgba(var(--fg-rgb),.06);
+      --max:1120px;
+      --code-bg:#0f1214;
+    }
+    html{scroll-behavior:smooth;scroll-padding-top:24px}
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+      background:var(--bg);
+      color:rgba(var(--fg-rgb),.75);
+      line-height:1.8;
+      padding:48px 24px 96px;
+    }
+    .page{
+      max-width:var(--max);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:240px 1fr;
+      gap:48px;
+      align-items:start;
+    }
+    a.back{
+      display:inline-block;
+      margin-bottom:32px;
+      color:var(--accent);
+      text-decoration:none;
+      font-size:.875rem;
+      font-weight:500;
+    }
+    a.back:hover{text-decoration:underline}
+
+    /* ── TOC ─────────────────────────────────────────────────── */
+    .toc{
+      position:sticky;
+      top:24px;
+      max-height:calc(100vh - 48px);
+      overflow-y:auto;
+      font-size:.8125rem;
+      border-left:1px solid var(--dim2);
+      padding:4px 0 4px 16px;
+    }
+    .toc-title{
+      font-size:.6875rem;
+      font-weight:600;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--accent);
+      margin-bottom:12px;
+    }
+    .toc ol{list-style:none;padding-left:0;margin:0}
+    .toc li{margin:0}
+    .toc a{
+      display:block;
+      padding:5px 8px;
+      color:rgba(var(--fg-rgb),.55);
+      text-decoration:none;
+      border-radius:6px;
+      line-height:1.4;
+    }
+    .toc a:hover{color:var(--fg);background:var(--dim2)}
+    .toc a.active{color:var(--accent);background:rgba(var(--accent-rgb),.08)}
+    .toc .lvl-3{padding-left:14px;font-size:.78125rem;color:rgba(var(--fg-rgb),.45)}
+    .toc summary{display:none}
+
+    /* ── Article ─────────────────────────────────────────────── */
+    .article{min-width:0}
+    .article h1{
+      font-size:clamp(1.75rem,3vw,2.25rem);
+      font-weight:700;
+      color:var(--fg);
+      letter-spacing:-.02em;
+      margin-bottom:12px;
+    }
+    .article .lede{
+      font-size:1rem;
+      color:rgba(var(--fg-rgb),.6);
+      margin-bottom:8px;
+      max-width:70ch;
+    }
+    .article .lede + .lede{margin-bottom:32px}
+    .article h2{
+      font-size:1.375rem;
+      font-weight:700;
+      color:var(--fg);
+      letter-spacing:-.01em;
+      margin:48px 0 16px;
+      padding-top:24px;
+      border-top:1px solid var(--dim2);
+      scroll-margin-top:24px;
+    }
+    .article h2:first-of-type{border-top:none;padding-top:0;margin-top:40px}
+    .article h3{
+      font-size:1.0625rem;
+      font-weight:600;
+      color:var(--fg);
+      margin:28px 0 12px;
+      scroll-margin-top:24px;
+    }
+    .article p{
+      margin-bottom:14px;
+      font-size:.9375rem;
+      max-width:70ch;
+    }
+    .article ul,
+    .article ol{
+      margin:0 0 16px 22px;
+      max-width:70ch;
+    }
+    .article li{
+      margin-bottom:8px;
+      font-size:.9375rem;
+    }
+    .article li > p{margin-bottom:6px}
+    .article strong{color:rgba(var(--fg-rgb),.95);font-weight:600}
+    .article em{color:rgba(var(--fg-rgb),.85);font-style:italic}
+    .article a{color:var(--accent)}
+    .article a:hover{text-decoration:underline}
+
+    /* anchor links rendered next to headings */
+    .h-anchor{
+      color:rgba(var(--fg-rgb),.25);
+      margin-left:10px;
+      font-weight:400;
+      font-size:.85em;
+      text-decoration:none;
+      opacity:0;
+      transition:opacity .15s;
+    }
+    h2:hover .h-anchor,
+    h3:hover .h-anchor,
+    .h-anchor:focus{opacity:1}
+
+    /* inline code */
+    .article :not(pre) > code{
+      font-family:'SF Mono',ui-monospace,Menlo,Monaco,Consolas,monospace;
+      font-size:.85em;
+      padding:1px 6px;
+      border-radius:5px;
+      background:rgba(var(--fg-rgb),.07);
+      color:#E8A832;
+      border:1px solid var(--dim2);
+      word-break:break-word;
+    }
+
+    /* code blocks */
+    pre{
+      margin:18px 0 22px;
+      padding:0;
+      background:var(--code-bg);
+      border:1px solid rgba(var(--accent-rgb),.08);
+      border-radius:10px;
+      overflow:hidden;
+      box-shadow:0 20px 50px -25px rgba(0,0,0,.5);
+    }
+    pre code.hljs{
+      display:block;
+      padding:18px 20px;
+      background:transparent;
+      font-family:'SF Mono',ui-monospace,Menlo,Monaco,Consolas,monospace;
+      font-size:.8125rem;
+      line-height:1.7;
+      overflow-x:auto;
+      color:rgba(var(--fg-rgb),.85);
+      border:none;
+    }
+    /* shave off hljs default backgrounds so our --code-bg wins */
+    pre code.hljs,
+    pre code{background:transparent !important}
+    pre code{
+      color:rgba(var(--fg-rgb),.85);
+      font-family:'SF Mono',ui-monospace,Menlo,Monaco,Consolas,monospace;
+      font-size:.8125rem;
+      line-height:1.7;
+      display:block;
+      padding:18px 20px;
+      overflow-x:auto;
+      white-space:pre;
+    }
+
+    /* tables */
+    .table-wrap{
+      overflow-x:auto;
+      margin:18px 0 22px;
+      border:1px solid var(--dim2);
+      border-radius:10px;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:.875rem;
+    }
+    thead{
+      background:rgba(var(--fg-rgb),.03);
+    }
+    th, td{
+      text-align:left;
+      padding:10px 14px;
+      border-bottom:1px solid var(--dim2);
+      vertical-align:top;
+    }
+    th{
+      font-weight:600;
+      color:var(--fg);
+      font-size:.8125rem;
+      letter-spacing:.01em;
+    }
+    td{color:rgba(var(--fg-rgb),.7)}
+    tbody tr:last-child td{border-bottom:none}
+    table code{
+      font-family:'SF Mono',ui-monospace,Menlo,Monaco,Consolas,monospace;
+      font-size:.85em;
+      padding:1px 5px;
+      border-radius:4px;
+      background:rgba(var(--fg-rgb),.07);
+      color:#E8A832;
+      border:1px solid var(--dim2);
+      white-space:nowrap;
+    }
+
+    hr{
+      border:none;
+      border-top:1px solid var(--dim2);
+      margin:40px 0;
+    }
+
+    .callout{
+      margin:18px 0 22px;
+      padding:14px 18px;
+      border-left:3px solid var(--accent);
+      background:rgba(var(--accent-rgb),.06);
+      border-radius:0 8px 8px 0;
+      font-size:.9375rem;
+      color:rgba(var(--fg-rgb),.85);
+    }
+    .callout strong{color:var(--fg)}
+
+    .resource-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin:24px 0 8px;
+    }
+    .resource-card{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      padding:16px 18px;
+      border:1px solid var(--dim2);
+      border-radius:10px;
+      background:rgba(var(--fg-rgb),.02);
+      text-decoration:none;
+      transition:border-color .15s, background .15s, transform .15s;
+    }
+    .resource-card:hover{
+      border-color:rgba(var(--accent-rgb),.4);
+      background:rgba(var(--accent-rgb),.05);
+      transform:translateY(-1px);
+    }
+    .resource-kind{
+      font-size:.6875rem;
+      font-weight:600;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      color:var(--accent);
+    }
+    .resource-title{
+      font-size:.9375rem;
+      font-weight:600;
+      color:var(--fg);
+    }
+    .resource-desc{
+      font-size:.8125rem;
+      color:rgba(var(--fg-rgb),.55);
+      line-height:1.5;
+    }
+    @media (max-width:600px){
+      .resource-grid{grid-template-columns:1fr}
+    }
+
+    /* AI prompt anchor chip (top of page) */
+    .prompt-cta{
+      display:inline-flex;align-items:center;gap:10px;
+      margin:8px 0 16px;
+      padding:8px 14px 8px 10px;
+      border:1px solid rgba(var(--accent-rgb),.35);
+      background:rgba(var(--accent-rgb),.08);
+      border-radius:100px;
+      font-size:.8125rem;font-weight:600;
+      color:var(--accent);
+      text-decoration:none;
+      transition:background .15s, border-color .15s, transform .15s;
+    }
+    .prompt-cta:hover{
+      background:rgba(var(--accent-rgb),.14);
+      border-color:rgba(var(--accent-rgb),.55);
+      transform:translateY(-1px);
+    }
+    .prompt-cta-icon{
+      width:22px;height:22px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(var(--accent-rgb),.18);
+    }
+    .prompt-cta-icon svg{
+      width:13px;height:13px;
+      fill:var(--accent);
+    }
+    .prompt-cta-arrow{
+      font-size:.875rem;
+      opacity:.7;
+      transition:transform .15s;
+    }
+    .prompt-cta:hover .prompt-cta-arrow{transform:translateY(2px)}
+
+    /* AI prompt section */
+    .prompt-box{
+      margin:20px 0 8px;
+      border:1px solid rgba(var(--accent-rgb),.22);
+      border-radius:12px;
+      background:rgba(var(--accent-rgb),.04);
+      overflow:hidden;
+    }
+    .prompt-box-head{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:12px;
+      padding:12px 16px;
+      background:rgba(var(--accent-rgb),.08);
+      border-bottom:1px solid rgba(var(--accent-rgb),.18);
+    }
+    .prompt-box-label{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:.75rem;font-weight:600;letter-spacing:.08em;
+      text-transform:uppercase;color:var(--accent);
+    }
+    .prompt-box-label svg{
+      width:14px;height:14px;fill:var(--accent);
+    }
+    .copy-btn{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 12px;
+      background:var(--accent);
+      color:#161B1D;
+      border:none;border-radius:6px;
+      font-family:inherit;
+      font-size:.8125rem;font-weight:600;
+      cursor:pointer;
+      transition:background .15s, transform .1s;
+    }
+    .copy-btn:hover{background:var(--muted)}
+    .copy-btn:active{transform:scale(.97)}
+    .copy-btn svg{
+      width:14px;height:14px;
+      fill:none;stroke:currentColor;stroke-width:2;
+      stroke-linecap:round;stroke-linejoin:round;
+    }
+    .copy-btn.copied{background:#7dd3a7;color:#0c1012}
+    .prompt-box pre{
+      margin:0;
+      border:none;border-radius:0;
+      box-shadow:none;
+      background:transparent;
+      max-height:520px;
+    }
+    .prompt-box pre code{
+      max-height:520px;
+      overflow:auto;
+      font-size:.78125rem;
+      white-space:pre;
+    }
+    .prompt-hint{
+      font-size:.8125rem;color:rgba(var(--fg-rgb),.55);
+      margin:14px 0 0;
+    }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width:900px){
+      body{padding:32px 18px 80px}
+      .page{
+        grid-template-columns:1fr;
+        gap:16px;
+      }
+      .toc{
+        position:static;
+        max-height:none;
+        border-left:none;
+        border:1px solid var(--dim2);
+        border-radius:10px;
+        padding:0;
+        margin-bottom:24px;
+      }
+      .toc-title{display:none}
+      .toc details{padding:0}
+      .toc summary{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:14px 16px;
+        cursor:pointer;
+        font-size:.8125rem;
+        font-weight:600;
+        letter-spacing:.06em;
+        text-transform:uppercase;
+        color:var(--accent);
+        list-style:none;
+      }
+      .toc summary::-webkit-details-marker{display:none}
+      .toc summary::after{
+        content:'▾';
+        font-size:.8em;
+        color:rgba(var(--fg-rgb),.4);
+        transition:transform .2s;
+      }
+      .toc details[open] summary::after{transform:rotate(180deg)}
+      .toc ol{padding:0 8px 12px}
+      .toc a{padding:6px 12px}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <aside class="toc" aria-label="On this page">
+      <details>
+        <summary>On this page</summary>
+        <div class="toc-title">On this page</div>
+        <ol id="toc-list">
+          <li><a href="#integration-prompt">Integration prompt</a></li>
+          <li><a href="#quick-start">Quick start</a></li>
+          <li><a href="#transport">Transport</a></li>
+          <li>
+            <a href="#events">Events</a>
+            <ol><li class="lvl-3"><a href="#task-lifecycle-reference">Task lifecycle reference</a></li></ol>
+          </li>
+          <li><a href="#headers">Headers</a></li>
+          <li>
+            <a href="#payload-schema">Payload schema</a>
+            <ol>
+              <li class="lvl-3"><a href="#top-level">Top-level</a></li>
+              <li class="lvl-3"><a href="#task-object"><code>task</code> object</a></li>
+              <li class="lvl-3"><a href="#webhook-ping-payload"><code>webhook.ping</code> payload</a></li>
+            </ol>
+          </li>
+          <li>
+            <a href="#signature-verification">Signature verification</a>
+            <ol>
+              <li class="lvl-3"><a href="#algorithm">Algorithm</a></li>
+              <li class="lvl-3"><a href="#nodejs-express">Node.js (Express)</a></li>
+              <li class="lvl-3"><a href="#python-flask">Python (Flask)</a></li>
+              <li class="lvl-3"><a href="#go">Go</a></li>
+              <li class="lvl-3"><a href="#common-verification-mistakes">Common verification mistakes</a></li>
+            </ol>
+          </li>
+          <li><a href="#responses-dovilo-expects">Responses Dovilo expects</a></li>
+          <li><a href="#retry-policy">Retry policy</a></li>
+          <li><a href="#ordering-and-concurrency">Ordering and concurrency</a></li>
+          <li><a href="#idempotency">Idempotency</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#operational-notes">Operational notes</a></li>
+          <li><a href="#changelog">Changelog</a></li>
+        </ol>
+      </details>
+    </aside>
+
+    <article class="article">
+      <a href="/" class="back">&larr; Dovilo</a>
+      <h1>Dovilo Webhooks</h1>
+      <a class="prompt-cta" href="#integration-prompt" aria-label="Jump to the AI integration prompt">
+        <span class="prompt-cta-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2l1.5 6.5L20 10l-6.5 1.5L12 18l-1.5-6.5L4 10l6.5-1.5L12 2zM19 15l.7 2.3L22 18l-2.3.7L19 21l-.7-2.3L16 18l2.3-.7L19 15z"/></svg>
+        </span>
+        <span>Have an AI agent scaffold the receiver</span>
+        <span class="prompt-cta-arrow" aria-hidden="true">&darr;</span>
+      </a>
+      <p class="lede">Dovilo can POST a signed JSON event to your endpoint whenever a task in one of your projects changes. Use it to bridge Dovilo into Slack, Linear, your own automation, an LLM agent — anything that can accept an HTTPS request.</p>
+      <p class="lede">This document is the public reference for integrating with Dovilo webhooks. It covers events, payload schema, signature verification, retries, and the operational guarantees you should design your receiver around.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://github.com/slhddn/dovilo-langgraph-demo" target="_blank" rel="noopener">
+          <span class="resource-kind">Reference implementation</span>
+          <span class="resource-title">dovilo-langgraph-demo &rarr;</span>
+          <span class="resource-desc">End-to-end LangGraph receiver that verifies signatures, fans events out, and drives an agent through MCP.</span>
+        </a>
+        <a class="resource-card" href="https://www.youtube.com/watch?v=id_7T8qUfpg" target="_blank" rel="noopener">
+          <span class="resource-kind">Walkthrough video</span>
+          <span class="resource-title">Webhook + MCP integration &rarr;</span>
+          <span class="resource-desc">Full setup tour — generating the secret, verifying signatures, and wiring the agent loop.</span>
+        </a>
+      </div>
+
+      <h2 id="integration-prompt">Integration prompt <a class="h-anchor" href="#integration-prompt" aria-label="Link to Integration prompt">#</a></h2>
+      <p>Paste this into Claude Code, Cursor, Windsurf, or any other AI coding agent and it will build you a webhook receiver in your project's stack, set up signature verification correctly, and end with a checklist for the Dovilo-side setup.</p>
+
+      <div class="prompt-box">
+        <div class="prompt-box-head">
+          <span class="prompt-box-label">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l1.5 6.5L20 10l-6.5 1.5L12 18l-1.5-6.5L4 10l6.5-1.5L12 2zM19 15l.7 2.3L22 18l-2.3.7L19 21l-.7-2.3L16 18l2.3-.7L19 15z"/></svg>
+            AI integration prompt
+          </span>
+          <button type="button" class="copy-btn" id="copy-prompt-btn" aria-label="Copy prompt to clipboard">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span class="copy-btn-label">Copy prompt</span>
+          </button>
+        </div>
+<pre><code class="language-plaintext" id="integration-prompt-text">I want to receive task events from Dovilo (https://dovilo.app — a gamified
+todo app) into this project and act on them. Please build a webhook
+receiver here, then walk me through the Dovilo-side setup.
+
+DO THIS IN ORDER:
+
+────────────────────────────────────────────────────────────────────
+STEP 1 — ASK ME FIRST
+────────────────────────────────────────────────────────────────────
+- What should happen when an event arrives? (Slack notification?
+  Linear sync? CI trigger? Database log? Hand off to an LLM?)
+- Which stack should the receiver use? Match this project if obvious;
+  otherwise ask. (Node/Express, FastAPI, Go net/http, Cloudflare
+  Workers, Vercel function, etc.)
+- Where will it be deployed and what's the public URL going to be?
+  For local dev, suggest ngrok / cloudflared / tailscale funnel.
+
+────────────────────────────────────────────────────────────────────
+STEP 2 — WRITE THE RECEIVER
+────────────────────────────────────────────────────────────────────
+Route: POST /webhooks/dovilo  (or fit the project's conventions)
+
+CRITICAL RULES:
+- Read the RAW request body before any JSON parsing. The HMAC is
+  computed over the raw bytes; re-serializing breaks the signature.
+- Verify `X-Dovilo-Signature` (format: `t=&lt;unix-ms&gt;,v1=&lt;hex&gt;`):
+    1. Parse `t` and `v1`.
+    2. Reject if `|Date.now() - t|` &gt; 5 minutes (replay protection).
+    3. Compute `HMAC_SHA256(secret, `${t}.${rawBody}`)`, hex-encode.
+    4. Compare to `v1` in CONSTANT TIME (timingSafeEqual /
+       hmac.compare_digest / hmac.Equal). Never use plain `==`.
+- Use `X-Dovilo-Delivery` (also `id` in the body) as the idempotency
+  key — store it, drop duplicates. Same id is reused across retries.
+- Respond 2xx on success, 401 on bad signature. Respond 410 ONLY if
+  the integration is permanently dead — Dovilo will disable the
+  webhook on its side when it sees 410.
+- Read the signing secret from env var `DOVILO_WEBHOOK_SECRET`. Add
+  a placeholder to `.env.example`. NEVER commit the real secret.
+
+────────────────────────────────────────────────────────────────────
+STEP 3 — HANDLE THESE EVENT TYPES
+────────────────────────────────────────────────────────────────────
+- `task.created`         — new task created.
+- `task.status_changed`  — body has `previousStatus` + `task.status`.
+                           Status values: queued, running, awaiting-user,
+                           done, failed, cancelled.
+- `webhook.ping`         — test event from Dovilo's "Send test" button.
+                           Acknowledge with 2xx; don't trigger anything.
+
+Payload shape (slim — these are ALL the fields you get):
+
+{
+  "id": "evt_...",                  // also in X-Dovilo-Delivery
+  "type": "task.status_changed",
+  "createdAt": 1715900000000,       // unix ms when queued
+  "projectId": "list_...",
+  "projectName": "Marketing site",  // may be omitted
+  "previousStatus": "running" | null,  // status_changed only
+  "task": {
+    "id": "tsk_...",
+    "text": "Draft launch announcement",
+    "status": "done",
+    "projectId": "list_...",
+    "createdAt": 1715800000000,
+    "updatedAt": 1715900000000,     // USE THIS to order, not delivery time
+    "priority": "high",             // optional: none|low|medium|high|urgent
+    "importance": true,             // optional
+    "dueAt": 1716000000000,         // optional, unix ms
+    "startedAt": 1715890000000,     // optional
+    "completedAt": 1715900000000,   // optional
+    "error": { "message": "...", "stepId": "..." },  // optional, on failed
+    "claimedByAgentId": "agent_...",       // optional
+    "claimedByAgentName": "Claude Code",   // optional
+    "telemetry": {                  // only on terminal transitions
+      "entries": 14, "tokensIn": 12483, "tokensOut": 3201,
+      "durationMs": 84120, "costEstimate": 0.0731, "truncated": false
+    }
+  }
+}
+
+Ordering: same task = FIFO. Different tasks = parallel, no order
+guarantee. Sort by `task.updatedAt` if you need a total order.
+
+────────────────────────────────────────────────────────────────────
+STEP 4 — TEST LOCALLY
+────────────────────────────────────────────────────────────────────
+Show me how to:
+- Run the receiver locally.
+- Expose it on a public URL if needed (ngrok / cloudflared).
+- What logs to watch.
+
+────────────────────────────────────────────────────────────────────
+STEP 5 — END WITH THIS CHECKLIST (substitute the real URL)
+────────────────────────────────────────────────────────────────────
+Print this checklist VERBATIM at the end, replacing `&lt;YOUR_URL&gt;` with
+the actual public URL of the receiver you just built:
+
+  ─────────────────────────────────────────────────────────────
+  FINAL STEP — set this up on the Dovilo side:
+
+  1. Open the Dovilo desktop app and open the project you want
+     events from.
+  2. Open the project editor and expand the "Webhooks" section.
+  3. Paste this URL into the URL field:
+       &lt;YOUR_URL&gt;
+  4. Click "Generate signing secret". The plaintext secret is
+     shown EXACTLY ONCE — copy it immediately.
+  5. Put the secret in your `.env` (or your host's secret manager):
+       DOVILO_WEBHOOK_SECRET=&lt;paste-here&gt;
+     Then restart the receiver so it picks up the env var.
+  6. Tick the events you want (task.created and/or
+     task.status_changed).
+  7. Toggle the project's webhook to "Enabled".
+  8. Click "Send test". You should see a 2xx in your receiver logs
+     within a second.
+  ─────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────
+GUARDRAILS
+────────────────────────────────────────────────────────────────────
+- Don't invent Dovilo features. If I ask for something this prompt
+  doesn't cover (inbound API, unsubscribe webhook, batch deliveries,
+  task.deleted events), say "not currently supported by Dovilo
+  webhooks — check https://dovilo.app/docs/webhooks" rather than
+  guessing or stubbing.
+- The webhook payload is intentionally slim. If I need the full task
+  (description, agent notes, full telemetry, steps), tell me to
+  fetch it via Dovilo's MCP server using `get_task` / `list_tasks`.
+</code></pre>
+      </div>
+      <p class="prompt-hint">Tip — for the fastest result, run it inside the project that will host the receiver, so the agent picks up your stack, conventions, and lint/test scripts.</p>
+
+      <h2 id="quick-start">Quick start <a class="h-anchor" href="#quick-start" aria-label="Link to Quick start">#</a></h2>
+      <ol>
+        <li>Open a project in Dovilo (desktop app) and expand the <strong>Webhooks</strong> section in the project editor.</li>
+        <li>Paste your receiver URL (must be <code>https://</code> for anything that isn't <code>localhost</code>).</li>
+        <li>Click <strong>Generate signing secret</strong>. The plaintext is shown <strong>once</strong> — copy it into your receiver's secret store immediately.</li>
+        <li>Pick which events you want (<code>task.created</code>, <code>task.status_changed</code>).</li>
+        <li>Click <strong>Enable</strong>, then <strong>Send test</strong> to fire a <code>webhook.ping</code> against your endpoint.</li>
+      </ol>
+      <p>Once enabled, every matching task event in that project is delivered as a signed POST to the configured URL.</p>
+
+      <h2 id="transport">Transport <a class="h-anchor" href="#transport" aria-label="Link to Transport">#</a></h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Property</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Method</td><td><code>POST</code></td></tr>
+          <tr><td>Content-Type</td><td><code>application/json</code></td></tr>
+          <tr><td>User-Agent</td><td><code>Dovilo-Webhook/1.0</code></td></tr>
+          <tr><td>URL schemes</td><td><code>http://</code> (localhost only), <code>https://</code></td></tr>
+          <tr><td>Body encoding</td><td>UTF-8 JSON</td></tr>
+          <tr><td>Per-attempt timeout</td><td>10 seconds</td></tr>
+        </tbody>
+      </table></div>
+      <p>Anything outside <code>http(s)://</code> is rejected before a request is made. Plain <code>http://</code> to a non-<code>localhost</code> host is allowed but flagged with a warning in the UI — don't ship a production integration over cleartext.</p>
+
+      <h2 id="events">Events <a class="h-anchor" href="#events" aria-label="Link to Events">#</a></h2>
+      <p>Dovilo currently emits three event types. The set is intentionally small; we'd rather add events later than walk back a half-baked one.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Event type</th><th>When it fires</th></tr></thead>
+        <tbody>
+          <tr><td><code>task.created</code></td><td>A new task is created in the project.</td></tr>
+          <tr><td><code>task.status_changed</code></td><td>A task's <code>status</code> changes (e.g. <code>queued</code> &rarr; <code>running</code> &rarr; <code>done</code>).</td></tr>
+          <tr><td><code>webhook.ping</code></td><td>Synthetic event sent by the <strong>Send test</strong> button. Single attempt, no retry.</td></tr>
+        </tbody>
+      </table></div>
+      <p>You select which events to subscribe to per project. <code>webhook.ping</code> is always delivered when the test button is pressed, regardless of subscription.</p>
+
+      <h3 id="task-lifecycle-reference">Task lifecycle reference <a class="h-anchor" href="#task-lifecycle-reference" aria-label="Link to Task lifecycle reference">#</a></h3>
+      <p><code>task.status_changed</code> carries a <code>previousStatus</code> field. The status values you will see in <code>task.status</code> and <code>previousStatus</code>:</p>
+<pre><code class="language-plaintext">queued  &rarr;  running  &rarr;  awaiting-user  &rarr;  running  &rarr;  done
+                                                  &rarr;  failed
+                                                  &rarr;  cancelled</code></pre>
+      <p><code>awaiting-user</code> is entered when an agent pauses for human input (plan approval, mid-task question). It transitions back to <code>running</code> once the user responds.</p>
+
+      <h2 id="headers">Headers <a class="h-anchor" href="#headers" aria-label="Link to Headers">#</a></h2>
+      <p>Every delivery includes three Dovilo-specific headers in addition to the standard ones.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Header</th><th>Example</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>X-Dovilo-Signature</code></td><td><code>t=1715900000000,v1=4b2a...c7</code></td><td>HMAC signature + timestamp (see below)</td></tr>
+          <tr><td><code>X-Dovilo-Event</code></td><td><code>task.status_changed</code></td><td>Event type — route without parsing body</td></tr>
+          <tr><td><code>X-Dovilo-Delivery</code></td><td><code>evt_4f0b8a3e-7d2a-4c92-9b13-3e8a1f6c4d11</code></td><td>Unique delivery id — use for deduplication</td></tr>
+        </tbody>
+      </table></div>
+      <p>The delivery id is stable across retries of the <strong>same</strong> delivery, so it is safe to use as an idempotency key in your receiver.</p>
+
+      <h2 id="payload-schema">Payload schema <a class="h-anchor" href="#payload-schema" aria-label="Link to Payload schema">#</a></h2>
+      <p>The body is a JSON object. Field set is deliberately slim — just enough to route and decide whether to fetch more. Large or sensitive fields (<code>description</code>, <code>agentNotes</code>, <code>context</code>, <code>steps</code>, full <code>telemetry</code>) are not included; fetch the full task via MCP (<code>get_task</code>) if you need them.</p>
+
+      <h3 id="top-level">Top-level <a class="h-anchor" href="#top-level" aria-label="Link to Top-level">#</a></h3>
+<pre><code class="language-json">{
+  "id": "evt_4f0b8a3e-7d2a-4c92-9b13-3e8a1f6c4d11",
+  "type": "task.status_changed",
+  "createdAt": 1715900000000,
+  "projectId": "list_2hP9...",
+  "projectName": "Marketing site",
+  "previousStatus": "running",
+  "task": { ... }
+}</code></pre>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>id</code></td><td>string</td><td>Same value as <code>X-Dovilo-Delivery</code>. Idempotency key.</td></tr>
+          <tr><td><code>type</code></td><td>string</td><td>One of <code>task.created</code>, <code>task.status_changed</code>, <code>webhook.ping</code>.</td></tr>
+          <tr><td><code>createdAt</code></td><td>number (unix ms)</td><td>Time the event was queued for delivery — not the task time.</td></tr>
+          <tr><td><code>projectId</code></td><td>string</td><td>Dovilo project (custom list) id.</td></tr>
+          <tr><td><code>projectName</code></td><td>string | undefined</td><td>Display label resolved at fire time. Omitted if project was deleted.</td></tr>
+          <tr><td><code>previousStatus</code></td><td>string | null</td><td>Only present for <code>task.status_changed</code>. <code>null</code> on first transition.</td></tr>
+          <tr><td><code>task</code></td><td>object</td><td>Slim task — see below. Absent on <code>webhook.ping</code>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="task-object"><code>task</code> object <a class="h-anchor" href="#task-object" aria-label="Link to task object">#</a></h3>
+<pre><code class="language-json">{
+  "id": "tsk_8a1c...",
+  "text": "Draft launch announcement",
+  "status": "done",
+  "projectId": "list_2hP9...",
+  "createdAt": 1715800000000,
+  "updatedAt": 1715900000000,
+  "priority": "high",
+  "importance": true,
+  "dueAt": 1716000000000,
+  "startedAt": 1715890000000,
+  "completedAt": 1715900000000,
+  "error": { "message": "...", "stepId": "step_..." },
+  "claimedByAgentId": "agent_4d...",
+  "claimedByAgentName": "Claude Code",
+  "telemetry": {
+    "entries": 14,
+    "tokensIn": 12483,
+    "tokensOut": 3201,
+    "durationMs": 84120,
+    "costEstimate": 0.0731,
+    "truncated": false
+  }
+}</code></pre>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>id</code></td><td>string</td><td>Task id.</td></tr>
+          <tr><td><code>text</code></td><td>string</td><td>Task title.</td></tr>
+          <tr><td><code>status</code></td><td>string</td><td>Current status (see lifecycle reference).</td></tr>
+          <tr><td><code>projectId</code></td><td>string</td><td>Mirrors top-level <code>projectId</code>.</td></tr>
+          <tr><td><code>createdAt</code></td><td>number (unix ms)</td><td>Task creation time.</td></tr>
+          <tr><td><code>updatedAt</code></td><td>number (unix ms)</td><td><strong>Use this — not the event arrival time — to order events for the same task.</strong></td></tr>
+          <tr><td><code>priority</code></td><td>string | omitted</td><td><code>none</code> | <code>low</code> | <code>medium</code> | <code>high</code> | <code>urgent</code>.</td></tr>
+          <tr><td><code>importance</code></td><td>boolean | omitted</td><td>"Starred" flag.</td></tr>
+          <tr><td><code>dueAt</code></td><td>number | omitted</td><td>Due date, unix ms.</td></tr>
+          <tr><td><code>startedAt</code></td><td>number | omitted</td><td>When the task first entered <code>running</code>.</td></tr>
+          <tr><td><code>completedAt</code></td><td>number | omitted</td><td>When the task reached a terminal status.</td></tr>
+          <tr><td><code>error</code></td><td>object | omitted</td><td><code>{ message, stepId? }</code>. Present on <code>failed</code>, sometimes carried after recovery.</td></tr>
+          <tr><td><code>claimedByAgentId</code></td><td>string | omitted</td><td>Id of the agent that picked up the task.</td></tr>
+          <tr><td><code>claimedByAgentName</code></td><td>string | omitted</td><td>Display name resolved at fire time.</td></tr>
+          <tr><td><code>telemetry</code></td><td>object | omitted</td><td><strong>Only on terminal transitions</strong> (<code>done</code>, <code>failed</code>, <code>cancelled</code>). Aggregated totals.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Fields with <code>omitted</code> mean: the key is absent from the JSON, not present with a <code>null</code> value. Your receiver should treat missing keys as "not set."</p>
+
+      <h3 id="webhook-ping-payload"><code>webhook.ping</code> payload <a class="h-anchor" href="#webhook-ping-payload" aria-label="Link to webhook.ping payload">#</a></h3>
+      <p>The test delivery uses a stripped-down body:</p>
+<pre><code class="language-json">{
+  "id": "evt_...",
+  "type": "webhook.ping",
+  "createdAt": 1715900000000,
+  "projectId": "list_2hP9..."
+}</code></pre>
+      <p>No <code>task</code>, no signature differences — same headers, same HMAC scheme.</p>
+
+      <h2 id="signature-verification">Signature verification <a class="h-anchor" href="#signature-verification" aria-label="Link to Signature verification">#</a></h2>
+      <p>Every delivery is signed with an HMAC-SHA256 of <code>{timestamp}.{rawBody}</code> using the per-project signing secret you generated in the UI. The format is modelled after Stripe's so it should look familiar.</p>
+
+      <h3 id="algorithm">Algorithm <a class="h-anchor" href="#algorithm" aria-label="Link to Algorithm">#</a></h3>
+      <ol>
+        <li>Read <code>X-Dovilo-Signature</code>. It looks like <code>t=1715900000000,v1=4b2a...c7</code>.</li>
+        <li>Parse out the timestamp (<code>t</code>, unix ms) and the v1 signature (<code>v1</code>, hex).</li>
+        <li>Reject if <code>|now - t|</code> exceeds the <strong>5-minute replay window</strong>.</li>
+        <li>Compute <code>HMAC_SHA256(secret, "{t}.{rawBody}")</code> and hex-encode.</li>
+        <li>Compare the computed hex to <code>v1</code> in constant time.</li>
+      </ol>
+      <div class="callout"><strong>Critical:</strong> Use the <strong>raw, unparsed</strong> request body bytes. Frameworks that auto-parse JSON often discard the original bytes; re-serializing the parsed object will produce a different signature.</div>
+
+      <h3 id="nodejs-express">Node.js (Express) <a class="h-anchor" href="#nodejs-express" aria-label="Link to Node.js (Express)">#</a></h3>
+<pre><code class="language-javascript">const crypto = require('node:crypto');
+const express = require('express');
+
+const app = express();
+
+// Keep the raw body around — JSON.parse re-serialization breaks the HMAC.
+app.use(
+  '/webhooks/dovilo',
+  express.raw({ type: 'application/json' }),
+);
+
+const SECRET = process.env.DOVILO_WEBHOOK_SECRET;
+const REPLAY_WINDOW_MS = 5 * 60 * 1000;
+
+function verifyDoviloSignature(req) {
+  const header = req.get('x-dovilo-signature');
+  if (!header) return false;
+
+  const parts = Object.fromEntries(
+    header.split(',').map((p) => {
+      const i = p.indexOf('=');
+      return [p.slice(0, i).trim(), p.slice(i + 1)];
+    }),
+  );
+  const t = Number(parts.t);
+  const v1 = parts.v1;
+  if (!Number.isFinite(t) || !v1) return false;
+
+  if (Math.abs(Date.now() - t) > REPLAY_WINDOW_MS) return false;
+
+  const expected = crypto
+    .createHmac('sha256', SECRET)
+    .update(`${t}.${req.body.toString('utf8')}`)
+    .digest('hex');
+
+  const a = Buffer.from(expected, 'utf8');
+  const b = Buffer.from(v1, 'utf8');
+  if (a.length !== b.length) return false;
+  return crypto.timingSafeEqual(a, b);
+}
+
+app.post('/webhooks/dovilo', (req, res) => {
+  if (!verifyDoviloSignature(req)) {
+    return res.status(401).send('invalid signature');
+  }
+  const event = JSON.parse(req.body.toString('utf8'));
+  // ... handle event ...
+  res.status(204).end();
+});</code></pre>
+
+      <h3 id="python-flask">Python (Flask) <a class="h-anchor" href="#python-flask" aria-label="Link to Python (Flask)">#</a></h3>
+<pre><code class="language-python">import hmac
+import hashlib
+import time
+from flask import Flask, request, abort
+
+app = Flask(__name__)
+SECRET = os.environ["DOVILO_WEBHOOK_SECRET"].encode("utf-8")
+REPLAY_WINDOW_MS = 5 * 60 * 1000
+
+def verify_dovilo_signature(req) -&gt; bool:
+    header = req.headers.get("X-Dovilo-Signature", "")
+    parts = dict(p.split("=", 1) for p in header.split(",") if "=" in p)
+    try:
+        t = int(parts["t"])
+        v1 = parts["v1"]
+    except (KeyError, ValueError):
+        return False
+
+    if abs(int(time.time() * 1000) - t) &gt; REPLAY_WINDOW_MS:
+        return False
+
+    raw = req.get_data()  # bytes — do NOT use request.json
+    mac = hmac.new(SECRET, f"{t}.".encode("utf-8") + raw, hashlib.sha256)
+    return hmac.compare_digest(mac.hexdigest(), v1)
+
+@app.post("/webhooks/dovilo")
+def dovilo_webhook():
+    if not verify_dovilo_signature(request):
+        abort(401)
+    event = request.get_json(force=True)
+    # ... handle event ...
+    return "", 204</code></pre>
+
+      <h3 id="go">Go <a class="h-anchor" href="#go" aria-label="Link to Go">#</a></h3>
+<pre><code class="language-go">package main
+
+import (
+    "crypto/hmac"
+    "crypto/sha256"
+    "encoding/hex"
+    "io"
+    "net/http"
+    "os"
+    "strconv"
+    "strings"
+    "time"
+)
+
+const replayWindow = 5 * time.Minute
+
+func verify(r *http.Request, secret []byte, body []byte) bool {
+    header := r.Header.Get("X-Dovilo-Signature")
+    var t int64
+    var v1 string
+    for _, p := range strings.Split(header, ",") {
+        kv := strings.SplitN(p, "=", 2)
+        if len(kv) != 2 { continue }
+        switch kv[0] {
+        case "t":
+            n, err := strconv.ParseInt(kv[1], 10, 64)
+            if err != nil { return false }
+            t = n
+        case "v1":
+            v1 = kv[1]
+        }
+    }
+    if t == 0 || v1 == "" { return false }
+
+    now := time.Now().UnixMilli()
+    if abs(now-t) &gt; replayWindow.Milliseconds() { return false }
+
+    mac := hmac.New(sha256.New, secret)
+    mac.Write([]byte(strconv.FormatInt(t, 10) + "."))
+    mac.Write(body)
+    expected := hex.EncodeToString(mac.Sum(nil))
+    return hmac.Equal([]byte(expected), []byte(v1))
+}
+
+func handle(w http.ResponseWriter, r *http.Request) {
+    secret := []byte(os.Getenv("DOVILO_WEBHOOK_SECRET"))
+    body, _ := io.ReadAll(r.Body)
+    if !verify(r, secret, body) {
+        http.Error(w, "invalid signature", http.StatusUnauthorized)
+        return
+    }
+    // ... handle event ...
+    w.WriteHeader(http.StatusNoContent)
+}
+
+func abs(x int64) int64 { if x &lt; 0 { return -x }; return x }</code></pre>
+
+      <h3 id="common-verification-mistakes">Common verification mistakes <a class="h-anchor" href="#common-verification-mistakes" aria-label="Link to Common verification mistakes">#</a></h3>
+      <ul>
+        <li><strong>Re-serializing the body.</strong> If you <code>JSON.parse &rarr; JSON.stringify</code> before hashing, byte-for-byte differences (key order, whitespace) will break the signature. Hash the raw bytes.</li>
+        <li><strong>String comparison instead of constant time.</strong> Use <code>timingSafeEqual</code> / <code>hmac.compare_digest</code> / <code>hmac.Equal</code>. Plain <code>==</code> leaks timing info.</li>
+        <li><strong>Skipping the timestamp check.</strong> Without it, a captured payload can be replayed forever. Enforce the 5-minute window.</li>
+        <li><strong>Trusting the body before verifying.</strong> Verify the signature on the raw bytes first, then parse the JSON.</li>
+      </ul>
+
+      <h2 id="responses-dovilo-expects">Responses Dovilo expects <a class="h-anchor" href="#responses-dovilo-expects" aria-label="Link to Responses Dovilo expects">#</a></h2>
+      <p>Your receiver's HTTP status determines what happens next.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Status range</th><th>Dovilo's behavior</th></tr></thead>
+        <tbody>
+          <tr><td><code>2xx</code></td><td>Delivered. Done.</td></tr>
+          <tr><td><code>429 Too Many Requests</code></td><td>Treated as transient. Retried per the schedule below. <code>Retry-After</code> is surfaced in failure logs but the next attempt still comes from the standard backoff.</td></tr>
+          <tr><td><code>4xx</code> (other than 429)</td><td>Permanent failure. <strong>No retry.</strong> Recorded in the failures buffer.</td></tr>
+          <tr><td><code>410 Gone</code></td><td>Permanent failure <strong>and</strong> Dovilo disables the webhook for this project.</td></tr>
+          <tr><td><code>5xx</code></td><td>Treated as transient. Retried per the schedule below.</td></tr>
+          <tr><td>Connection error / DNS / TLS</td><td>Treated as transient. Retried.</td></tr>
+          <tr><td>Timeout (&gt;10s)</td><td>Treated as transient. Retried.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Respond quickly — under a few hundred ms is ideal. If your processing is slow, accept the delivery (<code>202</code>) and queue the work asynchronously rather than holding the request open.</p>
+      <p>Use <code>410 Gone</code> deliberately. It is the documented "this endpoint is dead, stop sending" signal — Dovilo will flip the project's webhook to <strong>disabled</strong> on receipt.</p>
+
+      <h2 id="retry-policy">Retry policy <a class="h-anchor" href="#retry-policy" aria-label="Link to Retry policy">#</a></h2>
+      <p>Failed transient deliveries are retried up to <strong>5 times</strong> on this schedule:</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Attempt</th><th>Wait before attempt</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>0</td></tr>
+          <tr><td>2</td><td>5 seconds</td></tr>
+          <tr><td>3</td><td>30 seconds</td></tr>
+          <tr><td>4</td><td>2 minutes</td></tr>
+          <tr><td>5</td><td>10 minutes</td></tr>
+          <tr><td>6</td><td>1 hour</td></tr>
+        </tbody>
+      </table></div>
+      <p>Total delivery window is therefore approximately <strong>1 hour 15 minutes</strong>. After the final attempt, the delivery is dropped and recorded in the failures ring buffer visible in the project editor (last 100 entries per project).</p>
+      <p>The buffer is <strong>in-memory</strong> on the desktop client — it is not persisted across app restarts. Treat it as a debugging aid, not an audit log.</p>
+
+      <h2 id="ordering-and-concurrency">Ordering and concurrency <a class="h-anchor" href="#ordering-and-concurrency" aria-label="Link to Ordering and concurrency">#</a></h2>
+      <ul>
+        <li><strong>Same task:</strong> events are delivered in FIFO order. A retry of an older event will not pass a newer event for the same task.</li>
+        <li><strong>Different tasks:</strong> events run in parallel. There is <strong>no ordering guarantee across tasks.</strong></li>
+        <li>Receivers should not rely on delivery time. Use <code>task.updatedAt</code> (and <code>previousStatus</code> for transitions) to reconstruct order.</li>
+      </ul>
+
+      <h2 id="idempotency">Idempotency <a class="h-anchor" href="#idempotency" aria-label="Link to Idempotency">#</a></h2>
+      <p>Use <code>X-Dovilo-Delivery</code> (also available as <code>id</code> in the body) as your idempotency key. The same delivery id is reused across retries of the same event, so deduplication on this key is both safe and correct.</p>
+      <p>Recommended pattern: insert the delivery id into a unique-keyed table inside the same transaction as your side effects. On retry, the duplicate key collision becomes a no-op.</p>
+
+      <h2 id="security">Security <a class="h-anchor" href="#security" aria-label="Link to Security">#</a></h2>
+      <ul>
+        <li>The signing secret is the only thing standing between your endpoint and a spoofed Dovilo request. <strong>Treat it like a password.</strong></li>
+        <li>Anyone who learns the secret can forge requests that pass verification.</li>
+        <li>Rotate the secret if you suspect compromise — generating a new one in the UI immediately invalidates the previous secret.</li>
+        <li>Plaintext is revealed <strong>exactly once</strong>, when generated. There is no way to retrieve it later — generate, copy into your secret store, move on.</li>
+        <li>The secret is stored locally by the desktop client using OS-level secure storage (Keychain / Credential Manager / libsecret). It is not written to Firestore and is not synced across devices.</li>
+      </ul>
+
+      <h2 id="operational-notes">Operational notes <a class="h-anchor" href="#operational-notes" aria-label="Link to Operational notes">#</a></h2>
+      <ul>
+        <li><strong>Desktop-bound delivery.</strong> Webhooks fire from the Dovilo desktop app process — they will not deliver when the app is closed. Events that occur while the app is closed are <strong>not queued</strong> for later delivery; they are simply not sent. Tasks already present in Firestore at app launch are treated as historical state, not new events, and do not fire.</li>
+        <li><strong>Mobile- and agent-originated changes fire too.</strong> While the desktop is running, any task created or transitioned by mobile or an MCP agent in another process is observed via Firestore sync and fires the same events as a local write. The desktop persists per-task dedup markers (<code>webhookCreatedFiredAt</code>, <code>webhookLastSentStatus</code>) inside the same Firestore write, so a snapshot echo or a second connected desktop observing the same change will not double-fire.</li>
+        <li><strong>Multi-desktop dedup.</strong> When two desktops are signed in to the same account they race for each cloud-driven event via a Firestore transactional compare-and-swap on the dedup markers. Only the winner delivers — receivers do not need to dedup across desktops on top of <code>X-Dovilo-Delivery</code>.</li>
+        <li><strong>Slim payloads on purpose.</strong> Bulky and sensitive fields are excluded to reduce both bandwidth and the chance of leaking prompt content into third-party integrations. Use MCP (<code>get_task</code>, <code>list_tasks</code>) to fetch the full task when you need it.</li>
+        <li><strong>No webhook events for deleted tasks.</strong> A <code>task.deleted</code> event is not currently emitted. If you need to know about deletions, reconcile periodically through MCP.</li>
+      </ul>
+
+      <h2 id="changelog">Changelog <a class="h-anchor" href="#changelog" aria-label="Link to Changelog">#</a></h2>
+      <ul>
+        <li><strong>v0.6.0</strong> — Initial outbound webhook support. Events: <code>task.created</code>, <code>task.status_changed</code>, <code>webhook.ping</code>. HMAC-SHA256 signing. 5-attempt retry. Per-task FIFO.</li>
+        <li><strong>v0.6.x</strong> — Mobile- and agent-driven changes now fire via Firestore sync diff (previously only desktop-initiated writes fired). Persisted per-task dedup markers prevent snapshot-echo refire and double-fire across multiple connected desktops.</li>
+      </ul>
+    </article>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+  <script>
+    if (window.hljs) {
+      document.querySelectorAll('pre code').forEach((el) => {
+        if (el.classList.contains('language-plaintext')) return;
+        try { hljs.highlightElement(el); } catch (e) {}
+      });
+    }
+
+    // Copy the integration prompt to clipboard.
+    const copyBtn = document.getElementById('copy-prompt-btn');
+    const promptEl = document.getElementById('integration-prompt-text');
+    if (copyBtn && promptEl) {
+      copyBtn.addEventListener('click', async () => {
+        const text = promptEl.textContent;
+        const label = copyBtn.querySelector('.copy-btn-label');
+        const original = label.textContent;
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.top = '-1000px';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          label.textContent = 'Copied!';
+          copyBtn.classList.add('copied');
+        } catch (err) {
+          label.textContent = 'Copy failed';
+        }
+        setTimeout(() => {
+          label.textContent = original;
+          copyBtn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    // Scroll-spy for the TOC.
+    const headings = Array.from(document.querySelectorAll('.article h2[id], .article h3[id]'));
+    const tocLinks = new Map(
+      Array.from(document.querySelectorAll('.toc a[href^="#"]'))
+        .map(a => [a.getAttribute('href').slice(1), a])
+    );
+    function setActive(id) {
+      tocLinks.forEach(a => a.classList.remove('active'));
+      const link = tocLinks.get(id);
+      if (link) link.classList.add('active');
+    }
+    if ('IntersectionObserver' in window && headings.length) {
+      const seen = new Set();
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) seen.add(e.target.id);
+          else seen.delete(e.target.id);
+        });
+        // pick the earliest (topmost) heading currently visible
+        let pick = null;
+        for (const h of headings) if (seen.has(h.id)) { pick = h.id; break; }
+        if (pick) setActive(pick);
+      }, { rootMargin: '-10% 0px -70% 0px' });
+      headings.forEach(h => io.observe(h));
+    }
+  </script>
+</body>
+</html>

@@ -246,6 +246,27 @@
       </div>
     </div>
 
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <h3>Can Dovilo send task events to Slack, Linear, or my own service?</h3>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Yes. Dovilo Desktop fires <strong>HMAC-signed HTTPS webhooks</strong> on every task change — <code>task.created</code> and <code>task.status_changed</code> — so you can bridge Dovilo into Slack, Linear, n8n, LangGraph, or any custom receiver. Each delivery includes a Stripe-style <code>X-Dovilo-Signature</code> header for verification, a unique <code>X-Dovilo-Delivery</code> id for idempotency, FIFO ordering per task, and up to 5 retries on transient failures. Open a project &rarr; <strong>Webhooks</strong> in Desktop, paste your URL, generate a signing secret, and click Enable.</p>
+        <p>Full payload schema, signature verification examples (Node, Python, Go), and the retry policy live in the <a href="/docs/webhooks">webhooks reference</a>.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <h3>Is there an example webhook receiver I can copy from?</h3>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Yes — <a href="https://github.com/slhddn/dovilo-langgraph-demo" target="_blank" rel="noopener">dovilo-langgraph-demo</a> is an open-source <strong>LangGraph</strong> receiver that verifies the Dovilo signature, fans events out, and drives an agent through MCP end-to-end. There's also a <a href="https://www.youtube.com/watch?v=id_7T8qUfpg" target="_blank" rel="noopener">walkthrough video</a> covering the full setup: generating the signing secret, verifying signatures, and wiring up the agent loop.</p>
+      </div>
+    </div>
+
     <!-- Data & Privacy -->
     <div class="faq-section-title">Data &amp; Privacy</div>
 
