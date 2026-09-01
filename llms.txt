@@ -1,0 +1,47 @@
+# Dovilo
+
+> Dovilo is an agent-ready, gamified productivity app: a full to-do list, focus sessions with full-screen ambience, and an isometric city built from the work you finish. Free on iOS and Android; the Windows/Mac desktop app (Pro) ships a built-in MCP server and signed webhooks so AI agents and automation tools can work your task list with you.
+
+Dovilo runs offline-first with optional cloud sync, has no ads on any tier, and is available in English, Turkish, Spanish, French and German. Completed tasks and focus sessions earn **bricks**, the currency you spend on buildings, decorations and upgrades in your city.
+
+## The four pillars
+
+- **Tasks** — due dates, repeats, reminders, stars, flags and your own lists. One view picker holds My Day, Important, Planned, Flagged, all Tasks and every custom list, each with a live count. Lists group by date (Today, Tomorrow, No date); each task opens a detail sheet with its properties and notes.
+- **Focus** — three ways to run a session: a single session of any duration, a Pomodoro cycle (25 minutes of focus, a 5 minute break, a longer break every 4 rounds, breaks start on their own), or a session bound to one specific task. The timer keeps counting while the app is backgrounded or the phone is locked, Do Not Disturb can silence other apps for the length of the session, and a breathing exercise plus countdown precede the start. Only completed Pomodoro rounds count toward the daily round counter.
+- **Ambience** — a scene fills the whole screen and brings its own sound: Rainy City (rain, fireplace), Midnight (city hum, brown noise), Dusk (birds, breeze), Snow (winter wind, pink noise), Fog (fog horn, white noise). The Default scene is always available and is silent. Up to three sound layers can be blended at once with per-layer levels, chosen from rain, fireplace, city hum, birds, breeze, winter wind, fog horn, forest, waves, café, library, train, thunder and brown/pink/white noise. The mix can follow the session rhythm — opening softly in the first 5 minutes and brightening in the last 2 — and the scene can switch to Dusk when a break begins. This is ambience, not music: there is no melody or beat, and no lo-fi or instrumental tracks.
+- **City** — an isometric city built from bricks earned by finishing tasks and focus sessions. Buildings, roads and decorations are bought in the Market and placed on the grid.
+
+## Agent layer (Dovilo Desktop, Pro)
+
+- **MCP server**, bundled with the desktop app, local-first, no cloud dependency. Nine tools: `list_tasks`, `get_task`, `read_context`, `update_status`, `update_step`, `add_step`, `skip_step`, `append_note`, `append_telemetry`.
+- Works with Claude Code, Claude Desktop, Cursor, Cursor CLI, Windsurf, Codex CLI, Gemini CLI and any MCP-compatible client. A Connect AI flow writes the config snippet for the chosen client.
+- Agents can read and update tasks; **they cannot create tasks**. Scope is per project, and a project brief controls what an agent sees. Tasks must sit under a project before an agent can pick them up.
+- **Signed webhooks** — HMAC-SHA256-signed HTTPS events. Three event types: `task.created`, `task.status_changed` (carries `previousStatus`; statuses are queued, running, awaiting-user, done, failed, cancelled) and `webhook.ping` (the Send test button, never retried). Deliveries carry a 5-minute replay window, FIFO ordering per task with no ordering guarantee across tasks, up to 5 retries after the first attempt (5s, 30s, 2m, 10m, 1h — a delivery window of roughly 1 hour 15 minutes) and idempotency via the `X-Dovilo-Delivery` header.
+- Mobile shows agent progress, notes and telemetry; the agents themselves run on the desktop.
+
+## Pricing
+
+- **Free** — full to-do management, unlimited focus sessions (single and Pomodoro), the silent Default ambience scene, basic city, dark and light themes, no ads.
+- **Pro** — $2.49/month, $19.99/year (best value), or $49.99 lifetime. Adds cloud sync, the desktop app with its MCP server and webhooks, all buildings and decorations, advanced statistics, custom themes and priority support.
+- **One-time packs** (not subscriptions, both included with Pro) — Focus Ambience Pack $4.99 (5 scenes, 12 sound layers), Full City Package $4.99 (every building, decoration and upgrade).
+- **AI task packs** — from $0.99 (+10, +30 or +75 agent tasks; they never expire).
+
+Prices are the USD store baseline; each store applies its own regional pricing.
+
+## Docs
+
+- [Homepage](https://dovilo.app/): features, focus and ambience, screenshots, pricing, download links.
+- [FAQ](https://dovilo.app/faq): how tasks, focus sessions, ambience, the city, Pro and the MCP integration work.
+- [Webhooks reference](https://dovilo.app/docs/webhooks): event payload schema, signature verification examples, retry and idempotency rules, plus a copy-paste prompt for building a receiver with an AI agent.
+- [Downloads](https://dovilo.app/downloads): desktop builds for Windows and Mac.
+- [Privacy policy](https://dovilo.app/privacy) · [Terms](https://dovilo.app/terms) · [Open-source licenses](https://dovilo.app/licenses)
+
+## Apps
+
+- [App Store](https://apps.apple.com/app/dovilo/id6761195015) — iPhone and iPad.
+- [Google Play](https://play.google.com/store/apps/details?id=com.dovilo.app) — Android.
+- Desktop for Windows and macOS, included with Pro.
+
+## Optional
+
+- [LangGraph webhook demo](https://github.com/slhddn/dovilo-langgraph-demo): open-source end-to-end receiver that verifies signatures and drives an agent through MCP.

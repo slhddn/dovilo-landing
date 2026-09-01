@@ -7,6 +7,64 @@
   <meta name="description" content="HMAC-signed task events you can subscribe to. Payload schema, signature verification, retry policy.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://dovilo.app/docs/webhooks">
+  <link rel="alternate" type="text/markdown" href="https://dovilo.app/llms.txt" title="llms.txt — structured summary for language models">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Dovilo Webhooks — Developer Reference",
+  "description": "HMAC-signed task events from Dovilo Desktop: event types, payload schema, signature verification, retry policy, ordering and idempotency.",
+  "url": "https://dovilo.app/docs/webhooks",
+  "inLanguage": "en",
+  "dateModified": "2026-05-18",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Dovilo",
+    "url": "https://dovilo.app",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://dovilo.app/notify-icon.png"
+    }
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "Dovilo",
+    "url": "https://dovilo.app",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://dovilo.app/notify-icon.png"
+    }
+  },
+  "proficiencyLevel": "Expert",
+  "about": [
+    "Webhooks",
+    "HMAC-SHA256 signatures",
+    "Model Context Protocol",
+    "Task automation"
+  ],
+  "keywords": "Dovilo webhooks, HMAC-SHA256, task.created, task.status_changed, webhook signature verification, MCP"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Dovilo",
+      "item": "https://dovilo.app/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Webhooks reference",
+      "item": "https://dovilo.app/docs/webhooks"
+    }
+  ]
+}
+  </script>
   <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
   <meta property="og:type" content="article">
@@ -20,9 +78,20 @@
 
   <!-- Syntax highlighting (used by this docs page only). -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <script>
+    /* Same choice as the main page (same origin), otherwise the OS decides. */
+    (function(){
+      try{
+        var t = localStorage.getItem('dovilo-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      }catch(e){}
+    })();
+  </script>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     :root{
+      color-scheme:dark;
+      --fa:1;
       --bg:#161B1D;
       --bg-2:#1F2426;
       --fg:#E8EAEB;
@@ -30,16 +99,41 @@
       --muted:#E8A832;
       --fg-rgb:232,234,235;
       --accent-rgb:212,136,10;
-      --dim:rgba(var(--fg-rgb),.12);
-      --dim2:rgba(var(--fg-rgb),.06);
+      --dim:rgba(var(--fg-rgb),calc(.12 * var(--fa)));
+      --dim2:rgba(var(--fg-rgb),calc(.06 * var(--fa)));
       --max:1120px;
       --code-bg:#0f1214;
+    }
+
+    :root[data-theme="light"]{
+      color-scheme:light;
+      --bg:#F7F8F8;
+      --bg-2:#FFFFFF;
+      --fg:#161B1D;
+      --accent:#D97706;
+      --muted:#B45309;
+      --fg-rgb:22,27,29;
+      --accent-rgb:217,119,6;
+      --fa:1.55;
+    }
+    @media (prefers-color-scheme:light){
+      :root:not([data-theme="dark"]){
+        color-scheme:light;
+        --bg:#F7F8F8;
+        --bg-2:#FFFFFF;
+        --fg:#161B1D;
+        --accent:#D97706;
+        --muted:#B45309;
+        --fg-rgb:22,27,29;
+        --accent-rgb:217,119,6;
+        --fa:1.55;
+      }
     }
     html{scroll-behavior:smooth;scroll-padding-top:24px}
     body{
       font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
       background:var(--bg);
-      color:rgba(var(--fg-rgb),.75);
+      color:rgba(var(--fg-rgb),calc(.75 * var(--fa)));
       line-height:1.8;
       padding:48px 24px 96px;
     }
@@ -84,14 +178,14 @@
     .toc a{
       display:block;
       padding:5px 8px;
-      color:rgba(var(--fg-rgb),.55);
+      color:rgba(var(--fg-rgb),calc(.55 * var(--fa)));
       text-decoration:none;
       border-radius:6px;
       line-height:1.4;
     }
     .toc a:hover{color:var(--fg);background:var(--dim2)}
     .toc a.active{color:var(--accent);background:rgba(var(--accent-rgb),.08)}
-    .toc .lvl-3{padding-left:14px;font-size:.78125rem;color:rgba(var(--fg-rgb),.45)}
+    .toc .lvl-3{padding-left:14px;font-size:.78125rem;color:rgba(var(--fg-rgb),calc(.45 * var(--fa)))}
     .toc summary{display:none}
 
     /* ── Article ─────────────────────────────────────────────── */
@@ -105,7 +199,7 @@
     }
     .article .lede{
       font-size:1rem;
-      color:rgba(var(--fg-rgb),.6);
+      color:rgba(var(--fg-rgb),calc(.6 * var(--fa)));
       margin-bottom:8px;
       max-width:70ch;
     }
@@ -143,14 +237,14 @@
       font-size:.9375rem;
     }
     .article li > p{margin-bottom:6px}
-    .article strong{color:rgba(var(--fg-rgb),.95);font-weight:600}
-    .article em{color:rgba(var(--fg-rgb),.85);font-style:italic}
+    .article strong{color:rgba(var(--fg-rgb),calc(.95 * var(--fa)));font-weight:600}
+    .article em{color:rgba(var(--fg-rgb),calc(.85 * var(--fa)));font-style:italic}
     .article a{color:var(--accent)}
     .article a:hover{text-decoration:underline}
 
     /* anchor links rendered next to headings */
     .h-anchor{
-      color:rgba(var(--fg-rgb),.25);
+      color:rgba(var(--fg-rgb),calc(.25 * var(--fa)));
       margin-left:10px;
       font-weight:400;
       font-size:.85em;
@@ -168,10 +262,21 @@
       font-size:.85em;
       padding:1px 6px;
       border-radius:5px;
-      background:rgba(var(--fg-rgb),.07);
-      color:#E8A832;
+      background:rgba(var(--fg-rgb),calc(.07 * var(--fa)));
+      color:var(--muted);
       border:1px solid var(--dim2);
       word-break:break-word;
+    }
+
+    /* Code surfaces keep the dark palette in both themes — the same call the
+       landing page makes for its terminal: a code block is not a theme variant. */
+    pre{
+      color-scheme:dark;
+      --fg-rgb:232,234,235;
+      --accent-rgb:212,136,10;
+      --muted:#E8A832;
+      --fa:1;
+      --dim2:rgba(232,234,235,.06);
     }
 
     /* code blocks */
@@ -192,14 +297,14 @@
       font-size:.8125rem;
       line-height:1.7;
       overflow-x:auto;
-      color:rgba(var(--fg-rgb),.85);
+      color:rgba(var(--fg-rgb),calc(.85 * var(--fa)));
       border:none;
     }
     /* shave off hljs default backgrounds so our --code-bg wins */
     pre code.hljs,
     pre code{background:transparent !important}
     pre code{
-      color:rgba(var(--fg-rgb),.85);
+      color:rgba(var(--fg-rgb),calc(.85 * var(--fa)));
       font-family:'SF Mono',ui-monospace,Menlo,Monaco,Consolas,monospace;
       font-size:.8125rem;
       line-height:1.7;
@@ -222,7 +327,7 @@
       font-size:.875rem;
     }
     thead{
-      background:rgba(var(--fg-rgb),.03);
+      background:rgba(var(--fg-rgb),calc(.03 * var(--fa)));
     }
     th, td{
       text-align:left;
@@ -236,14 +341,14 @@
       font-size:.8125rem;
       letter-spacing:.01em;
     }
-    td{color:rgba(var(--fg-rgb),.7)}
+    td{color:rgba(var(--fg-rgb),calc(.7 * var(--fa)))}
     tbody tr:last-child td{border-bottom:none}
     table code{
       font-family:'SF Mono',ui-monospace,Menlo,Monaco,Consolas,monospace;
       font-size:.85em;
       padding:1px 5px;
       border-radius:4px;
-      background:rgba(var(--fg-rgb),.07);
+      background:rgba(var(--fg-rgb),calc(.07 * var(--fa)));
       color:#E8A832;
       border:1px solid var(--dim2);
       white-space:nowrap;
@@ -262,7 +367,7 @@
       background:rgba(var(--accent-rgb),.06);
       border-radius:0 8px 8px 0;
       font-size:.9375rem;
-      color:rgba(var(--fg-rgb),.85);
+      color:rgba(var(--fg-rgb),calc(.85 * var(--fa)));
     }
     .callout strong{color:var(--fg)}
 
@@ -279,7 +384,7 @@
       padding:16px 18px;
       border:1px solid var(--dim2);
       border-radius:10px;
-      background:rgba(var(--fg-rgb),.02);
+      background:rgba(var(--fg-rgb),calc(.02 * var(--fa)));
       text-decoration:none;
       transition:border-color .15s, background .15s, transform .15s;
     }
@@ -302,7 +407,7 @@
     }
     .resource-desc{
       font-size:.8125rem;
-      color:rgba(var(--fg-rgb),.55);
+      color:rgba(var(--fg-rgb),calc(.55 * var(--fa)));
       line-height:1.5;
     }
     @media (max-width:600px){
@@ -389,7 +494,7 @@
       margin:0;
       border:none;border-radius:0;
       box-shadow:none;
-      background:transparent;
+      background:var(--code-bg);
       max-height:520px;
     }
     .prompt-box pre code{
@@ -399,7 +504,7 @@
       white-space:pre;
     }
     .prompt-hint{
-      font-size:.8125rem;color:rgba(var(--fg-rgb),.55);
+      font-size:.8125rem;color:rgba(var(--fg-rgb),calc(.55 * var(--fa)));
       margin:14px 0 0;
     }
 
@@ -438,7 +543,7 @@
       .toc summary::after{
         content:'▾';
         font-size:.8em;
-        color:rgba(var(--fg-rgb),.4);
+        color:rgba(var(--fg-rgb),calc(.4 * var(--fa)));
         transition:transform .2s;
       }
       .toc details[open] summary::after{transform:rotate(180deg)}

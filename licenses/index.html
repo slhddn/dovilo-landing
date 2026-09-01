@@ -7,24 +7,121 @@
   <meta name="description" content="Open-source libraries and third-party software used in Dovilo.">
   <meta name="robots" content="noindex, follow">
   <link rel="canonical" href="https://dovilo.app/licenses">
+  <link rel="alternate" type="text/markdown" href="https://dovilo.app/llms.txt" title="llms.txt — structured summary for language models">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dovilo.app/licenses">
+  <meta property="og:title" content="Third-Party Software — Dovilo">
+  <meta property="og:description" content="Open-source libraries and third-party software used in Dovilo.">
+  <meta property="og:site_name" content="Dovilo">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Third-Party Software — Dovilo">
+  <meta name="twitter:description" content="Open-source libraries and third-party software used in Dovilo.">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Third-Party Software — Dovilo",
+  "description": "Open-source libraries and third-party software used in Dovilo.",
+  "url": "https://dovilo.app/licenses",
+  "inLanguage": "en",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Dovilo",
+    "url": "https://dovilo.app",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://dovilo.app/notify-icon.png"
+    }
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Dovilo",
+      "item": "https://dovilo.app/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Third-Party Software",
+      "item": "https://dovilo.app/licenses"
+    }
+  ]
+}
+  </script>
   <link rel="icon" href="../favicon.ico" type="image/x-icon">
+  <script>
+    /* Same choice as the main page (same origin), otherwise the OS decides. */
+    (function(){
+      try{
+        var t = localStorage.getItem('dovilo-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      }catch(e){}
+    })();
+  </script>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#161B1D;color:rgba(232,234,235,.75);line-height:1.8;padding:48px 24px 96px}
+
+    :root{
+      color-scheme:dark;
+      --bg:#161B1D;
+      --bg-2:#1F2426;
+      --fg:#E8EAEB;
+      --accent:#D4880A;
+      --fg-rgb:232,234,235;
+      --accent-rgb:212,136,10;
+      --fa:1;
+      --line:rgba(var(--fg-rgb),.06);
+      --card:rgba(var(--fg-rgb),.04);
+    }
+    :root[data-theme="light"]{
+      color-scheme:light;
+      --bg:#F7F8F8;
+      --bg-2:#FFFFFF;
+      --fg:#161B1D;
+      --accent:#D97706;
+      --fg-rgb:22,27,29;
+      --accent-rgb:217,119,6;
+      --fa:1.55;
+      --line:#E4E7E8;
+      --card:#FFFFFF;
+    }
+    @media (prefers-color-scheme:light){
+      :root:not([data-theme="dark"]){
+        color-scheme:light;
+        --bg:#F7F8F8;
+        --bg-2:#FFFFFF;
+        --fg:#161B1D;
+        --accent:#D97706;
+        --fg-rgb:22,27,29;
+        --accent-rgb:217,119,6;
+        --fa:1.55;
+        --line:#E4E7E8;
+        --card:#FFFFFF;
+      }
+    }
+
+    body{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:rgba(var(--fg-rgb),calc(.75 * var(--fa)));line-height:1.8;padding:48px 24px 96px}
     .container{max-width:680px;margin:0 auto}
-    a.back{display:inline-block;margin-bottom:32px;color:#D4880A;text-decoration:none;font-size:.875rem;font-weight:500}
+    a.back{display:inline-block;margin-bottom:32px;color:var(--accent);text-decoration:none;font-size:.875rem;font-weight:500}
     a.back:hover{text-decoration:underline}
-    h1{font-size:1.75rem;font-weight:700;color:#E8EAEB;margin-bottom:8px;letter-spacing:-.02em}
-    .intro{font-size:.9375rem;color:rgba(232,234,235,.45);margin-bottom:40px}
-    h2{font-size:1.125rem;font-weight:600;color:#E8EAEB;margin:32px 0 12px}
+    h1{font-size:1.75rem;font-weight:700;color:var(--fg);margin-bottom:8px;letter-spacing:-.02em}
+    .intro{font-size:.9375rem;color:rgba(var(--fg-rgb),calc(.45 * var(--fa)));margin-bottom:40px}
+    h2{font-size:1.125rem;font-weight:600;color:var(--fg);margin:32px 0 12px}
     table{width:100%;border-collapse:collapse;margin-bottom:16px}
-    th{text-align:left;font-size:.75rem;font-weight:600;color:rgba(232,234,235,.4);text-transform:uppercase;letter-spacing:.06em;padding:8px 12px;border-bottom:1px solid rgba(232,234,235,.08)}
-    td{font-size:.875rem;padding:10px 12px;border-bottom:1px solid rgba(232,234,235,.04);vertical-align:top}
-    td a{color:#D4880A;text-decoration:none}
+    th{text-align:left;font-size:.75rem;font-weight:600;color:rgba(var(--fg-rgb),calc(.4 * var(--fa)));text-transform:uppercase;letter-spacing:.06em;padding:8px 12px;border-bottom:1px solid rgba(var(--fg-rgb),calc(.08 * var(--fa)))}
+    td{font-size:.875rem;padding:10px 12px;border-bottom:1px solid rgba(var(--fg-rgb),calc(.04 * var(--fa)));vertical-align:top}
+    td a{color:var(--accent);text-decoration:none}
     td a:hover{text-decoration:underline}
-    .license-tag{font-size:.75rem;color:rgba(232,234,235,.4);font-weight:500}
+    .license-tag{font-size:.75rem;color:rgba(var(--fg-rgb),calc(.4 * var(--fa)));font-weight:500}
     p{margin-bottom:16px;font-size:.9375rem}
-    a{color:#D4880A}
+    a{color:var(--accent)}
   </style>
 </head>
 <body>
