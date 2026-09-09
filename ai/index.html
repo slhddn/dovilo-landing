@@ -139,7 +139,7 @@
       }
     }
 
-    html{scroll-behavior:smooth;scroll-padding-top:88px}
+    html{scroll-behavior:smooth;scroll-padding-top:96px}
     body{
       font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
       background:var(--bg);
@@ -153,7 +153,7 @@
     nav{
       position:fixed;top:0;left:0;right:0;z-index:100;
       display:flex;align-items:center;justify-content:space-between;
-      padding:16px clamp(20px,5vw,64px);
+      padding:20px clamp(24px,5vw,64px);
       background:rgba(var(--bg-rgb),.85);
       backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
       border-bottom:1px solid var(--line);
@@ -163,9 +163,9 @@
       font-size:1.125rem;font-weight:700;letter-spacing:-.02em;
       color:var(--fg);text-decoration:none;
     }
-    .logo img{width:30px;height:30px;border-radius:8px}
+    .logo img{width:32px;height:32px;border-radius:8px}
     .logo .logo-subtitle{font-size:.75rem;font-weight:500;color:var(--accent)}
-    nav ul{display:flex;gap:26px;list-style:none;align-items:center}
+    nav ul{display:flex;gap:32px;list-style:none;align-items:center}
     nav ul a{
       color:rgba(var(--fg-rgb),calc(.6 * var(--fa)));
       text-decoration:none;font-size:.875rem;font-weight:500;
@@ -175,13 +175,13 @@
     .nav-right{display:flex;gap:12px;align-items:center}
     .nav-icon{
       display:flex;align-items:center;justify-content:center;
-      width:34px;height:34px;border-radius:8px;
+      width:36px;height:36px;border-radius:8px;
       background:var(--card);border:1px solid var(--line);
       color:rgba(var(--fg-rgb),calc(.55 * var(--fa)));
       cursor:pointer;transition:all .2s;
     }
     .nav-icon:hover{background:var(--hover);color:var(--fg)}
-    .nav-icon svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;
+    .nav-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;
       stroke-linecap:round;stroke-linejoin:round}
     .theme-toggle .icon-sun{display:none}
     :root[data-theme="light"] .theme-toggle .icon-moon{display:none}
@@ -207,12 +207,19 @@
     .lede{font-size:1rem;color:rgba(var(--fg-rgb),calc(.6 * var(--fa)));max-width:68ch}
 
     /* ─── HERO ─── */
-    .hero{padding-top:132px;padding-bottom:56px;border-bottom:1px solid var(--line)}
+    .hero{padding-top:140px;padding-bottom:56px;border-bottom:1px solid var(--line)}
     .hero-grid{
       max-width:var(--max);margin:0 auto;
       display:grid;grid-template-columns:1fr 1fr;
       gap:clamp(28px,4vw,56px);align-items:start;
     }
+    /* Grid items default to min-width:auto, so the pre-formatted code block
+       widens its track and pushes the prose past the screen edge on a phone.
+       Let the code scroll inside its own box instead. */
+    .hero-grid > *,
+    .two-col > *,
+    .step > *{min-width:0}
+    .code-block{max-width:100%}
     .hero h1{
       font-size:clamp(2rem,4.6vw,3.1rem);font-weight:800;
       line-height:1.08;letter-spacing:-.03em;color:var(--fg);

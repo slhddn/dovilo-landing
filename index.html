@@ -599,9 +599,21 @@
       width:5px;height:5px;border-radius:50%;background:var(--accent);
       box-shadow:0 0 0 3px rgba(var(--accent-rgb),calc(.18 * var(--ga)));
     }
+    .hero-trial-line{
+      display:flex;align-items:flex-start;gap:8px;
+      margin-top:20px;font-size:.9375rem;
+      color:rgba(var(--fg-rgb),calc(.7 * var(--fa)));
+    }
+    .hero-trial-line strong{color:var(--fg);font-weight:600}
+    .hero-trial-line svg,.hero-ai-line svg{margin-top:3px}
+    .hero-trial-line svg{
+      width:17px;height:17px;flex-shrink:0;
+      fill:none;stroke:var(--accent);stroke-width:2.4;
+      stroke-linecap:round;stroke-linejoin:round;
+    }
     .hero-ai-line{
-      display:flex;align-items:center;gap:8px;
-      margin-top:18px;font-size:.875rem;
+      display:flex;align-items:flex-start;gap:8px;
+      margin-top:10px;font-size:.875rem;
       color:rgba(var(--fg-rgb),calc(.5 * var(--fa)));
     }
     .hero-ai-line svg{
@@ -1475,6 +1487,18 @@
     }
 
     /* One-time packs — the two content packs and the AI top-ups */
+    .pricing-trial{
+      display:flex;align-items:center;justify-content:center;gap:12px;
+      flex-wrap:wrap;text-align:center;
+      margin:-8px auto 40px;max-width:64ch;
+      font-size:.9375rem;color:rgba(var(--fg-rgb),calc(.62 * var(--fa)));
+    }
+    .trial-pill{
+      font-size:.75rem;font-weight:700;letter-spacing:.04em;
+      background:var(--accent);color:var(--on-accent);
+      padding:4px 12px;border-radius:100px;white-space:nowrap;
+    }
+
     .packs{
       max-width:860px;margin:56px auto 0;
       display:grid;grid-template-columns:200px 1fr;
@@ -1778,9 +1802,13 @@
             <div class="store-btn-text"><small>Get it on</small><strong>Google Play</strong></div>
           </a>
         </div>
+        <p class="hero-trial-line">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>Free to download &mdash; and <strong>Pro is free for 7 days</strong>, no charge if you cancel first.</span>
+        </p>
         <p class="hero-ai-line">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
-          Work with Claude Code or Cursor? <a href="/ai">Give your agent its own task list &rarr;</a>
+          <span>Work with Claude Code or Cursor? <a href="/ai">Give your agent its own task list &rarr;</a></span>
         </p>
       </div>
       <div class="hero-img">
@@ -2029,7 +2057,7 @@
       Your daily command center — My Day, lists, priorities, and detail panel.
     </p>
     <div class="mac-window" data-reveal>
-      <img src="screenshots/desktop.png" alt="Dovilo desktop app — My Day task list with a selected task detail panel showing due date, list and reminder options" loading="lazy">
+      <img src="screenshots/desktop.png" width="2764" height="1712" alt="Dovilo desktop app — My Day task list with a selected task detail panel showing due date, list and reminder options" loading="lazy">
     </div>
 
     <div class="mac-stack-gap"></div>
@@ -2039,7 +2067,7 @@
       Watch Claude Code execute a multi-step task — step-by-step progress, agent notes, and full control.
     </p>
     <div class="mac-window" data-reveal>
-      <img src="screenshots/desktop-ai.png" alt="Dovilo desktop app — AI Tasks view showing Claude Code running a multi-step task with progress steps and agent notes" loading="lazy">
+      <img src="screenshots/desktop-ai.png" width="2764" height="1712" alt="Dovilo desktop app — AI Tasks view showing Claude Code running a multi-step task with progress steps and agent notes" loading="lazy">
     </div>
 
     <div class="mac-stack-gap"></div>
@@ -2051,15 +2079,15 @@
     <div class="shot-block">
       <div class="shot-grid">
         <figure class="shot">
-          <div class="shot-screen"><img src="screenshots/mobile-tasks.png" alt="Dovilo My Day list with tasks grouped under Today and No date" loading="lazy"></div>
+          <div class="shot-screen"><img src="screenshots/mobile-tasks.png" width="386" height="840" alt="Dovilo My Day list with tasks grouped under Today and No date" loading="lazy"></div>
           <figcaption><strong>My Day</strong>Today, tomorrow and no-date in collapsible groups — dates and priorities read at a glance.</figcaption>
         </figure>
         <figure class="shot">
-          <div class="shot-screen"><img src="screenshots/mobile-views.png" alt="Dovilo view picker showing My Day, Important, Planned, Flagged and custom lists with counts" loading="lazy"></div>
+          <div class="shot-screen"><img src="screenshots/mobile-views.png" width="386" height="840" alt="Dovilo view picker showing My Day, Important, Planned, Flagged and custom lists with counts" loading="lazy"></div>
           <figcaption><strong>View picker</strong>My Day, Important, Planned, Flagged and every list you keep — each with a live count.</figcaption>
         </figure>
         <figure class="shot">
-          <div class="shot-screen"><img src="screenshots/mobile-task-detail.png" alt="Dovilo task detail with due date, repeat, star, flag and reminder properties" loading="lazy"></div>
+          <div class="shot-screen"><img src="screenshots/mobile-task-detail.png" width="386" height="840" alt="Dovilo task detail with due date, repeat, star, flag and reminder properties" loading="lazy"></div>
           <figcaption><strong>Task detail</strong>Due date, repeat, star, flag and reminder as one property grid, with notes underneath.</figcaption>
         </figure>
       </div>
@@ -2074,11 +2102,11 @@
     <div class="shot-block">
       <div class="shot-grid two">
         <figure class="shot">
-          <div class="shot-screen"><img src="screenshots/mobile-ai.png" alt="Dovilo AI Tasks list with queued agent tasks and remaining monthly quota" loading="lazy"></div>
+          <div class="shot-screen"><img src="screenshots/mobile-ai.png" width="386" height="840" alt="Dovilo AI Tasks list with queued agent tasks and remaining monthly quota" loading="lazy"></div>
           <figcaption><strong>Queued and running</strong>Awaiting you, running, queued — grouped by what needs your attention first, with your monthly quota in view.</figcaption>
         </figure>
         <figure class="shot">
-          <div class="shot-screen"><img src="screenshots/mobile-ai-done.png" alt="Dovilo AI Tasks recently done section with completed agent tasks and step counts" loading="lazy"></div>
+          <div class="shot-screen"><img src="screenshots/mobile-ai-done.png" width="386" height="840" alt="Dovilo AI Tasks recently done section with completed agent tasks and step counts" loading="lazy"></div>
           <figcaption><strong>Recently done</strong>Finished work drops into its own section with the step count it took to get there.</figcaption>
         </figure>
       </div>
@@ -2140,6 +2168,10 @@
   <section class="pricing" id="pricing" aria-label="Pricing — free and Pro plans">
     <p class="section-label">Pricing</p>
     <h2 class="section-title">Unlock the full experience</h2>
+    <p class="pricing-trial">
+      <span class="trial-pill">7 days free</span>
+      Every Pro plan starts with a free week. Cancel any time before it ends and you are not charged.
+    </p>
 
     <!-- What's included in Pro -->
     <div class="plans-compare">
@@ -2201,7 +2233,7 @@
 
     <div class="packs">
       <div class="packs-shot">
-        <img src="screenshots/mobile-market.png" alt="Dovilo Market showing AI task packs, the Focus Ambience Pack and the Full City Package" loading="lazy">
+        <img src="screenshots/mobile-market.png" width="386" height="840" alt="Dovilo Market showing AI task packs, the Focus Ambience Pack and the Full City Package" loading="lazy">
       </div>
       <div>
         <p class="packs-label">One-time packs</p>
@@ -2252,7 +2284,7 @@
           <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
         </div>
         <div class="faq-a">
-          <p>Yes! The free tier includes full to-do management, unlimited focus sessions, basic city building, dark &amp; light themes, and zero ads. Pro unlocks cloud sync, all buildings, advanced statistics, and more.</p>
+          <p>Yes! The free tier includes full to-do management, unlimited focus sessions, basic city building, dark &amp; light themes, and zero ads. Pro unlocks cloud sync, the desktop app, all buildings, advanced statistics and more &mdash; and it <strong>starts with a 7-day free trial</strong>, so you can try everything before paying. Cancel before the week is up and nothing is charged.</p>
         </div>
       </div>
 
@@ -2327,7 +2359,7 @@
     <p class="section-label">Download</p>
     <h2 class="section-title">Get Dovilo on your device</h2>
 
-    <p class="download-sub">Available on iOS, Android, Windows &amp; Mac. Free to start.</p>
+    <p class="download-sub">Available on iOS, Android, Windows &amp; Mac. Free to start, and Pro is free for the first 7 days.</p>
     <div class="store-buttons">
       <a href="https://apps.apple.com/app/dovilo/id6761195015?ct=website_download&mt=8" class="store-btn" aria-label="Download on the App Store">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -2346,7 +2378,7 @@
     </div>
 
     <p class="download-desktop-label">Desktop App <span class="pro-tag">Pro</span></p>
-    <p class="download-desktop-note">Requires an active Pro subscription</p>
+    <p class="download-desktop-note">Requires Pro &mdash; start the 7-day free trial in the mobile app</p>
     <div class="store-buttons">
       <a href="https://github.com/slhddn/dovilo-desktop-releases/releases/latest/download/Dovilo-Setup.exe?source=website_download" class="store-btn desktop-btn" aria-label="Download for Windows">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
