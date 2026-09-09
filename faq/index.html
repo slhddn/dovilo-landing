@@ -143,7 +143,7 @@
       "name": "What is Dovilo's MCP integration?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Dovilo Desktop (Pro) ships with a built-in Model Context Protocol server that runs locally on your machine. Any MCP-compatible client — Claude Code, Cursor, Claude Desktop, Windsurf, Codex CLI, Gemini CLI, and others — can connect and call Dovilo's tools: list_tasks, get_task, read_context, update_status, update_step, add_step, skip_step, append_note, and append_telemetry. Agents can only read and update; they cannot create tasks."
+        "text": "Dovilo Desktop (Pro) ships with a built-in Model Context Protocol server that runs locally on your machine. Any MCP-compatible client — Claude Code, Cursor, Claude Desktop, Windsurf, Codex CLI, Gemini CLI, and others — can connect and call Dovilo's tools: list_tasks, get_task, read_context, update_status, update_step, add_step, skip_step, append_note, and append_telemetry. Those tools reach AI tasks only — the jobs you write for an agent in the AI Tasks tab, inside a project. The personal to-do list in My Tasks is a separate surface agents cannot read, and agents cannot create tasks."
       }
     },
     {
@@ -183,7 +183,7 @@
       "name": "Do I get notified when an agent works on my task?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. You can choose between two notification modes: every step (each progress update the agent pushes) or start / finish / error only (quieter, summary-style). Agent notes and telemetry (tokens, cost, duration) are saved to the task and visible from the mobile app, so you can check in from anywhere."
+        "text": "Yes. You can choose between two notification modes: every step (each progress update the agent pushes) or start / finish / error only (quieter, summary-style). The AI Tasks tab is in the mobile app as well, so you can write an AI task from your phone and follow the same run there — step trail, agent notes and telemetry (tokens, cost, duration) all land on the task. Only the agent itself runs on the desktop."
       }
     },
     {
@@ -514,7 +514,7 @@
         <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="faq-a">
-        <p>Dovilo Desktop (Pro) ships with a built-in <strong>Model Context Protocol</strong> server that runs locally on your machine. Any MCP-compatible client — <strong>Claude Code, Cursor, Claude Desktop, Windsurf, Codex CLI, Gemini CLI</strong>, and others — can connect and call Dovilo's tools: <code>list_tasks</code>, <code>get_task</code>, <code>read_context</code>, <code>update_status</code>, <code>update_step</code>, <code>add_step</code>, <code>skip_step</code>, <code>append_note</code>, and <code>append_telemetry</code>. Agents can only read and update; they cannot create tasks.</p>
+        <p>Dovilo Desktop (Pro) ships with a built-in <strong>Model Context Protocol</strong> server that runs locally on your machine. Any MCP-compatible client — <strong>Claude Code, Cursor, Claude Desktop, Windsurf, Codex CLI, Gemini CLI</strong>, and others — can connect and call Dovilo's tools: <code>list_tasks</code>, <code>get_task</code>, <code>read_context</code>, <code>update_status</code>, <code>update_step</code>, <code>add_step</code>, <code>skip_step</code>, <code>append_note</code>, and <code>append_telemetry</code>. Those tools reach <strong>AI tasks only</strong> — the jobs you write for an agent in the AI Tasks tab, inside a project. Your personal to-do list in My Tasks is a separate surface an agent cannot read, and no agent can create a task. Setup, the full tool reference and the trust boundaries are on the <a href="/ai">developer page</a>.</p>
       </div>
     </div>
 
@@ -564,7 +564,7 @@
         <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="faq-a">
-        <p>Yes. You can choose between two notification modes: <strong>every step</strong> (each progress update the agent pushes) or <strong>start / finish / error only</strong> (quieter, summary-style). Agent notes and telemetry (tokens, cost, duration) are saved to the task and visible from the mobile app, so you can check in from anywhere.</p>
+        <p>Yes. You can choose between two notification modes: <strong>every step</strong> (each progress update the agent pushes) or <strong>start / finish / error only</strong> (quieter, summary-style). The <strong>AI Tasks</strong> tab is in the mobile app as well, so you can write an AI task from your phone and follow the same run there — step trail, agent notes and telemetry (tokens, cost, duration) all land on the task. Only the agent itself runs on the desktop.</p>
       </div>
     </div>
 
@@ -633,9 +633,9 @@
     </div>
 
     <!-- Contact -->
-    <div class="contact-box">
+    <div class="contact-box" id="contact">
       <p>Still have questions?</p>
-      <a href="mailto:support@dovilo.app">support@dovilo.app</a>
+      <a class="mail" href="/faq#contact" data-u="support" data-d="dovilo.app">support<span aria-hidden="true"> [at] </span>dovilo.app</a>
     </div>
   </div>
 
@@ -648,6 +648,19 @@
       // Toggle clicked
       if (!wasOpen) item.classList.add('open');
     }
+  </script>
+
+  <script>
+    /* Addresses are split in the markup so scrapers do not find a parseable
+       address; the real mailto is assembled here, in the browser. */
+    (function(){
+      var at = String.fromCharCode(64);
+      document.querySelectorAll('a.mail').forEach(function(a){
+        var addr = a.getAttribute('data-u') + at + a.getAttribute('data-d');
+        a.setAttribute('href', 'mailto:' + addr);
+        a.textContent = addr;
+      });
+    })();
   </script>
 </body>
 </html>

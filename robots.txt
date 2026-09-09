@@ -67,4 +67,8 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
+# Internal working notes, not part of the site.
+User-agent: *
+Disallow: /notes/
+
 Sitemap: https://dovilo.app/sitemap.xml

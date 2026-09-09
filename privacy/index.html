@@ -158,12 +158,12 @@
     <p>We do not sell, rent, or share your personal data with any other third parties.</p>
 
     <h2>6. MCP Server &amp; AI Agent Integration (Desktop Pro)</h2>
-    <p>Dovilo Desktop includes an optional <strong>Model Context Protocol (MCP)</strong> server that lets external AI agents (e.g. Cursor, Claude Code) interact with your tasks. Important privacy points:</p>
+    <p>Dovilo Desktop includes an optional <strong>Model Context Protocol (MCP)</strong> server that lets external AI agents (e.g. Cursor, Claude Code) work on <strong>AI tasks</strong> — the tasks you create for an agent, which are kept separate from your personal task lists. Important privacy points:</p>
     <ul>
       <li>The MCP server runs <strong>entirely locally</strong> on your machine. It listens only on a local port and is off by default — you must explicitly enable it.</li>
       <li>Dovilo does not transmit your tasks, notes, or MCP traffic to our servers or any third party. Once enabled, only clients you connect to the local endpoint can read data.</li>
       <li>Authentication is done with a locally generated API key; it never leaves your device unless you copy it into your MCP client.</li>
-      <li>Agents can only <strong>read and update</strong> tasks and steps you've allowed via Dovilo's per-task agent filter. Agents cannot create tasks or access data outside that filter.</li>
+      <li>Agents reach <strong>AI tasks only</strong> — the tasks you create for them in the AI Tasks section, within the project they are scoped to. Your personal tasks and lists in My Tasks are not exposed to the MCP tool surface. On the AI tasks they can see, agents may read and update status, steps, notes and telemetry; they cannot create or delete tasks.</li>
       <li>Any information the agent itself sends to its own model provider (OpenAI, Anthropic, etc.) is governed by that provider's privacy policy — not ours.</li>
     </ul>
     <p>You can disable the MCP server at any time from Dovilo Desktop settings; this immediately terminates any open agent connections.</p>
@@ -175,7 +175,7 @@
     <p>You have the right to:</p>
     <ul>
       <li>Access your data at any time through the app</li>
-      <li>Export your data from the app settings</li>
+      <li>Request a copy of your data by email — an in-app export is on the way, and will be announced in the <a href="/changelog/">changelog</a></li>
       <li>Delete your account and all associated data from Settings &gt; Delete Account</li>
       <li>Opt out of analytics by disabling it in app settings</li>
     </ul>
@@ -188,7 +188,20 @@
     <p>We may update this Privacy Policy from time to time. Any changes will be posted within the app and on this page. Continued use of Dovilo after changes constitutes acceptance of the updated policy.</p>
 
     <h2>11. Contact</h2>
-    <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:support@dovilo.app">support@dovilo.app</a>.</p>
+    <p>If you have any questions about this Privacy Policy, please contact us at <a class="mail" href="/faq#contact" data-u="support" data-d="dovilo.app">support<span aria-hidden="true"> [at] </span>dovilo.app</a>.</p>
   </div>
+
+  <script>
+    /* Addresses are split in the markup so scrapers do not find a parseable
+       address; the real mailto is assembled here, in the browser. */
+    (function(){
+      var at = String.fromCharCode(64);
+      document.querySelectorAll('a.mail').forEach(function(a){
+        var addr = a.getAttribute('data-u') + at + a.getAttribute('data-d');
+        a.setAttribute('href', 'mailto:' + addr);
+        a.textContent = addr;
+      });
+    })();
+  </script>
 </body>
 </html>

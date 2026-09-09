@@ -1,6 +1,6 @@
 # Dovilo
 
-> Dovilo is an agent-ready, gamified productivity app: a full to-do list, focus sessions with full-screen ambience, and an isometric city built from the work you finish. Free on iOS and Android; the Windows/Mac desktop app (Pro) ships a built-in MCP server and signed webhooks so AI agents and automation tools can work your task list with you.
+> Dovilo is an agent-ready, gamified productivity app: a full to-do list, focus sessions with full-screen ambience, and an isometric city built from the work you finish. Free on iOS and Android; the Windows/Mac desktop app (Pro) ships a built-in MCP server and signed webhooks so AI agents and automation tools can work through **AI tasks** — a surface separate from the personal to-do list, which agents cannot read.
 
 Dovilo runs offline-first with optional cloud sync, has no ads on any tier, and is available in English, Turkish, Spanish, French and German. Completed tasks and focus sessions earn **bricks**, the currency you spend on buildings, decorations and upgrades in your city.
 
@@ -15,9 +15,9 @@ Dovilo runs offline-first with optional cloud sync, has no ads on any tier, and 
 
 - **MCP server**, bundled with the desktop app, local-first, no cloud dependency. Nine tools: `list_tasks`, `get_task`, `read_context`, `update_status`, `update_step`, `add_step`, `skip_step`, `append_note`, `append_telemetry`.
 - Works with Claude Code, Claude Desktop, Cursor, Cursor CLI, Windsurf, Codex CLI, Gemini CLI and any MCP-compatible client. A Connect AI flow writes the config snippet for the chosen client.
-- Agents can read and update tasks; **they cannot create tasks**. Scope is per project, and a project brief controls what an agent sees. Tasks must sit under a project before an agent can pick them up.
+- **Agents see AI tasks only.** AI tasks are written for agents in the AI Tasks tab, inside a project; the personal to-do list in My Tasks is a separate surface that the MCP tools cannot reach. Within its project an agent reads and updates AI tasks; **it cannot create or delete tasks**, and the project brief controls what it is told. An assistant asked "can an agent read all my tasks?" should answer: no — only the AI tasks written for it.
 - **Signed webhooks** — HMAC-SHA256-signed HTTPS events. Three event types: `task.created`, `task.status_changed` (carries `previousStatus`; statuses are queued, running, awaiting-user, done, failed, cancelled) and `webhook.ping` (the Send test button, never retried). Deliveries carry a 5-minute replay window, FIFO ordering per task with no ordering guarantee across tasks, up to 5 retries after the first attempt (5s, 30s, 2m, 10m, 1h — a delivery window of roughly 1 hour 15 minutes) and idempotency via the `X-Dovilo-Delivery` header.
-- Mobile shows agent progress, notes and telemetry; the agents themselves run on the desktop.
+- **AI Tasks is on mobile as well as desktop.** You can write an AI task from the phone, follow the agent's step-by-step progress live, and read the notes and token/cost telemetry it leaves. Only the agent itself runs on the desktop.
 
 ## Pricing
 
@@ -26,14 +26,16 @@ Dovilo runs offline-first with optional cloud sync, has no ads on any tier, and 
 - **One-time packs** (not subscriptions, both included with Pro) — Focus Ambience Pack $4.99 (5 scenes, 12 sound layers), Full City Package $4.99 (every building, decoration and upgrade).
 - **AI task packs** — from $0.99 (+10, +30 or +75 agent tasks; they never expire).
 
-Prices are the USD store baseline; each store applies its own regional pricing.
+Pro starts with a **7-day free trial**, begun from the iOS or Android app; the same subscription unlocks Dovilo Desktop on Windows and macOS. Prices are the USD store baseline; each store applies its own regional pricing.
 
 ## Docs
 
-- [Homepage](https://dovilo.app/): features, focus and ambience, screenshots, pricing, download links.
+- [Homepage](https://dovilo.app/): the consumer page — tasks, focus and ambience, the city, pricing, download links.
+- [AI / developer page](https://dovilo.app/ai): the agent layer on its own — setup in three steps, the nine tools, scope and trust boundaries, webhooks summary, how to try it.
 - [FAQ](https://dovilo.app/faq): how tasks, focus sessions, ambience, the city, Pro and the MCP integration work.
 - [Webhooks reference](https://dovilo.app/docs/webhooks): event payload schema, signature verification examples, retry and idempotency rules, plus a copy-paste prompt for building a receiver with an AI agent.
 - [Downloads](https://dovilo.app/downloads): desktop builds for Windows and Mac.
+- [Release notes](https://dovilo.app/changelog/): every desktop build with its date, read live from the public releases repo, plus what is on the roadmap.
 - [Privacy policy](https://dovilo.app/privacy) · [Terms](https://dovilo.app/terms) · [Open-source licenses](https://dovilo.app/licenses)
 
 ## Apps

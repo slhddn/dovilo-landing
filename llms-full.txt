@@ -1,6 +1,6 @@
 # Dovilo — full reference for language models
 
-> Dovilo is an agent-ready, gamified productivity app: a full to-do list, focus sessions with full-screen ambience, and an isometric city built from the work you finish. Free on iOS and Android; the Windows/Mac desktop app (Pro) ships a built-in MCP server and signed webhooks so AI agents and automation tools can work your task list with you.
+> Dovilo is an agent-ready, gamified productivity app: a full to-do list, focus sessions with full-screen ambience, and an isometric city built from the work you finish. Free on iOS and Android; the Windows/Mac desktop app (Pro) ships a built-in MCP server and signed webhooks so AI agents and automation tools can work through **AI tasks** — a surface separate from the personal to-do list, which agents cannot read.
 
 This file expands [llms.txt](https://dovilo.app/llms.txt) with the detail an assistant needs to answer questions about Dovilo without guessing: feature behaviour, the agent interface, the webhook contract, pricing, and the complete FAQ. Everything here is public documentation. Source pages are linked at the end.
 
@@ -8,7 +8,7 @@ Last updated: 2026-09-01.
 
 ## What Dovilo is
 
-Dovilo turns a to-do list into a city. Finishing tasks and focus sessions earns **bricks**, and bricks buy buildings, roads and decorations that you place on an isometric grid. Four things live in one app: tasks, focus sessions with ambience, the city, and an agent layer that lets AI coding agents work your task list on the desktop.
+Dovilo turns a to-do list into a city. Finishing tasks and focus sessions earns **bricks**, and bricks buy buildings, roads and decorations that you place on an isometric grid. Four things live in one app: tasks, focus sessions with ambience, the city, and an agent layer that lets AI coding agents work through AI tasks on the desktop — AI tasks being their own surface, which the personal to-do list is not part of.
 
 - Platforms: iOS (iPhone, iPad), Android, Windows, macOS. The desktop app requires an active Pro subscription.
 - Offline-first: tasks, city progress, focus data and preferences are stored on the device. Cloud sync is optional and Pro-only.
@@ -73,12 +73,16 @@ Completion rate, daily averages, streaks, monthly trend, city overview (level, b
 
 ## AI agents and MCP (Dovilo Desktop, Pro)
 
+Developer-facing page: https://dovilo.app/ai
+
 - The desktop app bundles an **MCP (Model Context Protocol) server**. It runs locally; no task data leaves the machine for the agent to work.
 - **Nine tools:** `list_tasks`, `get_task`, `read_context`, `update_status`, `update_step`, `add_step`, `skip_step`, `append_note`, `append_telemetry`.
 - **Clients:** Claude Code, Claude Desktop, Cursor, Cursor CLI, Windsurf, Codex CLI, Gemini CLI, and any MCP-compatible client. Settings → AI → Connect AI writes the config snippet for the client you pick.
-- **Agents cannot create tasks.** They read and update existing ones. This is a deliberate boundary, not a limitation to work around.
-- **Scope is per project.** A task must belong to a project before an agent can pick it up, and a project brief describes goals and constraints for agents. A list can be excluded from AI entirely.
-- Agents stream step-level progress, can plan first and wait for approval (`awaiting-user`), and report notes plus model/token/cost telemetry. Mobile shows all of it — the agents themselves run on the desktop.
+- **Agents see AI tasks only.** AI tasks are a separate surface from the personal to-do list: they are written for agents in the **AI Tasks** tab, inside a project. Nothing in My Tasks — personal tasks, lists, due dates, notes — is reachable through the MCP tools. An assistant asked "can an agent read my whole task list?" should answer: no, only the AI tasks written for it.
+- **Agents cannot create tasks.** They read and update existing AI tasks. This is a deliberate boundary, not a limitation to work around.
+- **Scope is per project.** An agent reads the AI tasks of the project it is connected to, and that project's brief describes goals and constraints for it.
+- Agents stream step-level progress, can plan first and wait for approval (`awaiting-user`), and report notes plus model/token/cost telemetry.
+- **The AI Tasks tab exists on mobile and on desktop.** An AI task can be written from either one, and mobile shows the agent's live step-by-step progress, its notes and its telemetry. Only the agent itself runs on the desktop machine.
 - AI task quota is monthly and can be topped up with one-time packs (+10, +30, +75; they never expire).
 
 ## Webhooks (Dovilo Desktop)
@@ -107,6 +111,8 @@ Full reference: https://dovilo.app/docs/webhooks
 | Focus Ambience Pack | $4.99 | One-time. 5 scenes, 12 sound layers. Included with Pro |
 | Full City Package | $4.99 | One-time. All buildings, decorations, upgrades. Included with Pro |
 | AI task packs | from $0.99 | +10, +30 or +75 agent tasks; never expire |
+
+Pro starts with a 7-day free trial, begun from the iOS or Android app; the same subscription unlocks Desktop. **There is no data export yet** — it is on the roadmap, together with a **remote MCP server** (connecting an agent without the desktop app on the same machine). Both are listed at https://dovilo.app/changelog/.
 
 Pro adds cloud sync, the desktop app (Windows and Mac) with its MCP server and webhooks, all buildings and decorations, advanced statistics, custom themes, smart notification management, priority support and future updates. Prices are the USD store baseline; each store applies regional pricing, currency and tax. Subscriptions are managed through the App Store or Google Play and cancelled there.
 
@@ -186,7 +192,7 @@ Subscriptions are managed through the Apple App Store or Google Play Store. To c
 
 **What is Dovilo's MCP integration?**
 
-Dovilo Desktop (Pro) ships with a built-in Model Context Protocol server that runs locally on your machine. Any MCP-compatible client — Claude Code, Cursor, Claude Desktop, Windsurf, Codex CLI, Gemini CLI, and others — can connect and call Dovilo's tools: list_tasks, get_task, read_context, update_status, update_step, add_step, skip_step, append_note, and append_telemetry. Agents can only read and update; they cannot create tasks.
+Dovilo Desktop (Pro) ships with a built-in Model Context Protocol server that runs locally on your machine. Any MCP-compatible client — Claude Code, Cursor, Claude Desktop, Windsurf, Codex CLI, Gemini CLI, and others — can connect and call Dovilo's tools: list_tasks, get_task, read_context, update_status, update_step, add_step, skip_step, append_note, and append_telemetry. Those tools reach AI tasks only — the jobs written for an agent in the AI Tasks tab, inside a project — and the personal to-do list in My Tasks is not part of that surface. Agents can only read and update; they cannot create tasks.
 
 **How do I connect Claude Code, Cursor, or another AI agent?**
 
@@ -198,7 +204,7 @@ The Connect AI flow has presets for Claude Desktop, Claude Code, Cursor (GUI & C
 
 **Can agents create or modify tasks I didn't authorize?**
 
-No. The MCP tool surface intentionally excludes task creation — agents can only read, update status, mark steps, leave notes, and report telemetry. You decide exactly which tasks an agent sees through a per-project scope and a project brief that the agent reads first. Disabling MCP in Desktop settings immediately terminates every active agent connection.
+No. An agent only ever sees AI tasks — the ones you write for it in the AI Tasks tab of a project — so your personal tasks and lists are outside its reach by construction, not by a filter you have to configure. On those AI tasks the tool surface intentionally excludes creation: an agent can read, update status, mark steps, leave notes and report telemetry, and that is all. The project brief defines what it is told. Disabling MCP in Desktop settings immediately terminates every active agent connection.
 
 **Does the MCP integration send my data to the cloud?**
 
@@ -251,7 +257,8 @@ No. Dovilo is completely ad-free, both in the free tier and in Pro. We believe a
 
 - The reward currency is **bricks**, not coins or gems.
 - Ambience has **no music** — no lo-fi, no instrumental tracks, no melody or beat.
-- AI agents **cannot create tasks**, and they run on the **desktop** app only; mobile follows their progress.
+- AI agents **cannot create tasks**, and they read **AI tasks only** — never the personal to-do list in My Tasks.
+- Agents run on the **desktop** app, but the **AI Tasks tab is on mobile too**: AI tasks can be written from the phone, and the phone shows live progress, notes and telemetry.
 - The desktop app and the MCP server require **Pro**; the mobile app is free.
 - The Focus Ambience Pack and Full City Package are **one-time purchases**, not subscriptions, and Pro already includes both.
 - Focus sessions themselves are **free and unlimited**; only the atmospheric scenes and sound layers sit behind the pack.

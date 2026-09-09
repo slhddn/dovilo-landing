@@ -142,10 +142,10 @@
     <p>While we offer cloud sync via Firebase to keep your data accessible across devices, we do not guarantee against data loss. Users are encouraged to maintain their own backups of critical task information. Dovilo is provided on an "as is" basis without warranties of any kind, express or implied, including but not limited to warranties of merchantability or fitness for a particular purpose.</p>
 
     <h2>5. MCP Server &amp; AI Agent Use (Desktop Pro)</h2>
-    <p>Dovilo Desktop includes an optional Model Context Protocol (MCP) server that allows third-party AI agents (e.g. Cursor, Claude Code) to interact with your tasks. By enabling the MCP server you acknowledge and agree that:</p>
+    <p>Dovilo Desktop includes an optional Model Context Protocol (MCP) server that allows third-party AI agents (e.g. Cursor, Claude Code) to work on your AI tasks — the tasks you create for an agent, which are separate from your personal task lists. By enabling the MCP server you acknowledge and agree that:</p>
     <ul>
       <li>You are responsible for safeguarding your locally generated MCP API key and for any actions taken by agents you authorize.</li>
-      <li>Agents are granted only the permissions exposed by Dovilo's MCP tools (read tasks, update status, update steps, add notes). Agents cannot create tasks or bypass the per-task agent filter.</li>
+      <li>Agents are granted only the permissions exposed by Dovilo's MCP tools (read AI tasks, update status, update steps, add notes and telemetry), and only for AI tasks within the project they are scoped to. Personal tasks and lists in My Tasks are outside that surface. Agents cannot create or delete tasks.</li>
       <li>Content sent to an external AI model by your agent is governed by that model provider's terms and privacy policy. Dovilo is not responsible for the behavior of third-party agents or models.</li>
       <li>You will not use the MCP integration to violate any applicable law or to process data you are not authorized to share with the agent or its model provider.</li>
       <li>We may modify, deprecate, or change the MCP tool surface in future versions to improve safety, reliability, or compatibility.</li>
@@ -167,7 +167,20 @@
     <p>These Terms are governed by and construed in accordance with applicable laws. Any disputes arising from these Terms or your use of the App shall be resolved in the appropriate courts of jurisdiction.</p>
 
     <h2>11. Contact</h2>
-    <p>If you have any questions about these Terms, please contact us at <a href="mailto:support@dovilo.app">support@dovilo.app</a>.</p>
+    <p>If you have any questions about these Terms, please contact us at <a class="mail" href="/faq#contact" data-u="support" data-d="dovilo.app">support<span aria-hidden="true"> [at] </span>dovilo.app</a>.</p>
   </div>
+
+  <script>
+    /* Addresses are split in the markup so scrapers do not find a parseable
+       address; the real mailto is assembled here, in the browser. */
+    (function(){
+      var at = String.fromCharCode(64);
+      document.querySelectorAll('a.mail').forEach(function(a){
+        var addr = a.getAttribute('data-u') + at + a.getAttribute('data-d');
+        a.setAttribute('href', 'mailto:' + addr);
+        a.textContent = addr;
+      });
+    })();
+  </script>
 </body>
 </html>
