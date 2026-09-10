@@ -1,2 +1,9 @@
 # Internal working notes — kept locally, never published.
 notes/
+
+# Build tooling for the blog; the generated pages themselves are committed.
+node_modules/
+studio/node_modules/
+studio/dist/
+studio/.sanity/
+.env

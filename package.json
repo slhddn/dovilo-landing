@@ -1,0 +1,17 @@
+{
+  "name": "dovilo-landing",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Build tooling for the Dovilo blog. The rest of dovilo.app is hand-written static HTML with no build step.",
+  "scripts": {
+    "build:blog": "node tools/build-blog.mjs",
+    "serve": "python -m http.server 8000"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "marked": "^18.0.12"
+  }
+}

@@ -242,6 +242,15 @@ Yes. Go to Settings > Delete Account to permanently remove your account and all 
 
 No. Dovilo is completely ad-free, both in the free tier and in Pro. We believe ads break focus, which is the opposite of what a productivity app should do.
 
+<!-- BLOG:START -->
+## Blog
+
+Long-form posts, newest first — full text at each link, and an RSS feed at https://dovilo.app/blog/feed.xml.
+
+- [Best Gamified Productivity Apps in 2026 (Ranked & Reviewed)](https://dovilo.app/blog/best-gamified-productivity-apps/) — 2026-09-10. A comprehensive ranking the top gamified productivity apps available in 2026, covering Dovilo, Habitica, BeeDone, Forest, MainQuest, and others. Highlights each app's reward mechanics, focus-timer depth, platform availability, and pricing.
+- [Todoist Alternative: 7 Apps Worth Switching To in 2026](https://dovilo.app/blog/todoist-alternative-7-apps-worth-switching-to-in-2026/) — 2026-09-10. Find the best Todoist alternative in 2026 — from gamified apps to AI-native tools — with honest notes on who each one suits best.
+<!-- BLOG:END -->
+
 ## Source pages
 
 - https://dovilo.app/ — product overview, features, focus and ambience, screenshots, pricing

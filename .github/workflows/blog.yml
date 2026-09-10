@@ -1,0 +1,52 @@
+name: Publish blog
+
+# Sanity is the trigger: a webhook there POSTs a repository_dispatch here, this
+# job regenerates /blog and commits it, and GitHub Pages publishes the push.
+# The daily run is a safety net — it also releases posts whose publishedAt was
+# set in the future.
+
+on:
+  repository_dispatch:
+    types: [sanity-publish]
+  workflow_dispatch:
+  schedule:
+    - cron: '17 6 * * *'
+
+permissions:
+  contents: write
+
+# Two publishes in quick succession must not race for the same commit.
+concurrency:
+  group: publish-blog
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build /blog from Sanity
+        # Only needed if the dataset is private; harmless when the secret is unset.
+        env:
+          SANITY_READ_TOKEN: ${{ secrets.SANITY_READ_TOKEN }}
+        run: npm run build:blog
+
+      - name: Commit the generated pages
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add blog index.html sitemap.xml llms.txt llms-full.txt
+          if git diff --staged --quiet; then
+            echo "Nothing changed — the site is already current."
+            exit 0
+          fi
+          git commit -m "Publish the blog as of $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push
