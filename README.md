@@ -23,10 +23,28 @@ The app itself is closed source; this repository is the public website only.
 
 Hand-written static HTML. No build step, no framework, no package manager — each page is a
 single self-contained `index.html` with its CSS inlined and its structured data in `application/ld+json`
-blocks. The only external request is the Inter webfont from Google Fonts.
+blocks. Nothing is fetched from a third party: Inter is self-hosted from [`fonts/`](fonts/) as a
+variable `woff2` declared with `@font-face`, so no stylesheet blocks the first paint.
 
 Light and dark themes are CSS custom properties, with the choice stored in `localStorage` and
 applied before first paint so there is no flash.
+
+### Screenshots
+
+Pages reference `.webp`; the `.png` files next to them are the lossless sources, kept so the
+variants can be regenerated. The hero and the two desktop shots also carry `srcset`/`sizes`, whose
+candidate widths are named in the filename (`-193`, `-700` … ). To add or replace a screenshot,
+drop the PNG in [`screenshots/`](screenshots/) and re-encode it with ffmpeg:
+
+```bash
+# full-size WebP (quality 80 for the busy city render, 88 elsewhere)
+ffmpeg -i screenshots/mobile-x.png -c:v libwebp -quality 88 -compression_level 6 screenshots/mobile-x.webp
+
+# 1x variant for the phone slots (~193 CSS px wide)
+ffmpeg -i screenshots/mobile-x.png -vf scale=193:-2:flags=lanczos -c:v libwebp -quality 88 -compression_level 6 screenshots/mobile-x-193.webp
+```
+
+Share cards (`og:image`, `twitter:image`) stay on PNG/JPG — social crawlers are unreliable with WebP.
 
 ## Local preview
 

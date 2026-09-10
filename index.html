@@ -285,7 +285,21 @@
 }
   </script>
 
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <style>
+    /* Inter — self-hosted variable font (latin + latin-ext), so the first paint
+       waits on no third-party stylesheet. latin-ext only downloads if used. */
+    @font-face{
+      font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;
+      src:url('/fonts/inter-latin.woff2') format('woff2');
+      unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+    }
+    @font-face{
+      font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;
+      src:url('/fonts/inter-latin-ext.woff2') format('woff2');
+      unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+    }
+
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
     /* ─── DESIGN TOKENS ───
@@ -1744,15 +1758,12 @@
       footer{flex-direction:column;text-align:center}
     }
   </style>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <!-- NAV -->
   <nav aria-label="Main navigation">
-    <a href="#" class="logo"><img src="notify-icon.png" alt="Dovilo icon">Dovilo<span class="logo-subtitle">&nbsp;— Focus, Build &amp; To-Do</span></a>
+    <a href="#" class="logo"><img src="notify-icon.webp" width="32" height="32" alt="Dovilo icon">Dovilo<span class="logo-subtitle">&nbsp;— Focus, Build &amp; To-Do</span></a>
     <ul id="nav-menu">
       <li><a href="#features" onclick="closeMenu()">Features</a></li>
       <li><a href="#focus" onclick="closeMenu()">Focus</a></li>
@@ -1814,19 +1825,19 @@
       <div class="hero-img">
         <div class="hero-phones">
           <div class="hero-phone p-stats">
-            <div class="hero-phone-screen"><img src="screenshots/mobile-stats.png" alt="Dovilo statistics dashboard with completion rate and monthly trend" loading="eager"></div>
+            <div class="hero-phone-screen"><img srcset="screenshots/mobile-stats-193.webp 193w, screenshots/mobile-stats.webp 386w" sizes="(max-width:768px) 36vw, (max-width:1024px) 160px, 188px" width="386" height="840" src="screenshots/mobile-stats.webp" alt="Dovilo statistics dashboard with completion rate and monthly trend"></div>
           </div>
           <div class="hero-phone p-tasks">
-            <div class="hero-phone-screen"><img src="screenshots/mobile-tasks.png" alt="Dovilo My Day task list with today's tasks" loading="eager"></div>
+            <div class="hero-phone-screen"><img srcset="screenshots/mobile-tasks-193.webp 193w, screenshots/mobile-tasks.webp 386w" sizes="(max-width:768px) 32vw, (max-width:1024px) 152px, 182px" width="386" height="840" src="screenshots/mobile-tasks.webp" alt="Dovilo My Day task list with today's tasks"></div>
           </div>
           <div class="hero-phone p-ambience">
-            <div class="hero-phone-screen"><img src="screenshots/mobile-ambience-scenes.png" alt="Dovilo ambience scene picker — Rainy City, Midnight, Dusk, Snow and Fog" loading="eager"></div>
+            <div class="hero-phone-screen"><img srcset="screenshots/mobile-ambience-scenes-193.webp 193w, screenshots/mobile-ambience-scenes.webp 386w" sizes="(max-width:768px) 32vw, (max-width:1024px) 152px, 182px" width="386" height="840" src="screenshots/mobile-ambience-scenes.webp" alt="Dovilo ambience scene picker — Rainy City, Midnight, Dusk, Snow and Fog"></div>
           </div>
           <div class="hero-phone p-focus">
-            <div class="hero-phone-screen"><img src="screenshots/mobile-focus.png" alt="Dovilo focus session running in the Rainy City ambience scene" loading="eager"></div>
+            <div class="hero-phone-screen"><img srcset="screenshots/mobile-focus-193.webp 193w, screenshots/mobile-focus.webp 386w" sizes="(max-width:768px) 36vw, (max-width:1024px) 160px, 186px" width="386" height="840" src="screenshots/mobile-focus.webp" alt="Dovilo focus session running in the Rainy City ambience scene"></div>
           </div>
           <div class="hero-phone p-city">
-            <div class="hero-phone-screen"><img src="screenshots/mobile-city.png" alt="Dovilo isometric city built from completed tasks" loading="eager"></div>
+            <div class="hero-phone-screen"><img srcset="screenshots/mobile-city-193.webp 193w, screenshots/mobile-city.webp 386w" sizes="(max-width:768px) 40vw, (max-width:1024px) 172px, 200px" width="386" height="840" src="screenshots/mobile-city.webp" alt="Dovilo isometric city built from completed tasks" fetchpriority="high"></div>
           </div>
         </div>
       </div>
@@ -1966,13 +1977,13 @@
 
       <div class="focus-phones">
         <div class="focus-phone scenes">
-          <img src="screenshots/mobile-ambience-scenes.png" alt="Dovilo ambience scene picker — Default, Rainy City, Midnight, Dusk, Snow and Fog" loading="lazy">
+          <img srcset="screenshots/mobile-ambience-scenes-193.webp 193w, screenshots/mobile-ambience-scenes.webp 386w" sizes="(max-width:420px) 33vw, (max-width:1280px) 150px, 172px" src="screenshots/mobile-ambience-scenes.webp" alt="Dovilo ambience scene picker — Default, Rainy City, Midnight, Dusk, Snow and Fog" loading="lazy">
         </div>
         <div class="focus-phone running">
-          <img src="screenshots/mobile-focus.png" alt="Dovilo focus session running in the Rainy City scene with task, round and ambience rows" loading="lazy">
+          <img srcset="screenshots/mobile-focus-193.webp 193w, screenshots/mobile-focus.webp 386w" sizes="(max-width:420px) 38vw, (max-width:1280px) 172px, 198px" src="screenshots/mobile-focus.webp" alt="Dovilo focus session running in the Rainy City scene with task, round and ambience rows" loading="lazy">
         </div>
         <div class="focus-phone mixer">
-          <img src="screenshots/mobile-ambience-sound.png" alt="Dovilo ambience sound mixer with rain and fireplace layers and level sliders" loading="lazy">
+          <img srcset="screenshots/mobile-ambience-sound-193.webp 193w, screenshots/mobile-ambience-sound.webp 386w" sizes="(max-width:420px) 33vw, (max-width:1280px) 150px, 172px" src="screenshots/mobile-ambience-sound.webp" alt="Dovilo ambience sound mixer with rain and fireplace layers and level sliders" loading="lazy">
         </div>
       </div>
     </div>
@@ -2057,7 +2068,7 @@
       Your daily command center — My Day, lists, priorities, and detail panel.
     </p>
     <div class="mac-window" data-reveal>
-      <img src="screenshots/desktop.png" width="2764" height="1712" alt="Dovilo desktop app — My Day task list with a selected task detail panel showing due date, list and reminder options" loading="lazy">
+      <img srcset="screenshots/desktop-700.webp 700w, screenshots/desktop-1000.webp 1000w, screenshots/desktop-1400.webp 1400w, screenshots/desktop-2000.webp 2000w, screenshots/desktop.webp 2764w" sizes="(max-width:1000px) 100vw, 1000px" src="screenshots/desktop.webp" width="2764" height="1712" alt="Dovilo desktop app — My Day task list with a selected task detail panel showing due date, list and reminder options" loading="lazy">
     </div>
 
     <div class="mac-stack-gap"></div>
@@ -2067,7 +2078,7 @@
       Watch Claude Code execute a multi-step task — step-by-step progress, agent notes, and full control.
     </p>
     <div class="mac-window" data-reveal>
-      <img src="screenshots/desktop-ai.png" width="2764" height="1712" alt="Dovilo desktop app — AI Tasks view showing Claude Code running a multi-step task with progress steps and agent notes" loading="lazy">
+      <img srcset="screenshots/desktop-ai-700.webp 700w, screenshots/desktop-ai-1000.webp 1000w, screenshots/desktop-ai-1400.webp 1400w, screenshots/desktop-ai-2000.webp 2000w, screenshots/desktop-ai.webp 2764w" sizes="(max-width:1000px) 100vw, 1000px" src="screenshots/desktop-ai.webp" width="2764" height="1712" alt="Dovilo desktop app — AI Tasks view showing Claude Code running a multi-step task with progress steps and agent notes" loading="lazy">
     </div>
 
     <div class="mac-stack-gap"></div>
@@ -2079,15 +2090,15 @@
     <div class="shot-block">
       <div class="shot-grid">
         <figure class="shot">
-          <div class="shot-screen"><img src="screenshots/mobile-tasks.png" width="386" height="840" alt="Dovilo My Day list with tasks grouped under Today and No date" loading="lazy"></div>
+          <div class="shot-screen"><img src="screenshots/mobile-tasks.webp" width="386" height="840" alt="Dovilo My Day list with tasks grouped under Today and No date" loading="lazy"></div>
           <figcaption><strong>My Day</strong>Today, tomorrow and no-date in collapsible groups — dates and priorities read at a glance.</figcaption>
         </figure>
         <figure class="shot">
-          <div class="shot-screen"><img src="screenshots/mobile-views.png" width="386" height="840" alt="Dovilo view picker showing My Day, Important, Planned, Flagged and custom lists with counts" loading="lazy"></div>
+          <div class="shot-screen"><img src="screenshots/mobile-views.webp" width="386" height="840" alt="Dovilo view picker showing My Day, Important, Planned, Flagged and custom lists with counts" loading="lazy"></div>
           <figcaption><strong>View picker</strong>My Day, Important, Planned, Flagged and every list you keep — each with a live count.</figcaption>
         </figure>
         <figure class="shot">
-          <div class="shot-screen"><img src="screenshots/mobile-task-detail.png" width="386" height="840" alt="Dovilo task detail with due date, repeat, star, flag and reminder properties" loading="lazy"></div>
+          <div class="shot-screen"><img src="screenshots/mobile-task-detail.webp" width="386" height="840" alt="Dovilo task detail with due date, repeat, star, flag and reminder properties" loading="lazy"></div>
           <figcaption><strong>Task detail</strong>Due date, repeat, star, flag and reminder as one property grid, with notes underneath.</figcaption>
         </figure>
       </div>
@@ -2102,11 +2113,11 @@
     <div class="shot-block">
       <div class="shot-grid two">
         <figure class="shot">
-          <div class="shot-screen"><img src="screenshots/mobile-ai.png" width="386" height="840" alt="Dovilo AI Tasks list with queued agent tasks and remaining monthly quota" loading="lazy"></div>
+          <div class="shot-screen"><img src="screenshots/mobile-ai.webp" width="386" height="840" alt="Dovilo AI Tasks list with queued agent tasks and remaining monthly quota" loading="lazy"></div>
           <figcaption><strong>Queued and running</strong>Awaiting you, running, queued — grouped by what needs your attention first, with your monthly quota in view.</figcaption>
         </figure>
         <figure class="shot">
-          <div class="shot-screen"><img src="screenshots/mobile-ai-done.png" width="386" height="840" alt="Dovilo AI Tasks recently done section with completed agent tasks and step counts" loading="lazy"></div>
+          <div class="shot-screen"><img src="screenshots/mobile-ai-done.webp" width="386" height="840" alt="Dovilo AI Tasks recently done section with completed agent tasks and step counts" loading="lazy"></div>
           <figcaption><strong>Recently done</strong>Finished work drops into its own section with the step count it took to get there.</figcaption>
         </figure>
       </div>
@@ -2118,27 +2129,27 @@
       <div class="phone-deck-inner">
         <div class="phone">
           <span class="phone-label">Plan</span>
-          <div class="phone-screen"><img src="screenshots/mobile-planned.png" alt="Dovilo planned tasks grouped by day" loading="lazy"></div>
+          <div class="phone-screen"><img src="screenshots/mobile-planned.webp" alt="Dovilo planned tasks grouped by day" loading="lazy"></div>
         </div>
         <div class="phone">
           <span class="phone-label">Midnight</span>
-          <div class="phone-screen"><img src="screenshots/mobile-focus-midnight.png" alt="Dovilo focus session running in the Midnight ambience scene" loading="lazy"></div>
+          <div class="phone-screen"><img src="screenshots/mobile-focus-midnight.webp" alt="Dovilo focus session running in the Midnight ambience scene" loading="lazy"></div>
         </div>
         <div class="phone">
           <span class="phone-label">Build</span>
-          <div class="phone-screen"><img src="screenshots/mobile-city.png" alt="Dovilo isometric city built from completed tasks" loading="lazy"></div>
+          <div class="phone-screen"><img src="screenshots/mobile-city.webp" alt="Dovilo isometric city built from completed tasks" loading="lazy"></div>
         </div>
         <div class="phone">
           <span class="phone-label">Today</span>
-          <div class="phone-screen"><img src="screenshots/mobile-tasks.png" alt="Dovilo My Day task list" loading="lazy"></div>
+          <div class="phone-screen"><img src="screenshots/mobile-tasks.webp" alt="Dovilo My Day task list" loading="lazy"></div>
         </div>
         <div class="phone">
           <span class="phone-label">Track</span>
-          <div class="phone-screen"><img src="screenshots/mobile-stats.png" alt="Dovilo statistics with daily average, city overview and monthly trend" loading="lazy"></div>
+          <div class="phone-screen"><img src="screenshots/mobile-stats.webp" alt="Dovilo statistics with daily average, city overview and monthly trend" loading="lazy"></div>
         </div>
         <div class="phone">
           <span class="phone-label">AI</span>
-          <div class="phone-screen"><img src="screenshots/mobile-ai.png" alt="Dovilo mobile AI Tasks view — follow agent progress from your phone" loading="lazy"></div>
+          <div class="phone-screen"><img src="screenshots/mobile-ai.webp" alt="Dovilo mobile AI Tasks view — follow agent progress from your phone" loading="lazy"></div>
         </div>
       </div>
     </div>
@@ -2233,7 +2244,7 @@
 
     <div class="packs">
       <div class="packs-shot">
-        <img src="screenshots/mobile-market.png" width="386" height="840" alt="Dovilo Market showing AI task packs, the Focus Ambience Pack and the Full City Package" loading="lazy">
+        <img src="screenshots/mobile-market.webp" width="386" height="840" alt="Dovilo Market showing AI task packs, the Focus Ambience Pack and the Full City Package" loading="lazy">
       </div>
       <div>
         <p class="packs-label">One-time packs</p>
