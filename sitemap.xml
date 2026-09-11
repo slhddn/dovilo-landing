@@ -69,9 +69,16 @@
   <!-- BLOG:START -->
   <url>
     <loc>https://dovilo.app/blog/</loc>
-    <lastmod>2026-09-10</lastmod>
+    <lastmod>2026-09-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://dovilo.app/blog/cursor-ai-tools-how-developers-use-them-daily-in-2026/</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <url>
