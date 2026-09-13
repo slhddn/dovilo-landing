@@ -43,6 +43,7 @@ Pro starts with a **7-day free trial**, begun from the iOS or Android app; the s
 
 Long-form posts, newest first — full text at each link, and an RSS feed at https://dovilo.app/blog/feed.xml.
 
+- [Habitica Alternative: 6 Gamified Apps Ranked for 2026](https://dovilo.app/blog/habitica-alternative-6-gamified-apps-ranked-for-2026/) — 2026-09-13. Find the best Habitica alternative for 2026 with this ranked guide to 6 gamified productivity apps, from city-builders to RPG habit trackers.
 - [Cursor AI Tools: How Developers Use Them Daily in 2026](https://dovilo.app/blog/cursor-ai-tools-how-developers-use-them-daily-in-2026/) — 2026-09-11. Cursor AI tools are reshaping how developers work in 2026. Learn the daily workflows, agent habits, and MCP integrations that help solo devs ship faster.
 - [Best Gamified Productivity Apps in 2026 (Ranked & Reviewed)](https://dovilo.app/blog/best-gamified-productivity-apps/) — 2026-09-10. A comprehensive ranking the top gamified productivity apps available in 2026, covering Dovilo, Habitica, BeeDone, Forest, MainQuest, and others. Highlights each app's reward mechanics, focus-timer depth, platform availability, and pricing.
 - [Todoist Alternative: 7 Apps Worth Switching To in 2026](https://dovilo.app/blog/todoist-alternative-7-apps-worth-switching-to-in-2026/) — 2026-09-10. Find the best Todoist alternative in 2026 — from gamified apps to AI-native tools — with honest notes on who each one suits best.
